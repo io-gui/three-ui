@@ -1,0 +1,49 @@
+{
+  "name": "io-object",
+  "version": "2.2.0",
+  "description": "Object data editor",
+  "main": "build/io-object.js",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "build/io-object.js",
+    "build/io-object.min.js"
+  ],
+  "directories": {
+    "build": "build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arodic/io-object.git"
+  },
+  "author": "Aleksandar Aki Rodic",
+  "license": "MIT",
+  "keywords": [
+    "io",
+    "ui",
+    "gui",
+    "object",
+    "custom elements",
+    "web components",
+    "customelements"
+  ],
+  "bugs": {
+    "url": "https://github.com/arodic/io-object/issues"
+  },
+  "homepage": "https://github.com/arodic/io-object",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "uglify": "uglifyjs build/io-object.js > build/io-object.min.js",
+    "build": "eslint src && rollup -c && npm run uglify"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "eslint": "^4.19.1",
+    "rollup": "^0.59.4",
+    "uglify-es": "^3.3.9"
+  }
+}

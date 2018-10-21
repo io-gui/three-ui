@@ -1,35 +1,9 @@
-import {html, IoElement} from "../../lib/io.js";
+import { html, IoElement } from '../../io/build/io.js';
+import '../../io-primitives/build/io-primitives.js';
 
-export class IoObject extends IoElement {
+class IoObject extends IoElement {
   static get style() {
-    return html`<style>
-      :host {
-        display: flex;
-        flex-direction: column;
-        flex: 0 0;
-        line-height: 1em;
-      }
-      :host > div {
-        display: flex;
-        flex-direction: row;
-      }
-      :host > div > span {
-        padding: 0 0.2em 0 0.5em;
-        flex: 0 0 auto;
-      }
-      :host > io-number {
-        color: rgb(28, 0, 207);
-      }
-      :host > io-string {
-        color: rgb(196, 26, 22);
-      }
-      :host > io-boolean {
-        color: rgb(170, 13, 145);
-      }
-      :host > io-option {
-        color: rgb(32,135,0);
-      }
-    </style>`;
+    return html`<style>:host {display: flex;flex-direction: column;flex: 0 0;line-height: 1em;}:host > div {display: flex;flex-direction: row;}:host > div > span {padding: 0 0.2em 0 0.5em;flex: 0 0 auto;}:host > io-number {color: rgb(28, 0, 207);}:host > io-string {color: rgb(196, 26, 22);}:host > io-boolean {color: rgb(170, 13, 145);}:host > io-option {color: rgb(32,135,0);}</style>`;
   }
   static get properties() {
     return {
@@ -159,3 +133,5 @@ const IoObjectConfig = {
 };
 
 IoObject.Register();
+
+export { IoObject };

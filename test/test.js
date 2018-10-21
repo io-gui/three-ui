@@ -1,18 +1,22 @@
-import {IoElement} from "../src/io.js";
+import {html, IoElement, IoNode} from "../lib/io.js";
 
-export const IoTest = (Constructor) => class extends IoElement {
-  static get properties() {
-    return {
-      element: HTMLElement
-    };
-  }
+import ObjectTest from "./tests/object.js"
+
+import "https://cdn.jsdelivr.net/npm/mocha@5.2.0/mocha.js";
+
+mocha.setup('bdd');
+
+export class IoTest extends IoElement {
   constructor() {
     super();
-    this.appendChild(this.element = new Constructor());
+    // this.objectTest = new ObjectTest();
   }
   connectedCallback() {
-    super.connectedCallback();
-    this.run();
+    // this.objectTest.run();
+
+    mocha.checkLeaks();
+    mocha.run();
   }
-  run() {}
-};
+}
+
+IoTest.Register();

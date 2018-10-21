@@ -28,6 +28,6 @@ export default [
         indent: '  '
       }
     ],
-    external: [ path.resolve('../io/build/io.js') ]
+    external: [ path.resolve('../io/build/io.js'), path.resolve('../io-primitives/build/io-primitives.js') ]
   }
 ];
