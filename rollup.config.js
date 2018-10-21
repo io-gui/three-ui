@@ -19,31 +19,15 @@ function html() {
 
 export default [
   {
-    input: 'src/io.js',
-    experimentalDynamicImport: true,
-    plugins: [
-      html()
-    ],
+    input: 'src/io-object.js',
+    plugins: [html()],
     output: [
       {
         format: 'es',
-        file: 'build/io.js',
+        file: 'build/io-object.js',
         indent: '  '
       }
     ],
-    external: [ path.resolve('src/io-painters.js') ]
-  },
-  {
-    input: 'src/io-painters.js',
-    plugins: [
-      html()
-    ],
-    output: [
-      {
-        format: 'es',
-        file: 'build/io-painters.js',
-        indent: '  '
-      }
-    ]
+    external: [ path.resolve('../io/build/io.js') ]
   }
 ];
