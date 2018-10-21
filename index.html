@@ -1,0 +1,49 @@
+<!-- <!doctype html> -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes" />
+
+    <title>io</title>
+
+    <meta name="description" content="io" />
+
+    <style>
+      html {
+        font-family: Arial, Helvetica, sans-serif;
+        letter-spacing: 0.05em;
+        font-weight: 300;
+      }
+      body {
+        margin: 0;
+      }
+      io-demo {
+        display: block;
+        margin-top: 4em;
+      }
+      .passes {
+        color: #0a0;
+        font-weight: bold;
+      }
+      .failures {
+        color: #f00;
+        font-weight: bold;
+      }
+    </style>
+
+    <link href="node_modules/mocha/mocha.css" rel="stylesheet" />
+
+    <script type="module" src="demo/demo.js"></script>
+    <script type="module" src="src/io.js"></script>
+    <script type="module" src="test/tests.js"></script>
+
+  </head>
+  <body>
+
+    <io-demo></io-demo>
+    <io-tests></io-tests>
+
+    <div id="mocha"></div>
+
+  </body>
+</html>
