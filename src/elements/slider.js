@@ -1,5 +1,4 @@
-import {html, IoElement} from "../io.js";
-import {IoInteractive} from "../classes/interactive.js";
+import {html, IoElement, IoInteractiveMixin} from "../io.js";
 
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
@@ -45,7 +44,7 @@ export class IoSlider extends IoElement {
 
 IoSlider.Register();
 
-export class IoSliderKnob extends IoInteractive {
+export class IoSliderKnob extends IoInteractiveMixin(IoElement) {
   static get style() {
     return html`<style>
       :host {
