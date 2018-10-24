@@ -1,20 +1,20 @@
 {
-  "name": "io-object",
+  "name": "io-graphics",
   "version": "2.2.0",
-  "description": "Object data editor",
-  "main": "build/io-object.js",
+  "description": "A collection of io elements for graphics",
+  "main": "build/io-graphics.js",
   "files": [
     "LICENSE",
     "README.md",
-    "build/io-object.js",
-    "build/io-object.min.js"
+    "build/io-graphics.js",
+    "build/io-graphics.min.js"
   ],
   "directories": {
     "build": "build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/arodic/io-object.git"
+    "url": "https://github.com/arodic/io-graphics.git"
   },
   "author": "Aleksandar Aki Rodic",
   "license": "MIT",
@@ -23,14 +23,18 @@
     "ui",
     "gui",
     "object",
+    "graphics",
+    "vector",
+    "matrix",
+    "color",
     "custom elements",
     "web components",
     "customelements"
   ],
   "bugs": {
-    "url": "https://github.com/arodic/io-object/issues"
+    "url": "https://github.com/arodic/io-graphics/issues"
   },
-  "homepage": "https://github.com/arodic/io-object",
+  "homepage": "https://github.com/arodic/io-graphics",
   "publishConfig": {
     "access": "public"
   },
