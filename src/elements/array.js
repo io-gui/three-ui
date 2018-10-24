@@ -1,5 +1,4 @@
-import {html} from "../io.js";
-import {IoObject} from "./object.js";
+import {html, IoObject} from "../io.js";
 
 //TODO: test
 
@@ -28,6 +27,7 @@ export class IoArray extends IoObject {
       columns: {
         value: 0
       }
+      // TODO: labeled?
     };
   }
   changed() {

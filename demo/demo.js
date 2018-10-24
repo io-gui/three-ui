@@ -1,5 +1,14 @@
-import {html, IoElement} from "../lib/io.js";
-import "../build/io-object.js";
+import {html, IoElement} from "../src/io.js";
+import {IoArray} from "../src/elements/array.js";
+import {IoColor} from "../src/elements/color.js";
+import {IoColorHex} from "../src/elements/color-hex.js";
+import {IoColorHsv} from "../src/elements/color-hsv.js";
+import {IoColorCmyk} from "../src/elements/color-cmyk.js";
+import {IoColorPicker} from "../src/elements/color-picker.js";
+import {IoColorRgb} from "../src/elements/color-rgb.js";
+import {IoColorRgba} from "../src/elements/color-rgba.js";
+import {IoSlider} from "../src/elements/slider.js";
+import {IoVector} from "../src/elements/vector.js";
 
 export class IoDemo extends IoElement {
   static get style() {
@@ -53,8 +62,23 @@ export class IoDemo extends IoElement {
     this.selfRef = this;
     this.template([
       ['div', {className: 'demo'}, [
-        ['div', {className: 'demoLabel'}, 'io-object'],
-        ['io-object', {value: this, expanded: true, labeled: true}]
+        ['div', {className: 'demoLabel'}, 'io-array'],
+        ['io-array', {value: this.array, expanded: true, labeled: true}]
+      ]],
+      ['div', {className: 'demo'}, [
+        ['div', {className: 'demoLabel'}, 'io-color'],
+        ['io-color', {value: this.colorRGB, expanded: true, labeled: true}]
+      ]],
+      ['div', {className: 'demo'}, [
+        ['div', {className: 'demoLabel'}, 'io-vector'],
+        ['io-vector', {value: this.vec2, expanded: true, labeled: true}],
+        ['io-vector', {value: this.vec3, expanded: true, labeled: true}],
+        ['io-vector', {value: this.vec4, expanded: true, labeled: true}],
+      ]],
+      ['div', {className: 'demo'}, [
+        ['div', {className: 'demoLabel'}, 'io-slider'],
+        ['io-slider', {value: this.bind('number')}],
+        ['io-slider', {value: this.bind('number'), step: 0.1, min:-1, max: 1}]
       ]]
     ]);
   }

@@ -1,18 +1,19 @@
-import {html, IoElement, IoNode} from "../lib/io.js";
+import {html, IoElement, IoNode} from "../src/io.js";
 
-import ObjectTest from "./tests/object.js"
 
-import "https://cdn.jsdelivr.net/npm/mocha@5.2.0/mocha.js";
+import SliderTest from "./tests/slider.js"
+
+import "./lib/mocha.js";
 
 mocha.setup('bdd');
 
 export class IoTest extends IoElement {
   constructor() {
     super();
-    // this.objectTest = new ObjectTest();
+    this.sliderTest = new SliderTest();
   }
   connectedCallback() {
-    // this.objectTest.run();
+    this.sliderTest.run();
 
     mocha.checkLeaks();
     mocha.run();

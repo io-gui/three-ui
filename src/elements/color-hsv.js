@@ -1,5 +1,4 @@
-import {html} from "../io.js";
-import {IoObject} from "./object.js";
+import {html, IoObject} from "../io.js";
 
 //TODO: test
 

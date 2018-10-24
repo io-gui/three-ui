@@ -19,15 +19,16 @@ function html() {
 
 export default [
   {
-    input: 'src/io-object.js',
+    input: 'src/io-graphics.js',
     plugins: [html()],
+    experimentalDynamicImport: true,
     output: [
       {
         format: 'es',
-        file: 'build/io-object.js',
+        file: 'build/io-graphics.js',
         indent: '  '
       }
     ],
-    external: [ path.resolve('../io/build/io.js'), path.resolve('../io-primitives/build/io-primitives.js') ]
+    external: [ path.resolve('../io/build/io.js') ]
   }
 ];

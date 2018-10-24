@@ -36,7 +36,7 @@
   },
   "scripts": {
     "lint": "eslint src",
-    "uglify": "uglifyjs build/io-object.js > build/io-object.min.js",
+    "uglify": "uglifyjs build/io-graphics.js > build/io-graphics.min.js",
     "build": "eslint src && rollup -c && npm run uglify"
   },
   "devDependencies": {
