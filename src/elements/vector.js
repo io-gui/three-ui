@@ -15,12 +15,20 @@ export class IoVector extends IoObject {
       :host {
         display: flex;
         flex-direction: row;
+        font-family: monospace;
       }
       :host > io-number {
-        flex: 1 1;
+        flex: 1 1 auto;
+        margin: 1px;
+        padding: 0.1em 0.2em;
+        border: 1px solid rgba(0,0,0,0.1);
       }
       :host > io-boolean {
         color: inherit;
+        margin: 1px;
+        padding: 0.1em 0.2em;
+        border: 1px solid rgba(0,0,0,0.1);
+
       }
       :host > io-boolean:not([value]) {
         opacity: 0.25;
@@ -50,7 +58,6 @@ export class IoVector extends IoObject {
       if (this.value[key] !== event.detail.value) {
         this.value[key] = event.detail.value;
       }
-
       if (this.linked) {
         const change = event.detail.value / event.detail.oldValue;
         for (let key2 in components) {

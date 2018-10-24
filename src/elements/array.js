@@ -7,6 +7,12 @@ export class IoArray extends IoObject {
     return html`<style>
       :host {
         display: grid;
+        font-family: monospace;
+      }
+      :host > io-number {
+        margin: 1px;
+        padding: 0.1em 0.2em;
+        border: 1px solid rgba(0,0,0,0.1);
       }
       :host[columns="2"] {
         grid-template-columns: 50% 50%;
@@ -34,12 +40,7 @@ export class IoArray extends IoObject {
     const elements = [];
     this.setAttribute('columns', this.columns || Math.sqrt(this.value.length) || 1);
     for (let i = 0; i < this.value.length; i++) {
-      elements.push(['io-number', {
-        id: String(i),
-        value: this.value[i],
-        config: {tag: 'io-number'},
-        'on-value-set': this._onValueSet
-      }]);
+      elements.push(['io-number', {id: i, value: this.value[i], 'on-value-set': this._onValueSet}]);
     }
     this.template(elements);
   }

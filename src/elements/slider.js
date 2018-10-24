@@ -1,5 +1,5 @@
 import {html, IoElement} from "../io.js";
-import {IoInteractive} from "./interactive.js";
+import {IoInteractive} from "../classes/interactive.js";
 
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
@@ -9,12 +9,17 @@ export class IoSlider extends IoElement {
     return html`<style>
       :host {
         display: flex;
+        font-family: monospace;
       }
       :host > io-number {
         flex: 0 0 auto;
-        margin-right: 0.5em;
+        margin: 1px;
+        padding: 0.1em 0.2em;
+        border: 1px solid rgba(0,0,0,0.1);
       }
       :host > io-slider-knob {
+        border: 1px solid rgba(0,0,0,0.1);
+        margin: 1px;
         flex: 1 1 auto;
       }
     </style>`;
@@ -24,7 +29,7 @@ export class IoSlider extends IoElement {
       value: 0,
       step: 0.001,
       min: 0,
-      max: 1000,
+      max: 1,
       strict: true,
     };
   }
@@ -46,8 +51,9 @@ export class IoSliderKnob extends IoInteractive {
       :host {
         display: flex;
         cursor: ew-resize;
+        overflow: hidden;
       }
-      :host .slider-canvas {
+      :host img {
         width: 100% !important;
       }
     </style>`;
@@ -79,16 +85,14 @@ export class IoSliderKnob extends IoInteractive {
     this.set('value', value);
   }
   changed() {
-    this.template([['img', {id: 'img', className: 'slider-canvas'}],]);
-    this.paint(canvas, this.getBoundingClientRect());
-    this.$.img.src = canvas.toDataURL();
+    this.template([['img', {id: 'img'}],]);
+    this.$.img.src = this.paint(this.$.img.getBoundingClientRect());
   }
 
-  paint(canvas, rect) {
+  paint(rect) {
     // TODO: implement in webgl shader
     canvas.width = rect.width;
     canvas.height = rect.height;
-    const ctx = canvas.getContext('2d');
 
     const bgColor = '#888';
     const colorStart = '#2cf';
@@ -135,6 +139,8 @@ export class IoSliderKnob extends IoInteractive {
     ctx.moveTo(pos, 0);
     ctx.lineTo(pos, h);
     ctx.stroke();
+
+    return canvas.toDataURL();
   }
 }
 
