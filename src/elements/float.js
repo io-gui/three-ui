@@ -1,4 +1,4 @@
-import {html, IoNumber} from "../io.js";
+import {html, IoNumber} from "../../../io/build/io.js";
 // import {IoInteractive} from "../classes/interactive.js";
 
 export class IoFloat extends IoNumber {

@@ -1,4 +1,4 @@
-import {html, IoObject, IoNumber} from "../io.js";
+import {html, IoObject, IoNumber} from "../../../io/build/io.js";
 import {rgbToHex, hexToRgb} from "../utils/color.js";
 
 export class IoColor extends IoObject {

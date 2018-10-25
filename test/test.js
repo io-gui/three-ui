@@ -1,4 +1,4 @@
-import {html, IoElement, IoNode} from "../src/io.js";
+import {html, IoElement, IoNode} from "../../io/build/io.js";
 
 import SliderTest from "./tests/slider.js"
 

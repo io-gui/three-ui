@@ -1,4 +1,4 @@
-import {html, IoElement} from "../src/io.js";
+import {html, IoElement} from "../../io/build/io.js";
 import {IoArray} from "../src/elements/array.js";
 import {IoColor} from "../src/elements/color.js";
 import {IoFloat} from "../src/elements/float.js";
