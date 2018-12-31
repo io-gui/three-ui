@@ -1,11 +1,9 @@
-import {html, IoNumber} from "../../../io/build/io.js";
-// import {IoInteractive} from "../classes/interactive.js";
+import {html, IoNumber} from "../../../io/src/io.js";
 
 export class IoFloat extends IoNumber {
   static get style() {
     return html`<style>
       :host[underslider] {
-        background-image: paint(underslider);
         cursor: col-resize;
       }
     </style>`;

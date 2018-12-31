@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Io Graphics • Demo</title>
+    <title>Io Threejs • Demo</title>
     <meta name="description" content="Todo app MVC made with io custom elements library." />
     <style>
       html {
@@ -11,7 +11,50 @@
         font-weight: 300;
       }
     </style>
-    <script type="module" src="./demo.js"></script>
+    <script type="module">
+    import {IoElement, html} from "../../io/src/io.js";
+    import {ThreejsInspector} from "../src/io-three.js";
+
+    import {data} from "./data.js";
+
+    export class IoDemo extends IoElement {
+      static get style() {
+        return html`
+        <style>
+          :host .demo {
+            margin: 1em;
+            padding: 0.5em;
+            background: #eee;
+          }
+          :host .demoLabel {
+            padding: 0.25em;
+            margin: -0.5em -0.5em 0.5em -0.5em;
+            background: #ccc;
+          }
+        </style>
+        `;
+      }
+      static get listeners() {
+        return {
+          'value-set': '_onValueSet'
+        };
+      }
+      _onValueSet() {
+        this.dispatchEvent('io-object-mutated', {object: this, key: '*'}, false, window);
+      }
+      constructor(props) {
+        super(props);
+        this.template([
+          ['div', {className: 'demo'}, [
+            ['div', {className: 'demoLabel'}, 'io-inspector'],
+            ['threejs-inspector', {value: data.mesh, groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
+          ]],
+        ]);
+      }
+    }
+
+    IoDemo.Register();
+    </script>
   </head>
   <body>
     <io-demo></io-demo>

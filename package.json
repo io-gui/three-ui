@@ -1,51 +1,14 @@
 {
-  "name": "io-graphics",
+  "name": "io-threejs",
   "version": "2.2.0",
-  "description": "A collection of io elements for graphics",
-  "main": "build/io-graphics.js",
-  "files": [
-    "LICENSE",
-    "README.md",
-    "build/io-graphics.js",
-    "build/io-graphics.min.js"
-  ],
-  "directories": {
-    "build": "build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/arodic/io-graphics.git"
-  },
+  "description": "Io elements for threejs library",
   "author": "Aleksandar Aki Rodic",
   "license": "MIT",
-  "keywords": [
-    "io",
-    "ui",
-    "gui",
-    "object",
-    "graphics",
-    "vector",
-    "matrix",
-    "color",
-    "custom elements",
-    "web components",
-    "customelements"
-  ],
-  "bugs": {
-    "url": "https://github.com/arodic/io-graphics/issues"
-  },
-  "homepage": "https://github.com/arodic/io-graphics",
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
-    "lint": "eslint src",
-    "uglify": "uglifyjs build/io-graphics.js > build/io-graphics.min.js",
-    "build": "eslint src && rollup -c && npm run uglify"
+    "build": "eslint src && rollup -c"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "eslint": "^4.19.1",
     "rollup": "^0.59.4",
     "uglify-es": "^3.3.9"

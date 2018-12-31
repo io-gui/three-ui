@@ -1,4 +1,4 @@
-import {html, IoObject} from "../../../io/build/io.js";
+import {html, IoObjectProps} from "../../../io/src/io.js";
 
 //TODO: test
 
@@ -9,29 +9,18 @@ const components = {
   w: {}
 };
 
-export class IoVector extends IoObject {
+export class IoVector extends IoObjectProps {
   static get style() {
     return html`<style>
       :host {
         display: flex;
         flex-direction: row;
-        font-family: monospace;
+      }
+      :host > *:not(:last-child) {
+        margin-right: 2px;
       }
       :host > io-number {
-        flex: 1 1 auto;
-        margin: 1px;
-        padding: 0.1em 0.2em;
-        border: 1px solid rgba(0,0,0,0.1);
-      }
-      :host > io-boolean {
-        color: inherit;
-        margin: 1px;
-        padding: 0.1em 0.2em;
-        border: 1px solid rgba(0,0,0,0.1);
-
-      }
-      :host > io-boolean:not([value]) {
-        opacity: 0.25;
+        flex: 1 0;
       }
     </style>`;
   }
