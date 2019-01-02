@@ -1,7 +1,6 @@
-import {IoInspector} from "../../../io/src/elements/inspector.js";
+import {IoInspector} from "../../../io/src/io.js";
 
 import "./color.js";
-import "./float.js";
 import "./vector.js";
 import "./euler.js";
 
@@ -13,34 +12,17 @@ export class ThreejsInspector extends IoInspector {
         "constructor:Vector3": ["io-vector"],
         "constructor:Vector4": ["io-vector"],
         "constructor:Quaternion": ["io-vector"],
-        "constructor:Euler": ["io-euler"], // TODO: figure out setter attributes
+        "constructor:Euler": ["io-euler"], // TODO: setter attributes
         "constructor:Color": ["io-color"],
         "intensity": ["io-slider", {"min": 0,"max": 1}],
-        "opacity": ["io-slider", {"min": 0,"max": 1}],
-        // TODO: figure out why nested inspectors dont have correct configs
-        // "constructor:Matrix2": ["io-inspector"],
-        // "constructor:Matrix3": ["io-inspector"],
-        // "constructor:Matrix4": ["io-inspector"],
+        "constructor:Matrix2": ["io-matrix"],
+        "constructor:Matrix3": ["io-matrix"],
+        "constructor:Matrix4": ["io-matrix"],
       },
-      // "Euler": {
-      //   "x": ['io-number'],
-      //   "y": ['io-number'],
-      //   "z": ['io-number'],
-      // },
-      "Matrix2": {
-        "elements": ["io-array"],
-      },
-      "Matrix3": {
-        "elements": ["io-array"],
-      },
-      "Matrix4": {
-        "elements": ["io-array"],
-      },
-
       "BufferGeometry": {
         "parameters": ["io-inspector"],
+        // "attributes": ["io-object-props"],// TODO: figure out how to pass config
       },
-
       "WebGLRenderer": {
         "toneMapping": ["io-option", {"options": [{"value": 0, "label": "NoToneMapping"}, {"value": 1, "label": "LinearToneMapping"}, {"value": 2, "label": "ReinhardToneMapping"}, {"value": 3, "label": "Uncharted2ToneMapping"}, {"value": 4, "label": "CineonToneMapping"}]}]
       },
@@ -65,6 +47,12 @@ export class ThreejsInspector extends IoInspector {
         "drawMode": ["io-option", {"options": [{"value": 0, "label": "TrianglesDrawMode"}, {"value": 1, "label": "TriangleStripDrawMode"}, {"value": 2, "label": "TriangleFanDrawMode"}]}],
       },
       "Material": {
+        "reflectivity": ["io-slider", {"min": 0,"max": 1}],
+        "refractionRatio": ["io-slider", {"min": 0,"max": 1}],
+        "aoMapIntensity": ["io-slider", {"min": 0,"max": 1}],
+        "lightMapIntensity": ["io-slider", {"min": 0,"max": 1}],
+        "opacity": ["io-slider", {"min": 0,"max": 1}],
+
         // "map": ["io-inspector"],
         "blending": ["io-option", {"options": [{"value": 0, "label": "NoBlending"}, {"value": 1, "label": "NormalBlending"}, {"value": 2, "label": "AdditiveBlending"}, {"value": 3, "label": "SubtractiveBlending"}, {"value": 4, "label": "MultiplyBlending"}, {"value": 5, "label": "CustomBlending"}]}],
         "side": ["io-option", {"options": [{"value": 0, "label": "FrontSide"}, {"value": 1, "label": "BackSide"}, {"value": 2, "label": "DoubleSide"}]}],
@@ -80,29 +68,46 @@ export class ThreejsInspector extends IoInspector {
         "shadowSide": ["io-option", {"options": [{"value": 0, "label": "BackSide"}, {"value": 1, "label": "FrontSide"}, {"value": 2, "label": "DoubleSide"}]}],
         "shading": ["io-option", {"options": [{"value": 1, "label": "FlatShading"}, {"value": 2, "label": "SmoothShading"}]}],
       },
-      "Euler": {
-        "_order": ["io-option", {"options": [{"value": "XYZ", "label": "XYZ"}, {"value": "XZY", "label": "XZY"}, {"value": "YXZ", "label": "YXZ"}, {"value": "YZX", "label": "YZX"}, {"value": "ZXY", "label": "ZXY"}, {"value": "ZYX", "label": "ZYX"}]}],
-      }
     };
   }
   static get groups() {
     return {
       "Object": {
-        "main": ["name", "visible", "userData"],
-        "hidden": ["type"]
+        "main": ["name", "visible"],
+        "transform": [/[M,m]atrix/],
+        "rendering": [/[S,s]hadow/, /[R,r]ender/, /[D,d]raw/, /bounding/, "fog"],
+        "hidden": ["type", /(is[A-Z])\w+/],
       },
       "Object3D": {
-        "main": ["geometry", "material", "parent", "children"],
-        "transform": ["position", "rotation", "scale", "up", "quaternion", "matrix", "matrixWorld", "matrixAutoUpdate", "matrixWorldNeedsUpdate"],
-        "rendering": ["drawMode", "layers", "visible", "castShadow", "receiveShadow", "frustumCulled", "renderOrder"]
+        "main": ["position", "rotation", "scale", "parent", "children", "target"],
+        "transform": ["up", "quaternion"],
+        "rendering": ["layers", "frustumCulled"],
+      },
+      "Mesh": {
+        "main": ["geometry", "material"],
+      },
+      "BufferGeometry": {
+        "main": ["parameters", "index", "attributes"]
       },
       "Texture": {
         "main": ["offset", "repeat", "center", "rotation"]
       },
       "Material": {
-        "main": ["color", "specular", "shininess", "opacity", "wireframe", "map", "specularMap", "alphaMap", "envMap", "lightMap", "lightMapIntensity", "aoMap", "aoMapIntensity", "emissive", "emissiveMap", "emissiveIntensity", "bumpMap", "bumpScale", "normalMap", "normalScale", "displacementMap", "displacementScale", "displacementBias", "reflectivity", "refractionRatio"],
-        "shading": ["transparent", "dithering", "flatShading", "lights", "vertexColors"],
-        "blending": ["side", "shadowSide", "depthTest", "depthWrite", "depthFunc", "blending", "blendSrc", "blendSrcAlpha", "blendDst", "blendDstAlpha", "blendEquation", "blendEquationAlpha", "colorWrite", "alphaTest", "overdraw", "combine", "premultipliedAlpha"]
+        "main": [
+          "color", "specular", "shininess", "opacity", "wireframe", "map", "specularMap",
+          "alphaMap", "envMap", "lightMap", "lightMapIntensity", "aoMap", "aoMapIntensity",
+          "emissive", "emissiveMap", "emissiveIntensity", "bumpMap", "bumpScale",
+          "normalMap", "normalScale", "displacementMap", "displacementScale",
+          "displacementBias", "reflectivity", "refractionRatio",
+        ],
+        "rendering": [
+          /(depth[A-Z])\w+/, /(blend.)\w+/, "transparent", "dithering", "flatShading", "lights", "vertexColors",
+          "side", "blending", "colorWrite", "alphaTest", "combine",
+          "premultipliedAlpha",
+        ]
+      },
+      "Camera": {
+        "main": ["near", "far", "zoom", "focus", "top", "bottom", "left", "right", "fov", "aspect", "filmGauge", "filmOffset"]
       },
       "Light": {
         "main": ["intensity", "color"]

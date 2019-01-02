@@ -1,5 +1,5 @@
 import * as THREE from "../../../three.js/build/three.module.js";
-import {IoNode} from "../../../io/src/io-core.js";
+import {IoNode} from "../../../io/src/io.js";
 
 const nodes = {};
 const loader = new THREE.ObjectLoader();

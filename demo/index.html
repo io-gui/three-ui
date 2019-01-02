@@ -40,14 +40,16 @@
         };
       }
       _onValueSet() {
-        this.dispatchEvent('io-object-mutated', {object: this, key: '*'}, false, window);
+        this.dispatchEvent('object-mutated', {object: this, key: '*'}, false, window);
       }
       constructor(props) {
         super(props);
         this.template([
           ['div', {className: 'demo'}, [
             ['div', {className: 'demoLabel'}, 'io-inspector'],
-            ['threejs-inspector', {value: data.mesh, groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
+            ['threejs-inspector', {value: data.scene.children[0], groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
+            ['threejs-inspector', {value: data.scene.children[1], groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
+            ['threejs-inspector', {value: data.scene.children[2].material, groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
           ]],
         ]);
       }

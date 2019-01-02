@@ -63,7 +63,7 @@ export class IoVector extends IoObjectProps {
       }
 
       let detail = Object.assign({object: this.value, key: this.linked ? '*' : key}, event.detail);
-      this.dispatchEvent('io-object-mutated', detail, false, window);
+      this.dispatchEvent('object-mutated', detail, false, window);
       this.dispatchEvent('value-set', detail, true); // TODO
     }
   }
