@@ -19,16 +19,16 @@ function html() {
 
 export default [
   {
-    input: 'src/io-graphics.js',
+    input: 'src/io-three.js',
     plugins: [html()],
     experimentalDynamicImport: true,
     output: [
       {
         format: 'es',
-        file: 'build/io-graphics.js',
+        file: 'build/io-three.js',
         indent: '  '
       }
     ],
-    external: [ path.resolve('../io/build/io.js') ]
+    external: [ path.resolve('../io/src/io.js') ]
   }
 ];
