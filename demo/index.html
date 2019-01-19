@@ -34,6 +34,11 @@
         </style>
         `;
       }
+      static get properties() {
+        return {
+          value: function() { return data.scene; }
+        }
+      }
       static get listeners() {
         return {
           'value-set': '_onValueSet'
@@ -42,12 +47,19 @@
       _onValueSet() {
         this.dispatchEvent('object-mutated', {object: this, key: '*'}, false, window);
       }
-      constructor(props) {
-        super(props);
+      changed(props) {
         this.template([
+          ['io-option', {value: this.bind('value'), options: [
+            {label: 'Scene', value: data.scene},
+            {label: 'Camera', value: data.scene.children[0]},
+            {label: 'Light', value: data.scene.children[1]},
+            {label: 'Mesh', value: data.scene.children[2]},
+            {label: 'Geometry', value: data.scene.children[2].geometry},
+            {label: 'Material', value: data.scene.children[2].material},
+          ]}],
           ['div', {className: 'demo'}, [
             ['div', {className: 'demoLabel'}, 'io-inspector'],
-            ['io-inspector', {value: data.scene.children[0], groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
+            ['io-inspector', {value: this.value, groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
           ]],
         ]);
       }

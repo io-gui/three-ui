@@ -1,13 +1,13 @@
 import {html, IoElement} from "../../../io/src/io.js";
 
-export class IoMatrix extends IoElement {
-  // static get style() {
-  //   return html`<style>
-  //     :host {
-  //       display: block;
-  //     }
-  //   </style>`;
-  // }
+export class ThreeMatrix extends IoElement {
+  static get style() {
+    return html`<style>
+      :host {
+        display: block;
+      }
+    </style>`;
+  }
   static get properties() {
     return {
       value: Object,
@@ -15,9 +15,12 @@ export class IoMatrix extends IoElement {
   }
   changed() {
     this.template([
-      ['io-array', {value: this.value.elements}]
+      ['io-collapsable', {
+        label: 'elements',
+        elements: [['io-array', {value: this.value.elements}]]
+      }]
     ]);
   }
 }
 
-IoMatrix.Register();
+ThreeMatrix.Register();

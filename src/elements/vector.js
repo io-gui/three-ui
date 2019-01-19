@@ -9,7 +9,7 @@ const components = {
   w: {}
 };
 
-export class IoVector extends IoProperties {
+export class ThreeVector extends IoProperties {
   static get style() {
     return html`<style>
       :host {
@@ -91,4 +91,4 @@ export class IoVector extends IoProperties {
   }
 }
 
-IoVector.Register();
+ThreeVector.Register();

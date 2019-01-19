@@ -2,11 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Io Graphics • About</title>
-    <meta name="description" content="A collection of io elements for graphics" />
-    <script type="module" src="./doc/lib/io-md-view.js"></script>
+    <title>Threejs Io Elements • About</title>
+    <meta name="description" content="A collection of io elements for threejs" />
   </head>
   <body>
-    <io-md-view path="./readme.md"></io-md-view>
+    <script type="module" src="./lib/io-md-view.js"></script>
+    <script type="module">
+
+      import {IoElement} from "../io/src/io.js";
+
+      class IoDocs extends IoElement {
+        changed() {
+          this.template([
+            ['io-md-view', {path :'./readme.md'}],
+            ['io-md-view', {path :'./docs/core/color.md'}],
+            ['io-md-view', {path :'./docs/core/storage.md'}],
+            ['io-md-view', {path :'./docs/elements/color.md'}],
+            ['io-md-view', {path :'./docs/elements/euler.md'}],
+            ['io-md-view', {path :'./docs/elements/matrix.md'}],
+            ['io-md-view', {path :'./docs/elements/vector.md'}],
+          ]);
+        }
+      }
+
+      IoDocs.Register();
+
+    </script>
+    <io-docs></io-docs>
   </body>
 </html>

@@ -1,1 +1,0 @@
-### `IoSlider` `<io-slider>` ###

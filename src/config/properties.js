@@ -3,18 +3,19 @@ import {IoProperties} from "../../../io/src/io.js";
 IoProperties.RegisterConfig({
   // "Object|type:object": ["io-inspector-link"], // TODO: why not inherited?
 
-  "constructor:Vector2": ["io-vector"],
-  "constructor:Vector3": ["io-vector"],
-  "constructor:Vector4": ["io-vector"],
-  "constructor:Quaternion": ["io-vector"],
-  "constructor:Euler": ["io-euler"], // TODO: setter attributes
-  "constructor:Color": ["io-color"],
+  "constructor:Vector2": ["three-vector"],
+  "constructor:Vector3": ["three-vector"],
+  "constructor:Vector4": ["three-vector"],
+  "constructor:Quaternion": ["three-vector"],
+  "constructor:Euler": ["three-euler"], // TODO: setter attributes
+  "constructor:Color": ["three-color"],
   "intensity": ["io-slider", {"min": 0,"max": 1}],
-  "constructor:Matrix2": ["io-matrix"],
-  "constructor:Matrix3": ["io-matrix"],
-  "constructor:Matrix4": ["io-matrix"],
+  "constructor:Matrix2": ["three-matrix"],
+  "constructor:Matrix3": ["three-matrix"],
+  "constructor:Matrix4": ["three-matrix"],
   // Object3D
-  "Object3D|key:scale": ["io-vector", {canlink: true}],
+  "Object3D|key:scale": ["three-vector", {canlink: true}],
+  "Object3D|key:children": ["io-properties", {labeled: false, config: {'type:object': ['io-inspector-link']}}],
   // BufferGeometry
   "BufferGeometry|parameters": ["io-inspector"],
   // "BufferGeometry|attributes": ["io-object-props"],// TODO: figure out how to pass config

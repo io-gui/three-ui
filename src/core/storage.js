@@ -4,7 +4,7 @@ import {IoNode} from "../../../io/src/io.js";
 const nodes = {};
 const loader = new THREE.ObjectLoader();
 
-class StoreNode extends IoNode {
+class ThreeStorageNode extends IoNode {
   static get properties() {
     return {
       key: String,
@@ -25,11 +25,11 @@ class StoreNode extends IoNode {
   }
 }
 
-StoreNode.Register();
+ThreeStorageNode.Register();
 
-export function storage(key, defValue) {
+export function ThreeStorage(key, defValue) {
   if (!nodes[key]) {
-    nodes[key] = new StoreNode({key: key}, defValue);
+    nodes[key] = new ThreeStorageNode({key: key}, defValue);
     nodes[key].connect();
     nodes[key].binding = nodes[key].bind('value');
   }

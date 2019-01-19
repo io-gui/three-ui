@@ -1,6 +1,6 @@
 import {html, IoProperties, IoNumber} from "../../../io/src/io.js";
 
-export class IoColor extends IoProperties {
+export class ThreeColor extends IoProperties {
   static get style() {
     return html`<style>
     :host {
@@ -10,7 +10,7 @@ export class IoColor extends IoProperties {
     :host > *:not(:last-child) {
       margin-right: 2px;
     }
-    :host > io-color-hex {
+    :host > three-color-hex {
       font-family: monospace;
       flex: 0 1 5.5em;
     }
@@ -43,14 +43,14 @@ export class IoColor extends IoProperties {
       ['io-number', {value: this.value.r, 'on-value-set': this._onValueSet, id: 'r', step: 0.01, min: 0, max: 1, strict: false}],
       ['io-number', {value: this.value.g, 'on-value-set': this._onValueSet, id: 'g', step: 0.01, min: 0, max: 1, strict: false}],
       ['io-number', {value: this.value.b, 'on-value-set': this._onValueSet, id: 'b', step: 0.01, min: 0, max: 1, strict: false}],
-      ['io-color-hex', {value: this.bind('hex'), 'on-value-set': this._onValueSet, id: 'hex'}],
+      ['three-color-hex', {value: this.bind('hex'), 'on-value-set': this._onValueSet, id: 'hex'}],
     ]);
   }
 }
 
-IoColor.Register();
+ThreeColor.Register();
 
-export class IoColorHex extends IoNumber {
+export class ThreeColorHex extends IoNumber {
   static get style() {
     return html`<style>
       :host::before {
@@ -68,7 +68,7 @@ export class IoColorHex extends IoNumber {
   }
 }
 
-IoColorHex.Register();
+ThreeColorHex.Register();
 
 export function rgbToHsv(rgb) {
   const max = Math.max(rgb.r, rgb.g, rgb.b), min = Math.min(rgb.r, rgb.g, rgb.b);

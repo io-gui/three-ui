@@ -1,14 +1,15 @@
 import {IoInspector} from "../../../io/src/io.js";
 
 IoInspector.RegisterConfig({
+
   "Object|main": ["name", "visible"],
-  "Object|transform": [/[M,m]atrix/],
+  "Object|transform": [],
   "Object|rendering": [/[S,s]hadow/, /[R,r]ender/, /[D,d]raw/, /bounding/, "fog"],
   "Object|hidden": ["type", /(is[A-Z])\w+/],
 
-  "Object3D|main": ["position", "rotation", "scale", "parent", "children", "target"],
-  "Object3D|transform": ["up", "quaternion"],
+  "Object3D|transform": ["position", "rotation", "scale", "up", "quaternion", /[M,m]atrix/],
   "Object3D|rendering": ["layers", "frustumCulled"],
+  "Object3D|scenegraph": ["parent", "children", "target"],
 
   "Mesh|main": ["geometry", "material"],
 

@@ -1,15 +1,3 @@
-# A collection of io elements for graphics #
+# A collection of io elements for threejs #
 
 TODO
-
-## Classes ##
-
-### `IoArray` `<io-array>` ###
-
-### `IoColor` `<io-color>` ###
-
-### `IoFloat` `<io-float>` ###
-
-### `IoSlider` `<io-slider>` ###
-
-### `IoVector` `<io-vector>` ###

@@ -2,7 +2,7 @@ import {html, IoProperties} from "../../../io/src/io.js";
 
 //TODO: test
 
-export class IoEuler extends IoProperties {
+export class ThreeEuler extends IoProperties {
   static get style() {
     return html`<style>
       :host {
@@ -27,4 +27,4 @@ export class IoEuler extends IoProperties {
   }
 }
 
-IoEuler.Register();
+ThreeEuler.Register();
