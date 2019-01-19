@@ -1,6 +1,6 @@
-import {html, IoObjectProps, IoNumber} from "../../../io/src/io.js";
+import {html, IoProperties, IoNumber} from "../../../io/src/io.js";
 
-export class IoColor extends IoObjectProps {
+export class IoColor extends IoProperties {
   static get style() {
     return html`<style>
     :host {

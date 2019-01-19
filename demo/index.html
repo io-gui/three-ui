@@ -13,7 +13,7 @@
     </style>
     <script type="module">
     import {IoElement, html} from "../../io/src/io.js";
-    import {ThreejsInspector} from "../src/io-three.js";
+    import "../src/io-three.js";
 
     import {data} from "./data.js";
 
@@ -47,9 +47,7 @@
         this.template([
           ['div', {className: 'demo'}, [
             ['div', {className: 'demoLabel'}, 'io-inspector'],
-            ['threejs-inspector', {value: data.scene.children[0], groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
-            ['threejs-inspector', {value: data.scene.children[1], groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
-            ['threejs-inspector', {value: data.scene.children[2].material, groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
+            ['io-inspector', {value: data.scene.children[0], groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
           ]],
         ]);
       }

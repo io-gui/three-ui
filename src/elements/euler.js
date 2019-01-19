@@ -1,8 +1,8 @@
-import {html, IoObjectProps} from "../../../io/src/io.js";
+import {html, IoProperties} from "../../../io/src/io.js";
 
 //TODO: test
 
-export class IoEuler extends IoObjectProps {
+export class IoEuler extends IoProperties {
   static get style() {
     return html`<style>
       :host {

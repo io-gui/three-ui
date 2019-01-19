@@ -1,4 +1,4 @@
-import {html, IoObjectProps} from "../../../io/src/io.js";
+import {html, IoProperties} from "../../../io/src/io.js";
 
 //TODO: test
 
@@ -9,7 +9,7 @@ const components = {
   w: {}
 };
 
-export class IoVector extends IoObjectProps {
+export class IoVector extends IoProperties {
   static get style() {
     return html`<style>
       :host {
