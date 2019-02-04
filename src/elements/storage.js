@@ -1,10 +1,10 @@
 import * as THREE from "../../../three.js/build/three.module.js";
-import {IoNode} from "../../../io/src/io.js";
+import {IoCore} from "../../../io/src/io.js";
 
 const nodes = {};
 const loader = new THREE.ObjectLoader();
 
-class ThreeStorageNode extends IoNode {
+class ThreeStorageNode extends IoCore {
   static get properties() {
     return {
       key: String,

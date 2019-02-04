@@ -1,5 +1,5 @@
 import * as THREE from "../../three.js/build/three.module.js";
-import {storage as $} from "../src/core/storage.js";
+import {ThreeStorage as $} from "../src/elements/storage.js";
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera();
