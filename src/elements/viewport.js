@@ -1,5 +1,5 @@
-import {html, IoElement} from "../../lib/io.js";;
-import * as THREE from "../../../../three.js/build/three.module.js";
+import {html, IoElement} from "../../lib/io.js";
+import * as THREE from "../../../three.js/build/three.module.js";
 
 export class ThreeViewport extends IoElement {
   static get style() {

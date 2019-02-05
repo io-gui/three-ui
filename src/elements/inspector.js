@@ -1,11 +1,11 @@
-import {html, IoInspector, IoProperties} from "../../lib/io.js";
-import * as THREE from "../../../three.js/build/three.module.js";
+import {IoInspector, IoProperties} from "../../lib/io.js";
+// import * as THREE from "../../../three.js/build/three.module.js";
 
 export class ThreeInspector extends IoInspector {
   static get listeners() {
     return {
       'object-mutated': 'onObjectMutated'
-    }
+    };
   }
   onObjectMutated(event) {
     const obj = event.detail.object;

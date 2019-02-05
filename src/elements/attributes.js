@@ -1,5 +1,4 @@
-import {html, IoProperties} from "../../lib/io.js";
-// import * as THREE from "../../../three.js/build/three.module.js";
+import {IoProperties} from "../../lib/io.js";
 
 export class ThreeAttributes extends IoProperties {
   // static get listeners() {
@@ -21,14 +20,6 @@ export class ThreeAttributes extends IoProperties {
   valueChanged() {
     const config = this._config;
     const elements = [];
-
-    // const props = [];
-    // for (var variable in object) {
-    //   if (object.hasOwnProperty(variable)) {
-    //
-    //   }
-    // }
-
     for (let c in config) {
       if (this.value[c]) {
         const tag = config[c][0];
@@ -48,6 +39,4 @@ export class ThreeAttributes extends IoProperties {
 
 ThreeAttributes.Register();
 
-ThreeAttributes.RegisterConfig({
-
-})
+ThreeAttributes.RegisterConfig({});

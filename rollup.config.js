@@ -19,13 +19,13 @@ function html() {
 
 export default [
   {
-    input: 'src/io-three.js',
+    input: 'src/three-ui.js',
     plugins: [html()],
     experimentalDynamicImport: true,
     output: [
       {
         format: 'es',
-        file: 'build/io-three.js',
+        file: 'build/three-ui.js',
         indent: '  '
       }
     ],

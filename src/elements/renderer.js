@@ -14,8 +14,8 @@ continuously. In other words, you cannot render with mutliple instances of
 ThreeRenderer in realtime without severe performance penalties.
 */
 
-import {html, IoElement} from "../../lib/io.js";;
-import * as THREE from "../../../../three.js/build/three.module.js";
+import {html, IoElement} from "../../lib/io.js";
+import * as THREE from "../../../three.js/build/three.module.js";
 
 const renderer = new THREE.WebGLRenderer();
 const gl = renderer.getContext();
