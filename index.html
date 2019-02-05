@@ -2,32 +2,69 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Threejs Io Elements • About</title>
-    <meta name="description" content="A collection of io elements for threejs" />
-  </head>
-  <body>
-    <script type="module" src="./lib/io-md-view.js"></script>
+    <title>Threejs UI</title>
+    <meta name="description" content="UI elements for threejs library." />
+    <style>
+      html {
+        font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        letter-spacing: 0.05em;
+        font-weight: 300;
+      }
+      body {
+        padding: 0.5em;
+        background: #f5f5f5;
+        color: #4d4d4d;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      io-main-page {
+        display: block;
+        margin: auto;
+        max-width: 650px;
+      }
+    </style>
+    <link href="./lib/mocha.css" rel="stylesheet" />
     <script type="module">
 
-      import {IoElement} from "../io/src/io.js";
+    import "./lib/io-md-view.js";
 
-      class IoDocs extends IoElement {
-        changed() {
-          this.template([
-            ['io-md-view', {path :'./readme.md'}],
-            ['io-md-view', {path :'./docs/core/color.md'}],
-            ['io-md-view', {path :'./docs/core/storage.md'}],
-            ['io-md-view', {path :'./docs/elements/color.md'}],
-            ['io-md-view', {path :'./docs/elements/euler.md'}],
-            ['io-md-view', {path :'./docs/elements/matrix.md'}],
-            ['io-md-view', {path :'./docs/elements/vector.md'}],
-          ]);
-        }
+    import {html, IoElement, IoStorage as $} from "./lib/io.js";
+
+    import "./demo/demo.js";
+    // import "./tests/test.js";
+
+    export class IoMainPage extends IoElement {
+      constructor(props) {
+        super(props);
+        this.template([
+          ['io-selectable', {className: 'selectable-main', selected: $('page', 0, true), elements: [
+            ['div', {label: 'About'}, [
+              ['io-md-view', {label: 'readme', path :'./readme.md'}],
+            ]],
+            ['div', {label: 'Docs'}, [
+              ['io-selectable', {className: 'selectable-docs', vertical: true, selected: $('doc', 0, true), elements: [
+                ['io-md-view', {label: 'color', path :'./docs/core/color.md'}],
+                ['io-md-view', {label: 'storage', path :'./docs/elements/storage.md'}],
+                ['io-md-view', {label: 'color', path :'./docs/elements/color.md'}],
+                ['io-md-view', {label: 'euler', path :'./docs/elements/euler.md'}],
+                ['io-md-view', {label: 'matrix', path :'./docs/elements/matrix.md'}],
+                ['io-md-view', {label: 'vector', path :'./docs/elements/vector.md'}],
+              ]}]
+            ]],
+            ['div', {label: 'Demo'}, [
+              ['io-md-view', {label: 'lite', path :'./demo/demo.md'}],
+              ['three-demo'],
+            ]],
+            // ['io-test', {label: 'Test'}],
+          ]}],
+        ]);
       }
+    }
 
-      IoDocs.Register();
-
+    IoMainPage.Register();
     </script>
-    <io-docs></io-docs>
+  </head>
+  <body>
+    <io-main-page></io-main-page>
   </body>
 </html>

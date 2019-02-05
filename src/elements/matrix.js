@@ -1,10 +1,11 @@
-import {html, IoElement} from "../../../io/src/io.js";
+import {html, IoCollapsable} from "../../lib/io.js";
 
-export class ThreeMatrix extends IoElement {
+export class ThreeMatrix extends IoCollapsable {
   static get style() {
     return html`<style>
       :host {
-        display: block;
+        /* display: block; */
+        /* display: flex; */
       }
     </style>`;
   }
@@ -15,10 +16,8 @@ export class ThreeMatrix extends IoElement {
   }
   changed() {
     this.template([
-      ['io-collapsable', {
-        label: 'elements',
-        elements: [['io-array', {value: this.value.elements}]]
-      }]
+      ['io-boolean', {true: 'elements', false: 'elements', value: this.bind('expanded')}],
+      this.expanded ? ['div', {className: 'io-collapsable-content'}, [['io-array', {value: this.value.elements}]]] : null
     ]);
   }
 }

@@ -1,3 +1,3 @@
-# A collection of io elements for threejs #
+# UI elements for threejs library #
 
 TODO

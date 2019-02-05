@@ -1,4 +1,4 @@
-import {IoProperties} from "../../../io/src/io.js";
+import {IoProperties} from "../../lib/io.js";
 
 IoProperties.RegisterConfig({
   // "Object|type:object": ["io-inspector-link"], // TODO: why not inherited?

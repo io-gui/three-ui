@@ -1,4 +1,4 @@
-import {IoInspector} from "../../../io/src/io.js";
+import {IoInspector} from "../../lib/io.js";
 
 IoInspector.RegisterConfig({
 
