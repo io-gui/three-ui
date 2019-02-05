@@ -20,6 +20,15 @@ scene.add(mesh);
 // const data = $('scene', scene);
 const data = { value: scene };
 
+const menuOptions = [
+  {label: 'Scene', value: data.value},
+  {label: 'Camera', value: data.value.children[0]},
+  {label: 'Light', value: data.value.children[1]},
+  {label: 'Mesh', value: data.value.children[2]},
+  {label: 'Geometry', value: data.value.children[2].geometry},
+  {label: 'Material', value: data.value.children[2].material},
+];
+
 export class ThreeDemo extends IoElement {
   static get style() {
     return html`
@@ -61,16 +70,9 @@ export class ThreeDemo extends IoElement {
       ['three-viewport', {id: 'viewport', scene: data.value, camera: data.value.children[0]}],
       ['div', [
         ['span', {className: 'label'}, 'Select:'],
-        ['io-option', {value: this.bind('value'), options: [
-          {label: 'Scene', value: data.value},
-          {label: 'Camera', value: data.value.children[0]},
-          {label: 'Light', value: data.value.children[1]},
-          {label: 'Mesh', value: data.value.children[2]},
-          {label: 'Geometry', value: data.value.children[2].geometry},
-          {label: 'Material', value: data.value.children[2].material},
-        ]}],
+        ['io-option', {value: this.bind('value'), options: menuOptions}],
       ]],
-      ['three-inspector', {value: this.bind('value'), groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
+      ['three-inspector', {value: this.bind('value'), expanded: ['vectors']}],
     ]);
   }
 }
