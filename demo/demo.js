@@ -72,7 +72,7 @@ export class ThreeDemo extends IoElement {
         ['span', {className: 'label'}, 'Select:'],
         ['io-option', {value: this.bind('value'), options: menuOptions}],
       ]],
-      ['three-inspector', {value: this.bind('value'), expanded: ['vectors']}],
+      ['three-inspector', {value: this.bind('value')}],
     ]);
   }
 }
