@@ -7,7 +7,11 @@ import {ThreeStorage as $} from "../src/elements/storage.js";
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera();
 const light = new THREE.DirectionalLight();
-const mesh = new THREE.Mesh(new THREE.SphereBufferGeometry(1,1,2,2), new THREE.MeshBasicMaterial());
+const mesh = new THREE.Mesh(new THREE.SphereBufferGeometry(1,12,12), new THREE.MeshPhongMaterial());
+
+camera.position.set(3, 3, 3);
+camera.lookAt(scene.position);
+camera.updateMatrixWorld();
 
 scene.add(camera);
 scene.add(light);
@@ -26,6 +30,10 @@ export class ThreeDemo extends IoElement {
         display: flex;
         margin: var(--io-theme-spacing);
       }
+      :host > three-viewport {
+        display: block;
+        height: 200px;
+      }
       :host > div > .label {
         display: inline-block;
         border: 1px solid transparent;
@@ -39,20 +47,17 @@ export class ThreeDemo extends IoElement {
   }
   static get properties() {
     return {
-      value: function() { return data.value.children[2].material; }
+      value: function() { return data.value.children[2].geometry; }
     }
   }
-  static get listeners() {
-    return {
-      'value-set': '_onValueSet'
-    };
-  }
-  _onValueSet() {
-    this.dispatchEvent('object-mutated', {object: this, key: '*'}, false, window);
+  objectMutated(event) {
+    // TODO: optimize
+    this.$.viewport.rendered = false;
   }
   constructor(props) {
     super(props);
     this.template([
+      ['three-viewport', {id: 'viewport', scene: data.value, camera: data.value.children[0]}],
       ['div', [
         ['span', {className: 'label'}, 'Select:'],
         ['io-option', {value: this.bind('value'), options: [
@@ -64,7 +69,7 @@ export class ThreeDemo extends IoElement {
           {label: 'Material', value: data.value.children[2].material},
         ]}],
       ]],
-      ['io-inspector', {value: this.bind('value'), groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
+      ['three-inspector', {value: this.bind('value'), groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
     ]);
   }
 }

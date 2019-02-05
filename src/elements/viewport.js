@@ -25,12 +25,12 @@ export class ThreeViewport extends IoElement {
   }
   constructor(props) {
     super(props);
-    if (!this.__props.camera.value)
-        this.__props.camera.value = new THREE.PerspectiveCamera( 45, 1, .1, 20000 );
-    if (!this.__props.scene.value)
-        this.__props.scene.value = new THREE.Scene();
-    if (!this.__props.renderer.value)
-        this.__props.renderer.value = new THREE.WebGLRenderer( { antialias: false } );
+    if (!this.__properties.camera.value)
+        this.__properties.camera.value = new THREE.PerspectiveCamera( 45, 1, .1, 20000 );
+    if (!this.__properties.scene.value)
+        this.__properties.scene.value = new THREE.Scene();
+    if (!this.__properties.renderer.value)
+        this.__properties.renderer.value = new THREE.WebGLRenderer( { antialias: false } );
     this.appendChild(this.renderer.domElement);
   }
   connectedCallback() {
@@ -82,22 +82,17 @@ export class ThreeViewport extends IoElement {
   _onAnimate() {
     if (!this._connected) return;
     this._updateRendererSize();
-    this.changed();
     if (!this.rendered) {
       this.preRender();
-      this.template();
+      this._updateCameraAspect(this.camera);
+      this.renderer.render(this.scene, this.camera);
       this.postRender();
       this.rendered = true;
     }
     requestAnimationFrame(this._onAnimate);
   }
-  changed() {}
   preRender() {}
   postRender() {}
-  template() {
-    this._updateCameraAspect(this.camera);
-    this.renderer.render(this.scene, this.camera);
-  }
 }
 
 ThreeViewport.Register();

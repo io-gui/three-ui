@@ -1,4 +1,62 @@
-import {IoProperties} from "../../lib/io.js";
+import {html, IoInspector, IoProperties} from "../../lib/io.js";
+import * as THREE from "../../../three.js/build/three.module.js";
+
+export class ThreeInspector extends IoInspector {
+  static get listeners() {
+    return {
+      'object-mutated': 'onObjectMutated'
+    }
+  }
+  onObjectMutated(event) {
+    const obj = event.detail.object;
+    for (let i = this.crumbs.length; i--;) {
+      if ((obj instanceof Uint16Array || obj instanceof Float32Array) && this.crumbs[i].isBufferAttribute) {
+        this.crumbs[i].needsUpdate = true;
+      }
+    }
+    if (event.detail.object.isCamera) {
+      event.detail.object.updateProjectionMatrix();
+    }
+  }
+}
+
+ThreeInspector.Register();
+
+ThreeInspector.RegisterConfig({
+
+  "Object|main": ["name", "visible"],
+  "Object|transform": [],
+  "Object|rendering": [/[S,s]hadow/, /[R,r]ender/, /[D,d]raw/, /bounding/, "fog"],
+  "Object|hidden": ["type", /(is[A-Z])\w+/],
+
+  "Object3D|transform": ["position", "rotation", "scale", "up", "quaternion", /[M,m]atrix/],
+  "Object3D|rendering": ["layers", "frustumCulled"],
+  "Object3D|scenegraph": ["parent", "children", "target"],
+
+  "Mesh|main": ["geometry", "material"],
+
+  "BufferGeometry|main": ["parameters", "index", "attributes"],
+
+  "Texture|main": ["offset", "repeat", "center", "rotation"],
+
+  "Material|main": [
+    "color", "specular", "shininess", "opacity", "wireframe", "map", "specularMap",
+    "alphaMap", "envMap", "lightMap", "lightMapIntensity", "aoMap", "aoMapIntensity",
+    "emissive", "emissiveMap", "emissiveIntensity", "bumpMap", "bumpScale",
+    "normalMap", "normalScale", "displacementMap", "displacementScale",
+    "displacementBias", "reflectivity", "refractionRatio",
+  ],
+  // TODO: optimize for non-regex
+  "Material|rendering": [
+    /(depth[A-Z])\w+/, /(blend.)\w+/, "transparent", "dithering", "flatShading", "lights", "vertexColors",
+    "side", "blending", "colorWrite", "alphaTest", "combine",
+    "premultipliedAlpha",
+  ],
+
+  "Camera|main": ["near", "far", "zoom", "focus", "top", "bottom", "left", "right", "fov", "aspect", "filmGauge", "filmOffset"],
+
+  "Light|main": ["intensity", "color"],
+});
 
 IoProperties.RegisterConfig({
   // "Object|type:object": ["io-inspector-link"], // TODO: why not inherited?
@@ -16,9 +74,15 @@ IoProperties.RegisterConfig({
   // Object3D
   "Object3D|scale": ["three-vector", {canlink: true}],
   "Object3D|children": ["io-properties", {labeled: false, config: {'type:object': ['io-inspector-link']}}],
+  // Camera
+  "Camera|fov": ["io-slider", {min: 0.001, max: 180}],
+  "Camera|zoom": ["io-slider", {min: 0.001, max: 100}],
+  "Camera|near": ["io-slider", {min: 0.001, max: 100000}], // TODO: log
+  "Camera|far": ["io-slider", {min: 0.001, max: 100000}], // TODO: log
   // BufferGeometry
-  "BufferGeometry|parameters": ["io-inspector"],
-  // "BufferGeometry|attributes": ["io-object-props"],// TODO: figure out how to pass config
+  "BufferGeometry|parameters": ["io-properties"],
+  "BufferGeometry|index": ["three-attributes"],
+  "BufferGeometry|attributes": ["three-attributes"],
   // WebGLRenderer
   "WebGLRenderer|toneMapping": ["io-option", {"options": [
     {"value": 0, "label": "NoToneMapping"},
@@ -132,6 +196,7 @@ IoProperties.RegisterConfig({
     {"value": 1, "label": "TriangleStripDrawMode"},
     {"value": 2, "label": "TriangleFanDrawMode"}]}],
   // Material
+  "Material|shininess": ["io-slider", {"min": 0,"max": 100}],
   "Material|reflectivity": ["io-slider", {"min": 0,"max": 1}],
   "Material|refractionRatio": ["io-slider", {"min": 0,"max": 1}],
   "Material|aoMapIntensity": ["io-slider", {"min": 0,"max": 1}],
