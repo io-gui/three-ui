@@ -17,7 +17,8 @@ scene.add(camera);
 scene.add(light);
 scene.add(mesh);
 
-const data = $('scene', scene);
+// const data = $('scene', scene);
+const data = { value: scene };
 
 export class ThreeDemo extends IoElement {
   static get style() {
