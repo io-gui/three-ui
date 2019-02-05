@@ -17,11 +17,11 @@ export class ThreeEuler extends IoProperties {
       }
     </style>`;
   }
-  changed() {
+  valueChanged() {
     this.template([
-      ['io-number', {id: 'x', value: this.value.x, 'on-value-set': this._onValueSet}],
-      ['io-number', {id: 'y', value: this.value.y, 'on-value-set': this._onValueSet}],
-      ['io-number', {id: 'z', value: this.value.z, 'on-value-set': this._onValueSet}],
+      ['io-number', {id: 'x', conversion: 180 / Math.PI, value: this.value.x, 'on-value-set': this._onValueSet}],
+      ['io-number', {id: 'y', conversion: 180 / Math.PI, value: this.value.y, 'on-value-set': this._onValueSet}],
+      ['io-number', {id: 'z', conversion: 180 / Math.PI, value: this.value.z, 'on-value-set': this._onValueSet}],
       ['io-option', {id: 'order', value: this.value.order, options: ['XYZ', 'YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX'], 'on-value-set': this._onValueSet}]
     ]);
   }

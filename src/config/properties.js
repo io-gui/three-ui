@@ -14,8 +14,8 @@ IoProperties.RegisterConfig({
   "constructor:Matrix3": ["three-matrix"],
   "constructor:Matrix4": ["three-matrix"],
   // Object3D
-  "Object3D|key:scale": ["three-vector", {canlink: true}],
-  "Object3D|key:children": ["io-properties", {labeled: false, config: {'type:object': ['io-inspector-link']}}],
+  "Object3D|scale": ["three-vector", {canlink: true}],
+  "Object3D|children": ["io-properties", {labeled: false, config: {'type:object': ['io-inspector-link']}}],
   // BufferGeometry
   "BufferGeometry|parameters": ["io-inspector"],
   // "BufferGeometry|attributes": ["io-object-props"],// TODO: figure out how to pass config

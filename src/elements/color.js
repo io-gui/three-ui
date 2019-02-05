@@ -12,10 +12,10 @@ export class ThreeColor extends IoProperties {
     }
     :host > three-color-hex {
       font-family: monospace;
-      flex: 0 1 5.5em;
+      flex: 0 1 4.9em;
     }
     :host > io-number {
-      flex: 1 1 auto;
+      flex: 1 1 calc(100% / 3 - 4.9em);
     }
     </style>`;
   }
@@ -24,21 +24,14 @@ export class ThreeColor extends IoProperties {
       hex: Number
     };
   }
-  _onIoObjectMutated(event) {
-    if (event.detail.object === this.value) {
-      this.valueChanged();
-    }
-  }
-  valueChanged() {
-    this.hex = rgbToHex(this.value);
-  }
   hexChanged() {
     const rgb = hexToRgb(this.hex);
     this.value.r = rgb.r;
     this.value.g = rgb.g;
     this.value.b = rgb.b;
   }
-  changed() {
+  valueChanged() {
+    this.hex = rgbToHex(this.value);
     this.template([
       ['io-number', {value: this.value.r, 'on-value-set': this._onValueSet, id: 'r', step: 0.01, min: 0, max: 1, strict: false}],
       ['io-number', {value: this.value.g, 'on-value-set': this._onValueSet, id: 'g', step: 0.01, min: 0, max: 1, strict: false}],

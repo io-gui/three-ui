@@ -1,14 +1,6 @@
 import {html, IoCollapsable} from "../../lib/io.js";
 
 export class ThreeMatrix extends IoCollapsable {
-  static get style() {
-    return html`<style>
-      :host {
-        /* display: block; */
-        /* display: flex; */
-      }
-    </style>`;
-  }
   static get properties() {
     return {
       value: Object,

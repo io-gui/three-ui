@@ -1,4 +1,4 @@
-import {IoElement, html} from "../lib/io.js";
+import {IoElement, html, IoProperties} from "../lib/io.js";
 import "../src/three-ui.js";
 
 import * as THREE from "../../three.js/build/three.module.js";
@@ -13,30 +13,33 @@ scene.add(camera);
 scene.add(light);
 scene.add(mesh);
 
-const data = {
-  scene: $('scene', scene).value
-}
+const data = $('scene', scene);
 
 export class ThreeDemo extends IoElement {
   static get style() {
     return html`
     <style>
-      :host .demo {
-        margin: 1em;
-        padding: 0.5em;
-        background: #eee;
+      :host {
+        display: block;
       }
-      :host .demoLabel {
-        padding: 0.25em;
-        margin: -0.5em -0.5em 0.5em -0.5em;
-        background: #ccc;
+      :host > div {
+        display: flex;
+        margin: var(--io-theme-spacing);
       }
+      :host > div > .label {
+        display: inline-block;
+        border: 1px solid transparent;
+        padding: var(--io-theme-padding);
+        padding-left: calc(3 * var(--io-theme-padding));
+        padding-right: calc(3 * var(--io-theme-padding));
+      }
+
     </style>
     `;
   }
   static get properties() {
     return {
-      value: function() { return data.scene; }
+      value: function() { return data.value.children[2].material; }
     }
   }
   static get listeners() {
@@ -50,14 +53,17 @@ export class ThreeDemo extends IoElement {
   constructor(props) {
     super(props);
     this.template([
-      ['io-option', {value: this.bind('value'), options: [
-        {label: 'Scene', value: data.scene},
-        {label: 'Camera', value: data.scene.children[0]},
-        {label: 'Light', value: data.scene.children[1]},
-        {label: 'Mesh', value: data.scene.children[2]},
-        {label: 'Geometry', value: data.scene.children[2].geometry},
-        {label: 'Material', value: data.scene.children[2].material},
-      ]}],
+      ['div', [
+        ['span', {className: 'label'}, 'Select:'],
+        ['io-option', {value: this.bind('value'), options: [
+          {label: 'Scene', value: data.value},
+          {label: 'Camera', value: data.value.children[0]},
+          {label: 'Light', value: data.value.children[1]},
+          {label: 'Mesh', value: data.value.children[2]},
+          {label: 'Geometry', value: data.value.children[2].geometry},
+          {label: 'Material', value: data.value.children[2].material},
+        ]}],
+      ]],
       ['io-inspector', {value: this.bind('value'), groups: {'vectors': ['vec2', 'vec3', 'vec4']}, expanded: ['vectors']}],
     ]);
   }

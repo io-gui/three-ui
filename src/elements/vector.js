@@ -67,7 +67,7 @@ export class ThreeVector extends IoProperties {
       this.dispatchEvent('value-set', detail, true); // TODO
     }
   }
-  changed() {
+  valueChanged() {
     const elements = [];
     for (let key in components) {
       if (this.value[key] !== undefined) {
@@ -79,7 +79,6 @@ export class ThreeVector extends IoProperties {
           min: this.min,
           max: this.max,
           strict: this.strict,
-          underslider: this.underslider,
           'on-value-set': this._onValueSet
         }]);
       }
