@@ -21,6 +21,10 @@ const renderer = new THREE.WebGLRenderer();
 const gl = renderer.getContext();
 renderer.domElement.className = 'canvas3d';
 
+renderer.gammaInput = true;
+renderer.gammaOutput = true;
+renderer.gammaFactor = 2.2;
+
 let host;
 
 let perfNow = 0;
@@ -47,41 +51,38 @@ export class ThreeRenderer extends IoElement {
   static get style() {
     return html`<style>
       :host {
+        display: block;
         position: relative;
       }
       :host > canvas {
         position: absolute;
         top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
         left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
       }
       :host > canvas.canvas3d {
-        background: green;
         display: none;
-      }
-      :host > canvas.canvas2d {
-        background: blue;
-      }
-      :host[ishost] > canvas.canvas3d {
-        display: block;
       }
       :host[ishost] canvas.canvas2d {
         display: none;
+      }
+      :host[ishost] > canvas.canvas3d {
+        display: block;
       }
     </style>`;
   }
   static get properties() {
     return {
       ishost: {
-        value: false,
+        type: Boolean,
         reflect: true
       }
     };
   }
   static get listeners() {
     return {
-      'click': '_onSetHost'
+      'mousemove': 'setHost'
     };
   }
   constructor() {
@@ -97,12 +98,11 @@ export class ThreeRenderer extends IoElement {
     this._renderer = renderer;
     Object.defineProperty(this, '_props', { value: {} });
     for (let key in renderer) {
-      // console.log(key);
       if (typeof renderer[key] === 'object') {
         this[key] = renderer[key];
       } else if (typeof renderer[key] === 'function') {
         this[key] = function() {
-          this._setHost();
+          this.setHost();
           renderer[key].apply(renderer, arguments);
         }.bind(this);
       } else {
@@ -120,60 +120,35 @@ export class ThreeRenderer extends IoElement {
       }
     }
   }
-  connectedCallback() {
-    super.connectedCallback();
-    window.addEventListener('resize', this._onResize);
-    // window.addEventListener('app-split-changed', this._onResize);
-    this._onResize();
-  }
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    window.removeEventListener('resize', this._onResize);
-    // window.removeEventListener('app-split-changed', this._onResize);
-  }
-  _onSetHost() {
-    this._setHost();
-  }
-  _setHost() {
+  setHost() {
     if (!this.ishost) {
       _performanceCheck();
       if (host) {
-        // host._onResize();
+        host.ishost = false;
         host._context2d.drawImage(renderer.domElement, 0, 0, host._canvas2d.width, host._canvas2d.height);
         gl.flush();
-        host.ishost = false;
       }
       host = this;
       this.ishost = true;
       this.appendChild(renderer.domElement);
-      this._onResize();
+      this.resized();
     }
     for (let key in this.props) {
       renderer[key] = this._props[key];
     }
-    // renderer.setClearColor(_clearColor);
-    // renderer.setClearAlpha(_clearAlpha);
   }
-  _setSize() {
-    let rect = this.getBoundingClientRect();
-    let ratio = this._context2d.webkitBackingStorePixelRatio ||
-                this._context2d.mozBackingStorePixelRatio ||
-                this._context2d.msBackingStorePixelRatio ||
-                this._context2d.oBackingStorePixelRatio ||
-                this._context2d.backingStorePixelRatio || 1;
-
+  resized() {
+    const rect = this.getBoundingClientRect();
+    const ratio = this._context2d.backingStorePixelRatio || 1;
     this._c2Dratio = (window.devicePixelRatio || 1) / ratio;
-
-    this._canvas2d.width = rect.width * this._c2Dratio;
-    this._canvas2d.height = rect.height * this._c2Dratio;
-
-    if (this.ishost) {
-      renderer.setSize(rect.width, rect.height);
-      renderer.setPixelRatio( window.devicePixelRatio );
+    if (rect.width && rect.height) {
+      this._canvas2d.width = rect.width * this._c2Dratio || 1;
+      this._canvas2d.height = rect.height * this._c2Dratio || 1;
+      if (this.ishost) {
+        renderer.setSize(rect.width, rect.height);
+        renderer.setPixelRatio(window.devicePixelRatio);
+      }
     }
-  }
-  _onResize() {
-    this._setSize();
   }
 }
 

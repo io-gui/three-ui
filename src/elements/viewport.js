@@ -17,20 +17,14 @@ export class ThreeViewport extends IoElement {
   }
   static get properties() {
     return {
-      renderer: null,
-      camera: null,
-      scene: null,
+      renderer: THREE.WebGLRenderer,
+      camera: THREE.PerspectiveCamera,
+      scene: THREE.Scene,
       tabindex: 1
     };
   }
   constructor(props) {
     super(props);
-    if (!this.__properties.camera.value)
-        this.__properties.camera.value = new THREE.PerspectiveCamera( 45, 1, .1, 20000 );
-    if (!this.__properties.scene.value)
-        this.__properties.scene.value = new THREE.Scene();
-    if (!this.__properties.renderer.value)
-        this.__properties.renderer.value = new THREE.WebGLRenderer( { antialias: false } );
     this.appendChild(this.renderer.domElement);
   }
   connectedCallback() {
@@ -46,11 +40,7 @@ export class ThreeViewport extends IoElement {
     let rect = this.getBoundingClientRect();
     if (rect.width !== this._width || rect.height !== this._height) {
       let _ctx = this.renderer.context;
-      let _ratio = _ctx.webkitBackingStorePixelRatio ||
-                  _ctx.mozBackingStorePixelRatio ||
-                  _ctx.msBackingStorePixelRatio ||
-                  _ctx.oBackingStorePixelRatio ||
-                  _ctx.backingStorePixelRatio || 1;
+      let _ratio = _ctx.backingStorePixelRatio || 1;
       this._width = rect.width;
       this._height = rect.height;
       this.renderer.setPixelRatio((window.devicePixelRatio || 1) * _ratio);
