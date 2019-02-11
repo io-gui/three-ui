@@ -59,11 +59,16 @@ export class ThreeDemo extends IoElement {
   }
   constructor(props) {
     super(props);
+
+    // renderer.gammaInput = true;
+    // renderer.gammaOutput = true;
+    // renderer.gammaFactor = 2.2;
+
     this.template([
-      ['three-renderer', {id: 'renderer', scene: scene}],
-      ['three-renderer', {id: 'renderer1', scene: scene}],
-      ['three-renderer', {id: 'renderer2', scene: scene}],
-      ['three-renderer', {id: 'renderer3', scene: scene}],
+      ['three-renderer', {id: 'renderer', scene: scene, gammaInput: true, gammaOutput: true, gammaFactor: 2.2}],
+      ['three-renderer', {id: 'renderer1', scene: scene, gammaInput: true, gammaOutput: true, gammaFactor: 2.2}],
+      ['three-renderer', {id: 'renderer2', scene: scene, gammaInput: true, gammaOutput: true, gammaFactor: 2.2}],
+      ['three-renderer', {id: 'renderer3', scene: scene, gammaInput: true, gammaOutput: true, gammaFactor: 2.2}],
       ['three-inspector', {value: this.bind('value')}],
     ]);
   }
