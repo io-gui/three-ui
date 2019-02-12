@@ -1,5 +1,4 @@
-import {IoInspector, IoProperties} from "../../lib/io.js";
-// import * as THREE from "../../../three.js/build/three.module.js";
+import {IoInspector, IoProperties} from "../../../io/src/io.js";
 
 export class ThreeInspector extends IoInspector {
   static get listeners() {

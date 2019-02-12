@@ -1,4 +1,4 @@
-import {html, IoElement} from "../../lib/io.js";
+import {html, IoElement} from "../../../io/src/io.js";
 import * as THREE from "../../../three.js/build/three.module.js";
 import {ThreeRenderer} from "./renderer.js";
 

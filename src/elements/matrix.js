@@ -1,4 +1,4 @@
-import {IoCollapsable} from "../../lib/io.js";
+import {IoCollapsable} from "../../../io/src/io.js";
 
 export class ThreeMatrix extends IoCollapsable {
   static get properties() {

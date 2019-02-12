@@ -1,4 +1,4 @@
-import {html, IoProperties, IoNumber} from "../../lib/io.js";
+import {html, IoProperties, IoNumber} from "../../../io/src/io.js";
 
 export class ThreeColor extends IoProperties {
   static get style() {
