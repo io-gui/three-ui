@@ -31,7 +31,6 @@ export class ThreeDemo extends IoElement {
         padding-left: calc(3 * var(--io-theme-padding));
         padding-right: calc(3 * var(--io-theme-padding));
       }
-
     </style>
     `;
   }
@@ -42,24 +41,24 @@ export class ThreeDemo extends IoElement {
   }
   objectMutated(event) {
     // TODO: optimize
-    this.$.renderer0.rendered = false;
-    this.$.renderer1.rendered = false;
-    this.$.renderer2.rendered = false;
-    this.$.renderer3.rendered = false;
+    this.$.viewport0.render();
+    this.$.viewport1.render();
+    this.$.viewport2.render();
+    this.$.viewport3.render();
   }
   resized() {
-    this.$.renderer0.rendered = false;
-    this.$.renderer1.rendered = false;
-    this.$.renderer2.rendered = false;
-    this.$.renderer3.rendered = false;
+    this.$.viewport0.render();
+    this.$.viewport1.render();
+    this.$.viewport2.render();
+    this.$.viewport3.render();
   }
   constructor(props) {
     super(props);
     this.template([
-      ['three-viewport', {id: 'renderer0', scene: scene, camera: camera}],
-      ['three-viewport', {id: 'renderer1', scene: scene, camera: camera}],
-      ['three-viewport', {id: 'renderer2', scene: scene, camera: camera}],
-      ['three-viewport', {id: 'renderer3', scene: scene, camera: camera}],
+      ['three-viewport', {id: 'viewport0', scene: scene, camera: camera}],
+      ['three-viewport', {id: 'viewport1', scene: scene, camera: camera}],
+      ['three-viewport', {id: 'viewport2', scene: scene, camera: camera}],
+      ['three-viewport', {id: 'viewport3', scene: scene, camera: camera}],
       ['three-inspector', {value: this.bind('value')}],
     ]);
   }

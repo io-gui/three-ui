@@ -1,19 +1,3 @@
-/**
-* @author arodic / http://akirodic.com/
-*/
-
-/**
-THREE.WebGLRenderer wrapper that manages GL rendering context across multiple instances of
-ThreeRenderer. All instances of this element will share a single WebGL canvas.
-An element instance becomes a host of the canvas any time WebGL API is used through one of
-its methods. Before this happens, the previous host needs to store the framebuffer data in a
-2D canvas before the WebGL canvas can be handed out.
-
-IMPORTANT: Keep in mind that WebGL canvas migration is expensive and should not be performed
-continuously. In other words, you cannot render with mutliple instances of
-ThreeRenderer in realtime without severe performance penalties.
-*/
-
 import {html, IoElement} from "../../lib/io.js";
 import * as THREE from "../../../three.js/build/three.module.js";
 
@@ -28,10 +12,6 @@ let perfDelta = 1000;
 let perfAverage = 1000;
 let perfWarned;
 
-/**
- * This function runs every time renderer migrates to another three-renderer host
- * It is designed to detect if migration feature is overrused by the user.
- */
 const _performanceCheck = function() {
   if (perfWarned) return;
   perfDelta = performance.now() - perfNow;
@@ -62,27 +42,23 @@ export class ThreeRenderer extends IoElement {
         left: 0;
         width: 100%;
         height: 100%;
-        touch-action: none;
-        user-select: none;
       }
-      :host > canvas.canvas3d {
+      :host[ishost] > canvas:not(.canvas3d) {
         display: none;
-      }
-      :host[ishost] > canvas {
-        display: none;
-      }
-      :host[ishost] > canvas.canvas3d {
-        display: block;
       }
     </style>`;
   }
   static get properties() {
     return {
+      scene: THREE.Scene,
+      camera: THREE.PerspectiveCamera,
       ishost: {
         type: Boolean,
         reflect: true
       },
+      size: [0, 0],
       tabindex: 1,
+      renderer: function () { return renderer; }
     };
   }
   static get listeners() {
@@ -92,22 +68,52 @@ export class ThreeRenderer extends IoElement {
   }
   constructor(props) {
     super(props);
-
     this.template([['canvas', {id: 'canvas'}]]);
-    this._context2d = this.$.canvas.getContext('2d');
-
-    Object.defineProperty(this, '_props', { value: {} })
-
-    for (let key in renderer) {
-      if (typeof renderer[key] === 'object') {
-        this[key] = renderer[key];
-      } else if (typeof renderer[key] === 'function') {
-        this[key] = function() {
-          renderer[key].apply(renderer, arguments);
-          this.setHost();
-        }.bind(this);
-      } else {
-        this._props[key] = renderer[key];
+    this._ctx = this.$.canvas.getContext('2d');
+  }
+  render() {
+    if (this.rendered) {
+      if (!this.scheduled) {
+        requestAnimationFrame(this.renderNextFrame);
+      }
+      this.scheduled = true;
+      return;
+    }
+    requestAnimationFrame(this.onNextFrame);
+    this.setHost();
+    this.updateCameraAspect();
+    this.preRender();
+    this.renderer.render(this.scene, this.camera);
+    this.postRender();
+    this.rendered = true;
+  }
+  preRender() {}
+  postRender() {}
+  renderNextFrame() {
+    this.scheduled = false;
+    this.render();
+  }
+  onNextFrame() {
+    this.rendered = false;
+  }
+  updateCameraAspect() {
+    let aspect = this.size[0] / this.size[1];
+    const camera = this.camera;
+    if (camera instanceof THREE.PerspectiveCamera) {
+      if (camera.aspect !== aspect) {
+        camera.aspect = aspect;
+        camera.updateProjectionMatrix();
+      }
+    }
+    if (camera instanceof THREE.OrthographicCamera) {
+      let hh = camera.top - camera.bottom / 2;
+      let hw = hh * aspect;
+      if (camera.top !== hh || camera.right !== hw) {
+        camera.top = hh;
+        camera.bottom = - hh;
+        camera.right = hw;
+        camera.left = - hw;
+        camera.updateProjectionMatrix();
       }
     }
   }
@@ -116,33 +122,26 @@ export class ThreeRenderer extends IoElement {
       _performanceCheck();
       if (host) {
         host.ishost = false;
-        if (host.$.canvas) {
-          const canvas = renderer.domElement;
-          host.$.canvas.width = canvas.width;
-          host.$.canvas.height = canvas.height;
-          host._context2d.drawImage(canvas, 0, 0, canvas.width, canvas.height);
-        }
+        const canvas = this.renderer.domElement;
+        host.$.canvas.width = canvas.width;
+        host.$.canvas.height = canvas.height;
+        host._ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
         gl.flush();
       }
       host = this;
       this.ishost = true;
-      this.appendChild(renderer.domElement);
-      const rect = this.getBoundingClientRect();
-      renderer.setSize(rect.width, rect.height);
-      renderer.setPixelRatio(window.devicePixelRatio);
-      for (let key in this._props) {
-        if (this.__properties[key]) {
-          renderer[key] = this.__properties[key].value;
-        }
-      }
+      this.appendChild(this.renderer.domElement);
+      this.resized();
     }
   }
   resized() {
-    const rect = this.getBoundingClientRect();
-    if (rect.width && rect.height) {
-      if (this.ishost) {
-        renderer.setSize(rect.width, rect.height);
-        renderer.setPixelRatio(window.devicePixelRatio);
+    if (this.ishost) {
+      const style = getComputedStyle(this, null);
+      this.size[0] = style.width.substring(0, style.width.length - 2);
+      this.size[1] = style.height.substring(0, style.height.length - 2);
+      if (this.size[0] && this.size[1]) {
+        this.renderer.setSize(this.size[0], this.size[1]);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
       }
     }
   }
