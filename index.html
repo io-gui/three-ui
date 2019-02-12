@@ -24,15 +24,14 @@
         max-width: 650px;
       }
     </style>
-    <link href="./lib/mocha.css" rel="stylesheet" />
+    <link href="../io/lib/mocha.css" rel="stylesheet" />
     <script type="module">
 
-    import "./lib/io-md-view.js";
+    import "../io/lib/io-md-view.js";
 
-    import {html, IoElement, IoStorage as $} from "./lib/io.js";
+    import {html, IoElement, IoStorage as $} from "../io/src/io.js";
 
     import "./demo/demo.js";
-    // import "./tests/test.js";
 
     export class IoMainPage extends IoElement {
       constructor(props) {

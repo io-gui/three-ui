@@ -1,4 +1,4 @@
-import {IoCoreMixin} from "../lib/io.js";
+import {IoCoreMixin} from "../../io/src/io.js";
 import "../src/three-ui.js";
 
 import * as THREE from "../../three.js/build/three.module.js";

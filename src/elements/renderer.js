@@ -109,24 +109,18 @@ export class ThreeRenderer extends IoElement {
   postRender() {}
   updateCameraAspect() {
     let aspect = this.size[0] / this.size[1];
-    const camera = this.camera;
-    if (camera instanceof THREE.PerspectiveCamera) {
-      if (camera.aspect !== aspect) {
-        camera.aspect = aspect;
-        camera.updateProjectionMatrix();
-      }
+    if (this.camera instanceof THREE.PerspectiveCamera) {
+      this.camera.aspect = aspect;
     }
-    if (camera instanceof THREE.OrthographicCamera) {
-      let hh = camera.top - camera.bottom / 2;
+    if (this.camera instanceof THREE.OrthographicCamera) {
+      let hh = (this.camera.top - this.camera.bottom) / 2;
       let hw = hh * aspect;
-      if (camera.top !== hh || camera.right !== hw) {
-        camera.top = hh;
-        camera.bottom = - hh;
-        camera.right = hw;
-        camera.left = - hw;
-        camera.updateProjectionMatrix();
-      }
+      this.camera.top = hh;
+      this.camera.bottom = - hh;
+      this.camera.right = hw;
+      this.camera.left = - hw;
     }
+    this.camera.updateProjectionMatrix();
   }
   setHost() {
     if (!this.ishost) {

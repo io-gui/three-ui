@@ -1,13 +1,25 @@
-import {IoElement, html} from "../lib/io.js";
+import {IoElement, html} from "../../io/src/io.js";
 import "../src/three-ui.js";
 import {ThreeDemoScene} from "./scene.js";
 import * as THREE from "../../three.js/build/three.module.js";
 
 const scene = new ThreeDemoScene({path: 'demo/scene2/cubes2.glb'});
-const camera = new THREE.PerspectiveCamera();
-camera.fov = 60;
-camera.position.set(1, 1, 1);
-camera.lookAt(new THREE.Vector3(0, 0.75, 0));
+
+const perspCamera = new THREE.PerspectiveCamera(90, 1, 0.001, 10);
+perspCamera.position.set(1, 1, 1);
+perspCamera.target = new THREE.Vector3(0, 0.75, 0);
+
+const topCamera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.001, 10);
+topCamera.position.set(0, 1, 0);
+topCamera.target = new THREE.Vector3(0, 0, 0);
+
+const leftCamera = new THREE.OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001, 10);
+leftCamera.position.set(1, 0.75, 0);
+leftCamera.target = new THREE.Vector3(0, 0.75, 0);
+
+const frontCamera = new THREE.OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001, 10);
+frontCamera.position.set(0, 0.75, 1);
+frontCamera.target = new THREE.Vector3(0, 0.75, 0);
 
 export class ThreeDemo extends IoElement {
   static get style() {
@@ -17,12 +29,14 @@ export class ThreeDemo extends IoElement {
         display: block;
       }
       :host > div {
-        display: flex;
+        display: grid;
+        height: 400px;
         margin: var(--io-theme-spacing);
+        grid-template-columns: auto auto;
       }
-      :host > three-viewport {
+      :host > div > three-viewport {
         display: flex;
-        height: 100px;
+        height: 200px;
       }
       :host > div > .label {
         display: inline-block;
@@ -42,30 +56,21 @@ export class ThreeDemo extends IoElement {
   objectMutated(event) {
     this.render();
   }
-  resized() {
-    this.render();
-  }
   render() {
     this.$.viewport0.render();
-    this.$.viewport3.render();
-    this.$.viewport2.render();
     this.$.viewport1.render();
+    this.$.viewport2.render();
+    this.$.viewport3.render();
   }
-  // animate() {
-  //   requestAnimationFrame(this.animate.bind(this));
-  //   this.render();
-  // }
-  // connectedCallback() {
-  //   super.connectedCallback();
-  //   this.animate();
-  // }
   constructor(props) {
     super(props);
     this.template([
-      ['three-viewport', {id: 'viewport0', scene: scene, camera: camera}],
-      ['three-viewport', {id: 'viewport1', scene: scene, camera: camera}],
-      ['three-viewport', {id: 'viewport2', scene: scene, camera: camera}],
-      ['three-viewport', {id: 'viewport3', scene: scene, camera: camera}],
+      ['div', [
+        ['three-viewport', {id: 'viewport0', scene: scene, camera: perspCamera}],
+        ['three-viewport', {id: 'viewport1', scene: scene, camera: topCamera}],
+        ['three-viewport', {id: 'viewport2', scene: scene, camera: leftCamera}],
+        ['three-viewport', {id: 'viewport3', scene: scene, camera: frontCamera}],
+      ]],
       ['three-inspector', {value: this.bind('value')}],
     ]);
   }
