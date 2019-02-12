@@ -40,18 +40,25 @@ export class ThreeDemo extends IoElement {
     }
   }
   objectMutated(event) {
-    // TODO: optimize
-    this.$.viewport0.render();
-    this.$.viewport1.render();
-    this.$.viewport2.render();
-    this.$.viewport3.render();
+    this.render();
   }
   resized() {
-    this.$.viewport0.render();
-    this.$.viewport1.render();
-    this.$.viewport2.render();
-    this.$.viewport3.render();
+    this.render();
   }
+  render() {
+    this.$.viewport0.render();
+    this.$.viewport3.render();
+    this.$.viewport2.render();
+    this.$.viewport1.render();
+  }
+  // animate() {
+  //   requestAnimationFrame(this.animate.bind(this));
+  //   this.render();
+  // }
+  // connectedCallback() {
+  //   super.connectedCallback();
+  //   this.animate();
+  // }
   constructor(props) {
     super(props);
     this.template([

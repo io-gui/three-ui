@@ -1,7 +1,7 @@
 import {html, IoElement} from "../../lib/io.js";
 import * as THREE from "../../../three.js/build/three.module.js";
 
-const renderer = new THREE.WebGLRenderer({antialias: false});
+const renderer = new THREE.WebGLRenderer({antialias: false, preserveDrawingBuffer: true});
 const gl = renderer.getContext();
 renderer.domElement.className = 'canvas3d';
 
@@ -22,6 +22,21 @@ const _performanceCheck = function() {
     perfWarned = true;
   }
 };
+
+const renderQue = [];
+const scheduleQue = [];
+
+const animate = function() {
+  for (var i = 0; i < renderQue.length; i++) renderQue[i].rendered = false;
+  renderQue.length = 0;
+  for (var i = 0; i < scheduleQue.length; i++) {
+    scheduleQue[i].scheduled = false;
+    scheduleQue[i].render();
+  }
+  scheduleQue.length = 0;
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
 
 export class ThreeRenderer extends IoElement {
   static get style() {
@@ -74,28 +89,21 @@ export class ThreeRenderer extends IoElement {
   render() {
     if (this.rendered) {
       if (!this.scheduled) {
-        requestAnimationFrame(this.renderNextFrame);
+        scheduleQue.push(this);
+        this.scheduled = true;
       }
-      this.scheduled = true;
       return;
     }
-    requestAnimationFrame(this.onNextFrame);
     this.setHost();
     this.updateCameraAspect();
     this.preRender();
     this.renderer.render(this.scene, this.camera);
     this.postRender();
+    renderQue.push(this);
     this.rendered = true;
   }
   preRender() {}
   postRender() {}
-  renderNextFrame() {
-    this.scheduled = false;
-    this.render();
-  }
-  onNextFrame() {
-    this.rendered = false;
-  }
   updateCameraAspect() {
     let aspect = this.size[0] / this.size[1];
     const camera = this.camera;
@@ -119,26 +127,25 @@ export class ThreeRenderer extends IoElement {
   }
   setHost() {
     if (!this.ishost) {
-      _performanceCheck();
       if (host) {
-        host.ishost = false;
-        const canvas = this.renderer.domElement;
-        host.$.canvas.width = canvas.width;
-        host.$.canvas.height = canvas.height;
-        host._ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+        host._ctx.drawImage(this.renderer.domElement, 0, 0, host.size[0], host.size[1]);
         gl.flush();
+        host.ishost = false;
       }
       host = this;
-      this.ishost = true;
       this.appendChild(this.renderer.domElement);
+      this.ishost = true;
       this.resized();
+      _performanceCheck();
     }
   }
   resized() {
+    const style = getComputedStyle(this, null);
+    this.size[0] = style.width.substring(0, style.width.length - 2);
+    this.size[1] = style.height.substring(0, style.height.length - 2);
+    this.$.canvas.width = this.size[0];
+    this.$.canvas.height = this.size[1];
     if (this.ishost) {
-      const style = getComputedStyle(this, null);
-      this.size[0] = style.width.substring(0, style.width.length - 2);
-      this.size[1] = style.height.substring(0, style.height.length - 2);
       if (this.size[0] && this.size[1]) {
         this.renderer.setSize(this.size[0], this.size[1]);
         this.renderer.setPixelRatio(window.devicePixelRatio);
