@@ -17,13 +17,9 @@ ThreeRenderer in realtime without severe performance penalties.
 import {html, IoElement} from "../../lib/io.js";
 import * as THREE from "../../../three.js/build/three.module.js";
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({antialias: false});
 const gl = renderer.getContext();
 renderer.domElement.className = 'canvas3d';
-
-renderer.gammaInput = true;
-renderer.gammaOutput = true;
-renderer.gammaFactor = 2.2;
 
 let host;
 
@@ -52,19 +48,27 @@ export class ThreeRenderer extends IoElement {
     return html`<style>
       :host {
         display: block;
+        overflow: hidden;
         position: relative;
+        touch-action: none;
+        user-select: none;
+      }
+      :host:focus {
+        z-index: 2;
       }
       :host > canvas {
         position: absolute;
-        top: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        left: 0 !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+        user-select: none;
       }
       :host > canvas.canvas3d {
         display: none;
       }
-      :host[ishost] canvas.canvas2d {
+      :host[ishost] > canvas {
         display: none;
       }
       :host[ishost] > canvas.canvas3d {
@@ -77,45 +81,32 @@ export class ThreeRenderer extends IoElement {
       ishost: {
         type: Boolean,
         reflect: true
-      }
+      },
+      tabindex: 1,
     };
   }
   static get listeners() {
     return {
-      'mousemove': 'setHost'
+      'dragstart': 'preventDefault'
     };
   }
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    // TODO: implement smarter resize
+    this.template([['canvas', {id: 'canvas'}]]);
+    this._context2d = this.$.canvas.getContext('2d');
 
-    this._canvas2d = document.createElement('canvas');
-    this._canvas2d.className = 'canvas2d';
-    this._context2d = this._canvas2d.getContext('2d');
-    this.appendChild(this._canvas2d);
+    Object.defineProperty(this, '_props', { value: {} })
 
-    this._renderer = renderer;
-    Object.defineProperty(this, '_props', { value: {} });
     for (let key in renderer) {
       if (typeof renderer[key] === 'object') {
         this[key] = renderer[key];
       } else if (typeof renderer[key] === 'function') {
         this[key] = function() {
-          this.setHost();
           renderer[key].apply(renderer, arguments);
+          this.setHost();
         }.bind(this);
       } else {
-        Object.defineProperty(this, key, {
-          get: function() {
-            return this._props[key];
-          },
-          set: function(value) {
-            this._props[key] = value;
-          },
-          enumerable: true,
-          configurable: true
-        });
         this._props[key] = renderer[key];
       }
     }
@@ -125,25 +116,30 @@ export class ThreeRenderer extends IoElement {
       _performanceCheck();
       if (host) {
         host.ishost = false;
-        host._context2d.drawImage(renderer.domElement, 0, 0, host._canvas2d.width, host._canvas2d.height);
+        if (host.$.canvas) {
+          const canvas = renderer.domElement;
+          host.$.canvas.width = canvas.width;
+          host.$.canvas.height = canvas.height;
+          host._context2d.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+        }
         gl.flush();
       }
       host = this;
       this.ishost = true;
       this.appendChild(renderer.domElement);
-      this.resized();
-    }
-    for (let key in this.props) {
-      renderer[key] = this._props[key];
+      const rect = this.getBoundingClientRect();
+      renderer.setSize(rect.width, rect.height);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      for (let key in this._props) {
+        if (this.__properties[key]) {
+          renderer[key] = this.__properties[key].value;
+        }
+      }
     }
   }
   resized() {
     const rect = this.getBoundingClientRect();
-    const ratio = this._context2d.backingStorePixelRatio || 1;
-    this._c2Dratio = (window.devicePixelRatio || 1) / ratio;
     if (rect.width && rect.height) {
-      this._canvas2d.width = rect.width * this._c2Dratio || 1;
-      this._canvas2d.height = rect.height * this._c2Dratio || 1;
       if (this.ishost) {
         renderer.setSize(rect.width, rect.height);
         renderer.setPixelRatio(window.devicePixelRatio);

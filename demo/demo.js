@@ -20,10 +20,9 @@ export class ThreeDemo extends IoElement {
         display: flex;
         margin: var(--io-theme-spacing);
       }
-      :host > three-renderer {
+      :host > three-viewport {
         display: flex;
-        /* display: block; */
-        height: 200px;
+        height: 100px;
       }
       :host > div > .label {
         display: inline-block;
@@ -43,32 +42,24 @@ export class ThreeDemo extends IoElement {
   }
   objectMutated(event) {
     // TODO: optimize
-    this.$.renderer.render(scene, camera);
-    this.$.renderer1.render(scene, camera);
-    this.$.renderer2.render(scene, camera);
-    this.$.renderer3.render(scene, camera);
+    this.$.renderer0.rendered = false;
+    this.$.renderer1.rendered = false;
+    this.$.renderer2.rendered = false;
+    this.$.renderer3.rendered = false;
   }
   resized() {
-    clearTimeout(this._timeout);
-    this._timeout = setTimeout(() => {
-      this.$.renderer.render(scene, camera);
-      this.$.renderer1.render(scene, camera);
-      this.$.renderer2.render(scene, camera);
-      this.$.renderer3.render(scene, camera);
-    })
+    this.$.renderer0.rendered = false;
+    this.$.renderer1.rendered = false;
+    this.$.renderer2.rendered = false;
+    this.$.renderer3.rendered = false;
   }
   constructor(props) {
     super(props);
-
-    // renderer.gammaInput = true;
-    // renderer.gammaOutput = true;
-    // renderer.gammaFactor = 2.2;
-
     this.template([
-      ['three-renderer', {id: 'renderer', scene: scene, gammaInput: true, gammaOutput: true, gammaFactor: 2.2}],
-      ['three-renderer', {id: 'renderer1', scene: scene, gammaInput: true, gammaOutput: true, gammaFactor: 2.2}],
-      ['three-renderer', {id: 'renderer2', scene: scene, gammaInput: true, gammaOutput: true, gammaFactor: 2.2}],
-      ['three-renderer', {id: 'renderer3', scene: scene, gammaInput: true, gammaOutput: true, gammaFactor: 2.2}],
+      ['three-viewport', {id: 'renderer0', scene: scene, camera: camera}],
+      ['three-viewport', {id: 'renderer1', scene: scene, camera: camera}],
+      ['three-viewport', {id: 'renderer2', scene: scene, camera: camera}],
+      ['three-viewport', {id: 'renderer3', scene: scene, camera: camera}],
       ['three-inspector', {value: this.bind('value')}],
     ]);
   }

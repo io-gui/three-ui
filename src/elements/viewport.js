@@ -1,31 +1,25 @@
+/**
+THREE.WebGLRenderer wrapper that manages GL rendering context across multiple instances of
+ThreeRenderer. All instances of this element will share a single WebGL canvas.
+An element instance becomes a host of the canvas any time WebGL API is used through one of
+its methods. Before this happens, the previous host needs to store the framebuffer data in a
+2D canvas before the WebGL canvas can be handed out.
+
+IMPORTANT: Keep in mind that WebGL canvas migration is expensive and should not be performed
+continuously. In other words, you cannot render with mutliple instances of
+ThreeRenderer in realtime without severe performance penalties.
+*/
+
 import {html, IoElement} from "../../lib/io.js";
 import * as THREE from "../../../three.js/build/three.module.js";
+import {ThreeRenderer} from "./renderer.js";
 
-export class ThreeViewport extends IoElement {
-  static get style() {
-    return html`<style>
-      :host {
-        position: relative;
-        overflow: hidden;
-      }
-      :host > canvas {
-        position: absolute;
-        top: 0 !important;
-        left: 0 !important;
-      }
-    </style>`;
-  }
+export class ThreeViewport extends ThreeRenderer {
   static get properties() {
     return {
-      renderer: THREE.WebGLRenderer,
-      camera: THREE.PerspectiveCamera,
       scene: THREE.Scene,
-      tabindex: 1
+      camera: THREE.PerspectiveCamera,
     };
-  }
-  constructor(props) {
-    super(props);
-    this.appendChild(this.renderer.domElement);
   }
   connectedCallback() {
     super.connectedCallback();
@@ -35,18 +29,6 @@ export class ThreeViewport extends IoElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     this._connected = false;
-  }
-  _updateRendererSize() {
-    let rect = this.getBoundingClientRect();
-    if (rect.width !== this._width || rect.height !== this._height) {
-      let _ctx = this.renderer.context;
-      let _ratio = _ctx.backingStorePixelRatio || 1;
-      this._width = rect.width;
-      this._height = rect.height;
-      this.renderer.setPixelRatio((window.devicePixelRatio || 1) * _ratio);
-      this.renderer.setSize(Math.floor(rect.width), Math.floor(rect.height));
-      this.rendered = false;
-    }
   }
   _updateCameraAspect(camera) {
     let rect = this.getBoundingClientRect();
@@ -71,11 +53,10 @@ export class ThreeViewport extends IoElement {
   }
   _onAnimate() {
     if (!this._connected) return;
-    this._updateRendererSize();
     if (!this.rendered) {
       this.preRender();
       this._updateCameraAspect(this.camera);
-      this.renderer.render(this.scene, this.camera);
+      this.render(this.scene, this.camera);
       this.postRender();
       this.rendered = true;
     }
