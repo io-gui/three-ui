@@ -3,22 +3,22 @@ import "../src/three-ui.js";
 import {ThreeDemoScene} from "./scene.js";
 import * as THREE from "../../three.js/build/three.module.js";
 
-const scene = new ThreeDemoScene({path: 'demo/scene2/cubes2.glb'});
+const scene = new ThreeDemoScene({path: '/three-ui/demo/scene/cubes.gltf'});
 
 const perspCamera = new THREE.PerspectiveCamera(90, 1, 0.001, 10);
 perspCamera.position.set(1, 1, 1);
 perspCamera.target = new THREE.Vector3(0, 0.75, 0);
 
 const topCamera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.001, 10);
-topCamera.position.set(0, 1, 0);
+topCamera.position.set(0, 5, 0);
 topCamera.target = new THREE.Vector3(0, 0, 0);
 
 const leftCamera = new THREE.OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001, 10);
-leftCamera.position.set(1, 0.75, 0);
+leftCamera.position.set(5, 0.75, 0);
 leftCamera.target = new THREE.Vector3(0, 0.75, 0);
 
 const frontCamera = new THREE.OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001, 10);
-frontCamera.position.set(0, 0.75, 1);
+frontCamera.position.set(0, 0.75, 5);
 frontCamera.target = new THREE.Vector3(0, 0.75, 0);
 
 export class ThreeDemo extends IoElement {

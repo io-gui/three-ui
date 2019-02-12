@@ -1,9 +1,14 @@
 import {html, IoElement} from "../../../io/src/io.js";
 import * as THREE from "../../../three.js/build/three.module.js";
 
-const renderer = new THREE.WebGLRenderer({antialias: false, preserveDrawingBuffer: true});
+const renderer = new THREE.WebGLRenderer({antialias: false, preserveDrawingBuffer: true, alpha: true});
 const gl = renderer.getContext();
+
 renderer.domElement.className = 'canvas3d';
+renderer.gammaFactor = 2.2;
+renderer.gammaInput = true;
+renderer.gammaOutput = true;
+renderer.setClearColor(0x000000, 0.0);
 
 let host;
 
@@ -100,6 +105,7 @@ export class ThreeRenderer extends IoElement {
     this.setHost();
     this.updateCameraAspect();
     this.preRender();
+    this.renderer.clear();
     this.renderer.render(this.scene, this.camera);
     this.postRender();
     renderedQueue.push(this);
@@ -125,7 +131,8 @@ export class ThreeRenderer extends IoElement {
   setHost() {
     if (!this.ishost) {
       if (host) {
-        host._ctx.drawImage(this.renderer.domElement, 0, 0, host.size[0], host.size[1]);
+        host._ctx.clearRect(0, 0, host.size[0], host.size[1]);
+        host._ctx.drawImage(host.renderer.domElement, 0, 0, host.size[0], host.size[1]);
         gl.flush();
         host.ishost = false;
       }
@@ -141,10 +148,14 @@ export class ThreeRenderer extends IoElement {
   }
   resized() {
     const style = getComputedStyle(this, null);
-    this.size[0] = style.width.substring(0, style.width.length - 2);
-    this.size[1] = style.height.substring(0, style.height.length - 2);
+    this.size[0] = Math.round(style.width.substring(0, style.width.length - 2));
+    this.size[1] = Math.round(style.height.substring(0, style.height.length - 2));
     this.$.canvas.width = this.size[0];
     this.$.canvas.height = this.size[1];
+    if (this.size[0] && this.size[1]) {
+      this.renderer.setSize(this.size[0], this.size[1]);
+      this.renderer.setPixelRatio(window.devicePixelRatio);
+    }
     this.render();
   }
 }

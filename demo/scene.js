@@ -15,7 +15,7 @@ export class ThreeDemoScene extends IoCoreMixin(THREE.Scene) {
   }
   pathChanged() {
     this.loading = true;
-    loader.load( 'demo/scene/cubes.gltf', gltf => {
+    loader.load(this.path, gltf => {
       gltf.scene.children.forEach(child => { this.add( child ); });
       this.add(new THREE.AmbientLight());
       this.dispatchEvent('object-mutated', {object: this}, false, window);
