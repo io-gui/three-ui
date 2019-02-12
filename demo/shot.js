@@ -1,5 +1,5 @@
 import {IoNode} from "../../../../io/build/io.js";
-import * as THREE from "../../../../three.js/build/three.module.js";
+import * as THREE from "../../../../three.js/src/Three.js";
 
 export class ThreeShot extends IoNode {
   static get properties() {

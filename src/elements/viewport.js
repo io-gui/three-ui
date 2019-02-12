@@ -1,5 +1,5 @@
 import {html, IoElement} from "../../../io/src/io.js";
-import * as THREE from "../../../three.js/build/three.module.js";
+import * as THREE from "../../../three.js/src/Three.js";
 import {ThreeRenderer} from "./renderer.js";
 
 import {OrbitCameraControls} from "../controls/camera/Orbit.js";

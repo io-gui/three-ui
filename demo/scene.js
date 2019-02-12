@@ -1,7 +1,7 @@
 import {IoCoreMixin} from "../../io/src/io.js";
 import "../src/three-ui.js";
 
-import * as THREE from "../../three.js/build/three.module.js";
+import * as THREE from "../../three.js/src/Three.js";
 import {GLTFLoader} from "../lib/GLTFLoader.js";
 
 var loader = new GLTFLoader();
