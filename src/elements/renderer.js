@@ -23,17 +23,17 @@ const _performanceCheck = function() {
   }
 };
 
-const renderQue = [];
-const scheduleQue = [];
+const renderedQueue = [];
+const renderNextQueue = [];
 
 const animate = function() {
-  for (var i = 0; i < renderQue.length; i++) renderQue[i].rendered = false;
-  renderQue.length = 0;
-  for (var i = 0; i < scheduleQue.length; i++) {
-    scheduleQue[i].scheduled = false;
-    scheduleQue[i].render();
+  for (var i = 0; i < renderedQueue.length; i++) renderedQueue[i].rendered = false;
+  renderedQueue.length = 0;
+  for (var i = 0; i < renderNextQueue.length; i++) {
+    renderNextQueue[i].scheduled = false;
+    renderNextQueue[i].render();
   }
-  scheduleQue.length = 0;
+  renderNextQueue.length = 0;
   requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);
@@ -86,12 +86,15 @@ export class ThreeRenderer extends IoElement {
     this.template([['canvas', {id: 'canvas'}]]);
     this._ctx = this.$.canvas.getContext('2d');
   }
+  queueRender() {
+    if (!this.scheduled) {
+      renderNextQueue.push(this);
+      this.scheduled = true;
+    }
+  }
   render() {
     if (this.rendered) {
-      if (!this.scheduled) {
-        scheduleQue.push(this);
-        this.scheduled = true;
-      }
+      this.queueRender();
       return;
     }
     this.setHost();
@@ -99,7 +102,7 @@ export class ThreeRenderer extends IoElement {
     this.preRender();
     this.renderer.render(this.scene, this.camera);
     this.postRender();
-    renderQue.push(this);
+    renderedQueue.push(this);
     this.rendered = true;
   }
   preRender() {}
@@ -148,6 +151,7 @@ export class ThreeRenderer extends IoElement {
     this.size[1] = style.height.substring(0, style.height.length - 2);
     this.$.canvas.width = this.size[0];
     this.$.canvas.height = this.size[1];
+    this.render();
   }
 }
 
