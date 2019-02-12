@@ -132,10 +132,13 @@ export class ThreeRenderer extends IoElement {
         gl.flush();
         host.ishost = false;
       }
+      if (this.size[0] && this.size[1]) {
+        this.renderer.setSize(this.size[0], this.size[1]);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+      }
       host = this;
       this.appendChild(this.renderer.domElement);
       this.ishost = true;
-      this.resized();
       _performanceCheck();
     }
   }
@@ -145,12 +148,6 @@ export class ThreeRenderer extends IoElement {
     this.size[1] = style.height.substring(0, style.height.length - 2);
     this.$.canvas.width = this.size[0];
     this.$.canvas.height = this.size[1];
-    if (this.ishost) {
-      if (this.size[0] && this.size[1]) {
-        this.renderer.setSize(this.size[0], this.size[1]);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
-      }
-    }
   }
 }
 

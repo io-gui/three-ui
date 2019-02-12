@@ -15,6 +15,10 @@ export class ThreeViewport extends ThreeRenderer {
     this.controls = new OrbitCameraControls({domElement: this, camera: this.camera});
     this.controls.addEventListener('change', this.render);
   }
+  resized() {
+    super.resized();
+    this.render();
+  }
   preRender() {}
   postRender() {}
 }
