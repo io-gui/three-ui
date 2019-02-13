@@ -61,8 +61,6 @@ export class ThreeRenderer extends IoElement {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
       }
       :host[ishost] > canvas:not(.canvas3d) {
         display: none;
@@ -143,8 +141,9 @@ export class ThreeRenderer extends IoElement {
   setHost() {
     if (!this.ishost) {
       if (host) {
-        host._ctx.clearRect(0, 0, host.size[0], host.size[1]);
-        host._ctx.drawImage(host.renderer.domElement, 0, 0, host.size[0], host.size[1]);
+        const ratio =  (window.devicePixelRatio || 1) / host._ctx.backingStorePixelRatio || 1;
+        host._ctx.clearRect(0, 0, host.size[0] * ratio, host.size[1] * ratio);
+        host._ctx.drawImage(host.renderer.domElement, 0, 0, host.size[0] * ratio, host.size[1] * ratio);
         gl.flush();
         host.ishost = false;
       }
@@ -163,8 +162,11 @@ export class ThreeRenderer extends IoElement {
     const style = getComputedStyle(this, null);
     this.size[0] = Math.round(style.width.substring(0, style.width.length - 2));
     this.size[1] = Math.round(style.height.substring(0, style.height.length - 2));
-    this.$.canvas.width = this.size[0];
-    this.$.canvas.height = this.size[1];
+
+    const ratio =  (window.devicePixelRatio || 1) / this._ctx.backingStorePixelRatio || 1;
+    this.$.canvas.width = this.size[0] * ratio;
+    this.$.canvas.height = this.size[1] * ratio;
+
     if (this.size[0] && this.size[1]) {
       this.renderer.setSize(this.size[0], this.size[1]);
       this.renderer.setPixelRatio(window.devicePixelRatio);
