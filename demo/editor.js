@@ -1,9 +1,18 @@
+import * as THREE from "../../three.js/src/Three.js";
 import {IoElement, html} from "../../io/src/io.js";
 import "../src/three-ui.js";
-import {ThreeDemoScene} from "./scene.js";
-import * as THREE from "../../three.js/src/Three.js";
+import {GLTFLoader} from "../lib/GLTFLoader.js";
 
-const scene = new ThreeDemoScene({path: '/three-ui/demo/scene/cubes.gltf'});
+const loader = new GLTFLoader();
+const scene = new THREE.Scene();
+
+loader.load('/three-ui/demo/scene/cubes.gltf', gltf => {
+  gltf.scene.children.forEach(child => { scene.add( child ); });
+  scene.add(new THREE.AmbientLight());
+  window.dispatchEvent(new CustomEvent('object-mutated', {detail: {object: scene}}));
+}, undefined, function ( e ) {
+  console.error( e );
+} );
 
 const perspCamera = new THREE.PerspectiveCamera(50, 1, 0.001, 10);
 perspCamera.position.set(1, 1, 1);
@@ -21,14 +30,13 @@ const frontCamera = new THREE.OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001
 frontCamera.position.set(0, 0.75, 10);
 frontCamera.target = new THREE.Vector3(0, 0.75, 0);
 
-export class ThreeDemo extends IoElement {
+export class ThreeEditor extends IoElement {
   static get style() {
     return html`
     <style>
       :host {
         display: grid;
         grid-template-columns: 50% 50%;
-        align-self: flex-start !important;
       }
       :host > three-viewport {
         display: flex;
@@ -38,12 +46,12 @@ export class ThreeDemo extends IoElement {
   }
   objectMutated(event) {
     this.render();
+    // this.$.viewport0.render();
+    // this.$.viewport1.render();
+    // this.$.viewport2.render();
+    // this.$.viewport3.render();
   }
   render() {
-    this.$.viewport0.render();
-    this.$.viewport1.render();
-    this.$.viewport2.render();
-    this.$.viewport3.render();
   }
   constructor(props) {
     super(props);
@@ -52,8 +60,9 @@ export class ThreeDemo extends IoElement {
       ['three-viewport', {id: 'viewport1', scene: scene, camera: topCamera}],
       ['three-viewport', {id: 'viewport2', scene: scene, camera: leftCamera}],
       ['three-viewport', {id: 'viewport3', scene: scene, camera: frontCamera}],
+      // ['three-viewport', {id: 'viewport3', scene: scene, camera: frontCamera}],
     ]);
   }
 }
 
-ThreeDemo.Register();
+ThreeEditor.Register();

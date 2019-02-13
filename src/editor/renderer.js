@@ -8,6 +8,7 @@ renderer.domElement.className = 'canvas3d';
 renderer.gammaFactor = 2.2;
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
+renderer.shadowMap.enabled = true;
 renderer.setClearColor(0x000000, 0.0);
 
 let host;
@@ -70,14 +71,22 @@ export class ThreeRenderer extends IoElement {
   }
   static get properties() {
     return {
-      scene: THREE.Scene,
-      camera: THREE.PerspectiveCamera,
+      scene: {
+        type: THREE.Scene,
+        change: 'renderableChanged',
+      },
+      camera: {
+        type: THREE.PerspectiveCamera,
+        change: 'renderableChanged',
+      },
       ishost: {
         type: Boolean,
         reflect: true
       },
       size: [0, 0],
       tabindex: 1,
+      clearColor: 0x000000,
+      clearAlpha: 1,
       renderer: function () { return renderer; }
     };
   }
@@ -91,6 +100,9 @@ export class ThreeRenderer extends IoElement {
     this.template([['canvas', {id: 'canvas'}]]);
     this._ctx = this.$.canvas.getContext('2d');
   }
+  renderableChanged() {
+    this.queueRender();
+  }
   queueRender() {
     if (!this.scheduled) {
       renderNextQueue.push(this);
@@ -98,7 +110,7 @@ export class ThreeRenderer extends IoElement {
     }
   }
   render() {
-    if (this.rendered) {
+    if (this.rendered || !this._ctx) {
       this.queueRender();
       return;
     }
@@ -139,6 +151,7 @@ export class ThreeRenderer extends IoElement {
       if (this.size[0] && this.size[1]) {
         this.renderer.setSize(this.size[0], this.size[1]);
         this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setClearColor(this.clearColor, this.clearAlpha);
       }
       host = this;
       this.appendChild(this.renderer.domElement);

@@ -34,12 +34,9 @@ export class ThreeExample extends ThreeViewport {
   }
   static get listeners() {
     return {
-      'scroll': '_stopEvent',
+      'scroll': 'stopPropagation',
       'value-set': '_onValueSet'
     };
-  }
-  _stopEvent(event) {
-    event.stopPropagation();
   }
   _onValueSet(event) {
     if (this._example) {

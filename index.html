@@ -21,43 +21,60 @@
       io-main-page {
         display: block;
         margin: auto;
-        max-width: 650px;
+        max-width: 800px;
       }
-      three-demo {
-        height: 400px !important;
+      three-editor {
+        height: 600px;
+      }
+      .examples {
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+      }
+      .examples > * {
+        height: 200px !important;
       }
     </style>
     <link href="../io/lib/mocha.css" rel="stylesheet" />
     <script type="module">
 
     import "../io/lib/io-md-view.js";
-
     import {html, IoElement, IoStorage as $} from "../io/src/io.js";
+    import {ThreePlayer} from "./src/three-ui.js";
+    import "./demo/editor.js";
 
-    import "./demo/demo.js";
+    import "./examples/animation-keyframes.js";
+    import "./examples/cloth.js";
+    import "./examples/geometries.js";
+    import "./examples/geometry-colors.js";
+    import "./examples/geometry-hierarchy2.js";
+    import "./examples/geometry-teapot.js";
+    import "./examples/helpers.js";
 
     export class IoMainPage extends IoElement {
       constructor(props) {
         super(props);
         this.template([
           ['io-selectable', {className: 'selectable-main', selected: $('page', 0, true), elements: [
-            ['div', {label: 'About'}, [
-              ['io-md-view', {label: 'readme', path :'./readme.md'}],
+            ['io-md-view', {label: 'About', path :'./readme.md'}],
+            ['io-selectable', {label: 'Docs', className: 'selectable-docs', vertical: true, selected: $('doc', 0, true), elements: [
+              ['io-md-view', {label: 'color', path :'./docs/core/color.md'}],
+              ['io-md-view', {label: 'storage', path :'./docs/elements/storage.md'}],
+              ['io-md-view', {label: 'color', path :'./docs/elements/color.md'}],
+              ['io-md-view', {label: 'euler', path :'./docs/elements/euler.md'}],
+              ['io-md-view', {label: 'matrix', path :'./docs/elements/matrix.md'}],
+              ['io-md-view', {label: 'vector', path :'./docs/elements/vector.md'}],
+            ]}],
+            ['three-editor', {label: 'Editor'}],
+            ['div', {label: 'Examples', className: 'examples'}, [
+              ['three-example-animation-keyframes', {autoplay: true}],
+              ['three-example-cloth', {autoplay: true}],
+              ['three-example-geometries', {autoplay: true}],
+              ['three-example-geometry-colors'],
+              ['three-example-geometry-hierarchy2', {autoplay: true}],
+              ['three-example-geometry-teapot'],
+              ['three-editor'],
+              ['three-example-helpers', {autoplay: true}],
             ]],
-            ['div', {label: 'Docs'}, [
-              ['io-selectable', {className: 'selectable-docs', vertical: true, selected: $('doc', 0, true), elements: [
-                ['io-md-view', {label: 'color', path :'./docs/core/color.md'}],
-                ['io-md-view', {label: 'storage', path :'./docs/elements/storage.md'}],
-                ['io-md-view', {label: 'color', path :'./docs/elements/color.md'}],
-                ['io-md-view', {label: 'euler', path :'./docs/elements/euler.md'}],
-                ['io-md-view', {label: 'matrix', path :'./docs/elements/matrix.md'}],
-                ['io-md-view', {label: 'vector', path :'./docs/elements/vector.md'}],
-              ]}]
-            ]],
-            ['div', {label: 'Demo'}, [
-              ['three-demo'],
-            ]],
-            // ['io-test', {label: 'Test'}],
           ]}],
         ]);
       }
