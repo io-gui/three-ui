@@ -44,23 +44,13 @@ export class ThreeEditor extends IoElement {
     </style>
     `;
   }
-  objectMutated(event) {
-    this.render();
-    // this.$.viewport0.render();
-    // this.$.viewport1.render();
-    // this.$.viewport2.render();
-    // this.$.viewport3.render();
-  }
-  render() {
-  }
   constructor(props) {
     super(props);
     this.template([
-      ['three-viewport', {id: 'viewport0', scene: scene, camera: perspCamera}],
-      ['three-viewport', {id: 'viewport1', scene: scene, camera: topCamera}],
-      ['three-viewport', {id: 'viewport2', scene: scene, camera: leftCamera}],
-      ['three-viewport', {id: 'viewport3', scene: scene, camera: frontCamera}],
-      // ['three-viewport', {id: 'viewport3', scene: scene, camera: frontCamera}],
+      ['three-viewport', {id: 'viewport0', clearAlpha: 0, scene: scene, camera: perspCamera}],
+      ['three-viewport', {id: 'viewport1', clearAlpha: 0, scene: scene, camera: topCamera}],
+      ['three-viewport', {id: 'viewport2', clearAlpha: 0, scene: scene, camera: leftCamera}],
+      ['three-viewport', {id: 'viewport3', clearAlpha: 0, scene: scene, camera: frontCamera}],
     ]);
   }
 }

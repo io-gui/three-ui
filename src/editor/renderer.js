@@ -101,6 +101,11 @@ export class ThreeRenderer extends IoElement {
   renderableChanged() {
     this.queueRender();
   }
+  objectMutated(event) {
+    if (event.detail.object === this.scene || event.detail.object === this.camera) {
+      this.queueRender();
+    }
+  }
   queueRender() {
     if (!this.scheduled) {
       renderNextQueue.push(this);
@@ -156,6 +161,8 @@ export class ThreeRenderer extends IoElement {
       this.appendChild(this.renderer.domElement);
       this.ishost = true;
       _performanceCheck();
+      // TODO: remove debug
+      window._hostrenderer = this;
     }
   }
   resized() {
