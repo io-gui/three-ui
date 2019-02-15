@@ -54,26 +54,62 @@
       constructor(props) {
         super(props);
         this.template([
-          ['io-selectable', {className: 'selectable-main', selected: $('page', 0, true), elements: [
+          ['io-selector', {precache: true, selected: $('page', 0), elements: [
             ['io-md-view', {label: 'About', path :'./readme.md'}],
-            ['io-selectable', {label: 'Docs', className: 'selectable-docs', vertical: true, selected: $('doc', 0, true), elements: [
-              ['io-md-view', {label: 'color', path :'./docs/core/color.md'}],
-              ['io-md-view', {label: 'storage', path :'./docs/elements/storage.md'}],
-              ['io-md-view', {label: 'color', path :'./docs/elements/color.md'}],
-              ['io-md-view', {label: 'euler', path :'./docs/elements/euler.md'}],
-              ['io-md-view', {label: 'matrix', path :'./docs/elements/matrix.md'}],
-              ['io-md-view', {label: 'vector', path :'./docs/elements/vector.md'}],
+            ['io-selector', {label: 'Docs', precache: true, selected: $('doc', 0), elements: [
+              ['io-selector', {label: 'Core', vertical: true, selected: $('doc_core', 0), elements: [
+                ['io-md-view', {label: 'color', path :'./docs/core/color.md'}],
+                ['io-md-view', {label: 'interactive', path :'./docs/core/interactive.md'}],
+                ['io-md-view', {label: 'shot', path :'./docs/core/shot.md'}],
+              ]}],
+              ['io-selector', {label: 'Editor Elements', vertical: true, selected: $('doc_editor', 0), elements: [
+                ['io-md-view', {label: 'player', path :'./docs/editor/player.md'}],
+                ['io-md-view', {label: 'renderer', path :'./docs/editor/renderer.md'}],
+                ['io-md-view', {label: 'viewport', path :'./docs/editor/viewport.md'}],
+              ]}],
+              ['io-selector', {label: 'Io Elements', vertical: true, selected: $('doc_elements', 0), elements: [
+                ['io-md-view', {label: 'attributes', path :'./docs/elements/attributes.md'}],
+                ['io-md-view', {label: 'color', path :'./docs/elements/color.md'}],
+                ['io-md-view', {label: 'euler', path :'./docs/elements/euler.md'}],
+                ['io-md-view', {label: 'inspector', path :'./docs/elements/inspector.md'}],
+                ['io-md-view', {label: 'matrix', path :'./docs/elements/matrix.md'}],
+                ['io-md-view', {label: 'vector', path :'./docs/elements/vector.md'}],
+              ]}],
+              ['io-selector', {label: 'Helpers', vertical: true, selected: $('doc_helpers', 0), elements: [
+                ['io-md-view', {label: 'helper', path :'./docs/helpers/helper.md'}],
+                ['io-md-view', {label: 'selection', path :'./docs/helpers/selection.md'}],
+                ['io-md-view', {label: 'text', path :'./docs/helpers/text.md'}],
+                ['io-md-view', {label: 'transform', path :'./docs/helpers/transform.md'}],
+                ['io-md-view', {label: 'transform combined', path :'./docs/helpers/transform/combined.md'}],
+                ['io-md-view', {label: 'transform rotate', path :'./docs/helpers/transform/rotate.md'}],
+                ['io-md-view', {label: 'transform scale', path :'./docs/helpers/transform/scale.md'}],
+                ['io-md-view', {label: 'transform stretch', path :'./docs/helpers/transform/stretch.md'}],
+                ['io-md-view', {label: 'transform translate', path :'./docs/helpers/transform/translate.md'}],
+              ]}],
+              ['io-selector', {label: 'Controls', vertical: true, selected: $('doc_controls', 0), elements: [
+                ['io-md-view', {label: 'camera', path :'./docs/controls/camera.md'}],
+                ['io-md-view', {label: 'selection', path :'./docs/controls/selection.md'}],
+                ['io-md-view', {label: 'transform', path :'./docs/controls/transform.md'}],
+                ['io-md-view', {label: 'transform combined', path :'./docs/controls/transform/combined.md'}],
+                ['io-md-view', {label: 'transform drag', path :'./docs/controls/transform/drag.md'}],
+                ['io-md-view', {label: 'transform rotate', path :'./docs/controls/transform/rotate.md'}],
+                ['io-md-view', {label: 'transform scale', path :'./docs/controls/transform/scale.md'}],
+                ['io-md-view', {label: 'transform stretch', path :'./docs/controls/transform/stretch.md'}],
+                ['io-md-view', {label: 'transform translate', path :'./docs/controls/transform/translate.md'}],
+              ]}],
             ]}],
-            ['three-editor', {label: 'Editor'}],
+            ['io-selector', {label: 'Demos', vertical: true, selected: $('demo', 0), elements: [
+              ['three-editor', {label: 'Editor'}],
+            ]}],
             ['div', {label: 'Examples', className: 'examples'}, [
-              ['three-example-animation-keyframes', {autoplay: true}],
-              ['three-example-cloth', {autoplay: true}],
-              ['three-example-geometries', {autoplay: true}],
+              ['three-example-animation-keyframes'],
+              ['three-example-cloth'],
+              ['three-example-geometries'],
               ['three-example-geometry-colors'],
-              ['three-example-geometry-hierarchy2', {autoplay: true}],
+              ['three-example-geometry-hierarchy2'],
               ['three-example-geometry-teapot'],
               ['three-editor'],
-              ['three-example-helpers', {autoplay: true}],
+              ['three-example-helpers'],
             ]],
           ]}],
         ]);

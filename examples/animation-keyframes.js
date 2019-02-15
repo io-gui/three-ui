@@ -22,6 +22,8 @@ export class ThreeExampleAnimationKeyframes extends ThreePlayer {
     scene.add( pointLight );
     // envmap
 
+    this.loading = true;
+
     var path = './examples/textures/cube/Park2/';
     var format = '.jpg';
     var envMap = new THREE.CubeTextureLoader().load( [
@@ -47,21 +49,12 @@ export class ThreeExampleAnimationKeyframes extends ThreePlayer {
       scene.add( model );
       scope.mixer = new THREE.AnimationMixer( model );
       scope.mixer.clipAction( gltf.animations[ 0 ] ).play();
-      scope.play();
+
+      scope.loading = false;
+
     }, undefined, function ( e ) {
       console.error( e );
     } );
-
-    // function animate() {
-    //   requestAnimationFrame( animate );
-    //
-    //
-    //   controls.update( delta );
-    //   stats.update();
-    //   renderer.render( scene, camera );
-    // }
-
-
   }
   preRender() {
   }

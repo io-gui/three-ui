@@ -5,7 +5,8 @@ export {ThreeInspector} from "./elements/inspector.js";
 export {ThreeMatrix} from "./elements/matrix.js";
 export {ThreeVector} from "./elements/vector.js";
 
+export {ThreeShot} from "./core/shot.js";
+
 export {ThreePlayer} from "./editor/player.js";
 export {ThreeRenderer} from "./editor/renderer.js";
-export {ThreeShot} from "./editor/shot.js";
 export {ThreeViewport} from "./editor/viewport.js";

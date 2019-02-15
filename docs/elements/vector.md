@@ -1,1 +1,1 @@
-### `ThreeSlider` `<three-slider>` ###
+### `ThreeVector` `<three-vector>` ###

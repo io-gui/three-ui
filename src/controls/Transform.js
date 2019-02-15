@@ -3,7 +3,7 @@
  */
 
 import {Raycaster, Vector3, Quaternion, Plane} from "../../../three.js/src/Three.js";
-import {InteractiveMixin} from "../Interactive.js";
+import {InteractiveMixin} from "../core/Interactive.js";
 
 // Reusable utility variables
 const _ray = new Raycaster();

@@ -1,1 +1,1 @@
-### `ThreeSlider` `<three-slider>` ###
+### `ThreeColor` `<three-color>` ###

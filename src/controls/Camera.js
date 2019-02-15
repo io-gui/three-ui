@@ -3,7 +3,7 @@
  */
 
 import {Vector2, Vector3, MOUSE} from "../../../three.js/src/Three.js";
-import {Interactive} from "../Interactive.js";
+import {Interactive} from "../core/Interactive.js";
 import {Animation} from "../../lib/Animation.js";
 
 /*
