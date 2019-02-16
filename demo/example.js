@@ -2,8 +2,8 @@ import {html} from "../../../../io/build/io.js";
 import {ThreeViewport} from "../three-viewport/three-viewport.js";
 import {threeInspectorConfig} from "./inspector-config.js";
 import {IoInspector} from "../../../../io-inspector/src/io-inspector.js";
-import {EditorCameraControls} from "../../../../three.js-controls/src/controls/camera/Editor.js";
-import {CombinedTransformControls} from "../../../../three.js-controls/src/controls/transform/Combined.js";
+import {EditorCameraControls} from "../../../../three.js-controls/src/core/controls/camera/Editor.js";
+import {CombinedTransformControls} from "../../../../three.js-controls/src/core/controls/transform/Combined.js";
 
 export class ThreeExample extends ThreeViewport {
   static get style() {

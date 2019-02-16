@@ -1,5 +1,5 @@
 import * as THREE from "../../three.js/src/Three.js";
-import {ThreePlayer} from "../src/editor/player.js";
+import {ThreePlayer} from "../src/elements/player.js";
 import {TeapotBufferGeometry} from "./js/geometries/TeapotBufferGeometry.js";
 
 let TEAPOT_SIZE = 400;

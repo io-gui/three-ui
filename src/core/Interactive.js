@@ -3,7 +3,7 @@
  */
 
 import {PointerEvents} from "../../lib/PointerEvents.js";
-import {Helper} from "../helpers/Helper.js";
+import {Helper} from "../core/helpers/Helper.js";
 
 /*
  * Wraps target class with PointerEvent API polyfill for more powerful mouse/touch interactions.

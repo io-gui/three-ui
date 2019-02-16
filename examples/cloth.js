@@ -1,5 +1,5 @@
 import * as THREE from "../../three.js/src/Three.js";
-import {ThreePlayer} from "../src/editor/player.js";
+import {ThreePlayer} from "../src/elements/player.js";
 import {cloth, clothFunction, ballSize, windForce, simulate, ballPosition} from "./js/Cloth.js";
 
 export class ThreeExampleCloth extends ThreePlayer {

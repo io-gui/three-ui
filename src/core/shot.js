@@ -1,7 +1,7 @@
 import {html, IoCore} from "../../../io/src/io.js";
 import * as THREE from "../../../three.js/src/Three.js";
 
-export class ThreeShot extends IoCore {
+export class Shot extends IoCore {
   static get properties() {
     return {
       camera: THREE.PerspectiveCamera,
@@ -46,4 +46,4 @@ export class ThreeShot extends IoCore {
   }
 }
 
-ThreeShot.Register();
+Shot.Register();

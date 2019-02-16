@@ -1,5 +1,5 @@
 import * as THREE from "../../three.js/src/Three.js";
-import {ThreePlayer} from "../src/editor/player.js";
+import {ThreePlayer} from "../src/elements/player.js";
 import {GLTFLoader} from "../lib/GLTFLoader.js";
 import {DRACOLoader} from "../lib/DRACOLoader.js";
 
