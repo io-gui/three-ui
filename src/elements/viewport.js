@@ -1,5 +1,3 @@
-import {html, IoElement} from "../../../io/src/io.js";
-import * as THREE from "../../../three.js/src/Three.js";
 import {ThreeRenderer} from "./renderer.js";
 
 import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";
@@ -8,7 +6,7 @@ export class ThreeViewport extends ThreeRenderer {
   static get properties() {
     return {
       // controls: OrbitCameraControls
-    }
+    };
   }
   constructor(props) {
     super(props);

@@ -6,7 +6,7 @@
  */
 
 
-import {IoNode} from "../../../../../io/build/io.js";
+import {IoNode} from "../../../../../io/src/io.js";
 import * as THREE from "../../../../../three.js/build/three.module.js";
 
 // internals

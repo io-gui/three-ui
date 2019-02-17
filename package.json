@@ -1,7 +1,7 @@
 {
   "name": "three-ui",
-  "version": "2.2.1rc",
-  "description": "UI elements for threejs library",
+  "version": "2.3.0",
+  "description": "UI system for three.js built with io.js.",
   "author": "Aleksandar Aki Rodic",
   "license": "MIT",
   "scripts": {

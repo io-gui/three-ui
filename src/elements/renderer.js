@@ -1,5 +1,5 @@
 import {html, IoElement} from "../../../io/src/io.js";
-import * as THREE from "../../../three.js/src/Three.js";
+import * as THREE from "../../../three.js/build/three.module.js";
 
 const renderer = new THREE.WebGLRenderer({antialias: false, preserveDrawingBuffer: true, alpha: true});
 const gl = renderer.getContext();
@@ -33,15 +33,15 @@ const renderedQueue = [];
 const renderNextQueue = [];
 
 const animate = function() {
-  for (var i = 0; i < renderedQueue.length; i++) renderedQueue[i].rendered = false;
+  for (let i = 0; i < renderedQueue.length; i++) renderedQueue[i].rendered = false;
   renderedQueue.length = 0;
-  for (var i = 0; i < renderNextQueue.length; i++) {
+  for (let i = 0; i < renderNextQueue.length; i++) {
     renderNextQueue[i].scheduled = false;
     renderNextQueue[i].render();
   }
   renderNextQueue.length = 0;
   requestAnimationFrame(animate);
-}
+};
 requestAnimationFrame(animate);
 
 export class ThreeRenderer extends IoElement {

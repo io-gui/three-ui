@@ -1,4 +1,4 @@
-import * as THREE from "../../../three.js/src/Three.js";
+import * as THREE from "../../../three.js/build/three.module.js";
 import {html} from "../../../io/src/io.js";
 import {ThreeRenderer} from "./renderer.js";
 import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";

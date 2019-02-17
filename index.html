@@ -3,25 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <title>Threejs UI</title>
-    <meta name="description" content="UI elements for threejs library." />
+    <meta name="description" content="UI system for three.js built with io.js." />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <style>
-      html {
-        font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        letter-spacing: 0.05em;
-        font-weight: 300;
-      }
       body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         padding: 0.5em;
-        background: #f5f5f5;
         color: #4d4d4d;
+        background: #f5f5f5;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
       io-main-page {
         display: block;
         margin: auto;
-        max-width: 800px;
+        max-width: 650px;
       }
       three-editor {
         height: 600px;
@@ -37,7 +33,7 @@
     <link href="../io/lib/mocha.css" rel="stylesheet" />
     <script type="module">
 
-    import "../io/lib/io-md-view.js";
+    import "../io/lib/md-view.js";
     import {html, IoElement, IoStorage as $} from "../io/src/io.js";
     import {ThreePlayer} from "./src/three-ui.js";
     import "./demo/editor.js";
@@ -55,48 +51,48 @@
         super(props);
         this.template([
           ['io-selector', {precache: true, selected: $('page', 0), elements: [
-            ['io-md-view', {label: 'About', path :'./readme.md'}],
+            ['md-view', {label: 'About', path :'./readme.md'}],
             ['io-selector', {label: 'Docs', precache: true, selected: $('doc', 0), elements: [
-              ['io-selector', {label: 'Core', vertical: true, selected: $('doc_core', 0), elements: [
-                ['io-md-view', {label: 'color', path :'./docs/core/color.md'}],
-                ['io-md-view', {label: 'interactive', path :'./docs/core/interactive.md'}],
-                ['io-md-view', {label: 'shot', path :'./docs/core/shot.md'}],
+              ['io-selector', {label: 'Core', precache: true, vertical: true, selected: $('doc_core', 0), elements: [
+                ['md-view', {label: 'color', path :'./docs/core/color.md'}],
+                ['md-view', {label: 'interactive', path :'./docs/core/interactive.md'}],
+                ['md-view', {label: 'shot', path :'./docs/core/shot.md'}],
               ]}],
-              ['io-selector', {label: 'Io Elements', vertical: true, selected: $('doc_elements', 0), elements: [
-                ['io-md-view', {label: 'three-attributes', path :'./docs/elements/attributes.md'}],
-                ['io-md-view', {label: 'three-color', path :'./docs/elements/color.md'}],
-                ['io-md-view', {label: 'three-euler', path :'./docs/elements/euler.md'}],
-                ['io-md-view', {label: 'three-inspector', path :'./docs/elements/inspector.md'}],
-                ['io-md-view', {label: 'three-matrix', path :'./docs/elements/matrix.md'}],
-                ['io-md-view', {label: 'three-player', path :'./docs/elements/player.md'}],
-                ['io-md-view', {label: 'three-vector', path :'./docs/elements/vector.md'}],
-                ['io-md-view', {label: 'three-renderer', path :'./docs/elements/renderer.md'}],
-                ['io-md-view', {label: 'three-viewport', path :'./docs/elements/viewport.md'}],
+              ['io-selector', {label: 'Elements', precache: true, vertical: true, selected: $('doc_elements', 0), elements: [
+                ['md-view', {label: 'three-attributes', path :'./docs/elements/attributes.md'}],
+                ['md-view', {label: 'three-color', path :'./docs/elements/color.md'}],
+                ['md-view', {label: 'three-euler', path :'./docs/elements/euler.md'}],
+                ['md-view', {label: 'three-inspector', path :'./docs/elements/inspector.md'}],
+                ['md-view', {label: 'three-matrix', path :'./docs/elements/matrix.md'}],
+                ['md-view', {label: 'three-player', path :'./docs/elements/player.md'}],
+                ['md-view', {label: 'three-vector', path :'./docs/elements/vector.md'}],
+                ['md-view', {label: 'three-renderer', path :'./docs/elements/renderer.md'}],
+                ['md-view', {label: 'three-viewport', path :'./docs/elements/viewport.md'}],
               ]}],
-              ['io-selector', {label: 'Helpers', vertical: true, selected: $('doc_helpers', 0), elements: [
-                ['io-md-view', {label: 'Helper', path :'./docs/core/helpers/helper.md'}],
-                ['io-md-view', {label: 'SelectionHelper', path :'./docs/core/helpers/selection.md'}],
-                ['io-md-view', {label: 'textHelper', path :'./docs/core/helpers/text.md'}],
-                ['io-md-view', {label: 'TransformHelper', path :'./docs/core/helpers/transform.md'}],
-                ['io-md-view', {label: 'CombinedTransformHelper', path :'./docs/core/helpers/transform/combined.md'}],
-                ['io-md-view', {label: 'RotateTransformHelper', path :'./docs/core/helpers/transform/rotate.md'}],
-                ['io-md-view', {label: 'ScaleTransformHelper', path :'./docs/core/helpers/transform/scale.md'}],
-                ['io-md-view', {label: 'StretchTransformHelper', path :'./docs/core/helpers/transform/stretch.md'}],
-                ['io-md-view', {label: 'TranslateTransformHelper', path :'./docs/core/helpers/transform/translate.md'}],
+              ['io-selector', {label: 'Helpers', precache: true, vertical: true, selected: $('doc_helpers', 0), elements: [
+                ['md-view', {label: 'Helper', path :'./docs/core/helpers/helper.md'}],
+                ['md-view', {label: 'SelectionHelper', path :'./docs/core/helpers/selection.md'}],
+                ['md-view', {label: 'textHelper', path :'./docs/core/helpers/text.md'}],
+                ['md-view', {label: 'TransformHelper', path :'./docs/core/helpers/transform.md'}],
+                ['md-view', {label: 'CombinedTransformHelper', path :'./docs/core/helpers/transform/combined.md'}],
+                ['md-view', {label: 'RotateTransformHelper', path :'./docs/core/helpers/transform/rotate.md'}],
+                ['md-view', {label: 'ScaleTransformHelper', path :'./docs/core/helpers/transform/scale.md'}],
+                ['md-view', {label: 'StretchTransformHelper', path :'./docs/core/helpers/transform/stretch.md'}],
+                ['md-view', {label: 'TranslateTransformHelper', path :'./docs/core/helpers/transform/translate.md'}],
               ]}],
-              ['io-selector', {label: 'Controls', vertical: true, selected: $('doc_controls', 0), elements: [
-                ['io-md-view', {label: 'selectionControls', path :'./docs/core/controls/selection.md'}],
-                ['io-md-view', {label: 'CameraControls', path :'./docs/core/controls/camera.md'}],
-                ['io-md-view', {label: 'EditorCameraControls', path :'./docs/core/controls/camera/editor.md'}],
-                ['io-md-view', {label: 'OrbitCameraControls', path :'./docs/core/controls/camera/orbit.md'}],
-                ['io-md-view', {label: 'TrackballCameraControls', path :'./docs/core/controls/camera/trackball.md'}],
-                ['io-md-view', {label: 'TransformControls', path :'./docs/core/controls/transform.md'}],
-                ['io-md-view', {label: 'CombinedTransformControls', path :'./docs/core/controls/transform/combined.md'}],
-                ['io-md-view', {label: 'DragTransformControls', path :'./docs/core/controls/transform/drag.md'}],
-                ['io-md-view', {label: 'RotateTransformControls', path :'./docs/core/controls/transform/rotate.md'}],
-                ['io-md-view', {label: 'ScaleTransformControls', path :'./docs/core/controls/transform/scale.md'}],
-                ['io-md-view', {label: 'StretchTransformControls', path :'./docs/core/controls/transform/stretch.md'}],
-                ['io-md-view', {label: 'TranslateTransformControls', path :'./docs/core/controls/transform/translate.md'}],
+              ['io-selector', {label: 'Controls', precache: true, vertical: true, selected: $('doc_controls', 0), elements: [
+                ['md-view', {label: 'selectionControls', path :'./docs/core/controls/selection.md'}],
+                ['md-view', {label: 'CameraControls', path :'./docs/core/controls/camera.md'}],
+                ['md-view', {label: 'EditorCameraControls', path :'./docs/core/controls/camera/editor.md'}],
+                ['md-view', {label: 'OrbitCameraControls', path :'./docs/core/controls/camera/orbit.md'}],
+                ['md-view', {label: 'TrackballCameraControls', path :'./docs/core/controls/camera/trackball.md'}],
+                ['md-view', {label: 'TransformControls', path :'./docs/core/controls/transform.md'}],
+                ['md-view', {label: 'CombinedTransformControls', path :'./docs/core/controls/transform/combined.md'}],
+                ['md-view', {label: 'DragTransformControls', path :'./docs/core/controls/transform/drag.md'}],
+                ['md-view', {label: 'RotateTransformControls', path :'./docs/core/controls/transform/rotate.md'}],
+                ['md-view', {label: 'ScaleTransformControls', path :'./docs/core/controls/transform/scale.md'}],
+                ['md-view', {label: 'StretchTransformControls', path :'./docs/core/controls/transform/stretch.md'}],
+                ['md-view', {label: 'TranslateTransformControls', path :'./docs/core/controls/transform/translate.md'}],
               ]}],
             ]}],
             ['io-selector', {label: 'Demos', vertical: true, selected: $('demo', 0), elements: [

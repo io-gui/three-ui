@@ -1,4 +1,4 @@
-import * as THREE from "../../three.js/src/Three.js";
+import * as THREE from "../../three.js/build/three.module.js";
 import {IoElement, html} from "../../io/src/io.js";
 import "../src/three-ui.js";
 import {GLTFLoader} from "../lib/GLTFLoader.js";

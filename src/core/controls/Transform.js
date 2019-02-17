@@ -2,7 +2,7 @@
  * @author arodic / https://github.com/arodic
  */
 
-import {Raycaster, Vector3, Quaternion, Plane} from "../../../../three.js/src/Three.js";
+import {Raycaster, Vector3, Quaternion, Plane} from "../../../../three.js/build/three.module.js";
 import {InteractiveMixin} from "../core/Interactive.js";
 
 // Reusable utility variables

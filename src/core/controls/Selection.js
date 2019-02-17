@@ -4,9 +4,9 @@
 
 // TODO: marquee selection
 
-import {Raycaster} from "../../../../three.js/src/Three.js";
+import {Raycaster} from "../../../../three.js/build/three.module.js";
 import {Interactive} from "../Interactive.js";
-import {Vector3, Quaternion, Box3} from "../../../../three.js/src/Three.js";
+import {Vector3, Quaternion, Box3} from "../../../../three.js/build/three.module.js";
 import {SelectionHelper} from "../core/helpers/Selection.js";
 
 // Reusable utility variables

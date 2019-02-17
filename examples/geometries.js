@@ -1,4 +1,4 @@
-import * as THREE from "../../three.js/src/Three.js";
+import * as THREE from "../../three.js/build/three.module.js";
 import {ThreePlayer} from "../src/elements/player.js";
 
 export class ThreeExampleGeometries extends ThreePlayer {

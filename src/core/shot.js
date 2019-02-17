@@ -1,5 +1,7 @@
-import {html, IoCore} from "../../../io/src/io.js";
-import * as THREE from "../../../three.js/src/Three.js";
+import {IoCore} from "../../../io/src/io.js";
+import * as THREE from "../../../three.js/build/three.module.js";
+
+// TODO: consider IoLite
 
 export class Shot extends IoCore {
   static get properties() {

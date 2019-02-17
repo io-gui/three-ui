@@ -1,4 +1,4 @@
-import {Vector3, CylinderBufferGeometry} from "../../../../three.js/src/Three.js";
+import {Vector3, CylinderBufferGeometry} from "../../../../three.js/build/three.module.js";
 import {Helper} from "./Helper.js";
 import {HelperGeometry} from "./HelperGeometry.js";
 import {Animation} from "../../../lib/Animation.js";

@@ -7,7 +7,7 @@
  * @author arodic / http://github.com/arodic
  */
 
-import * as THREE from "../../../../../three.js/src/Three.js";
+import * as THREE from "../../../../../three.js/build/three.module.js";
 import {CameraControls} from "../Camera.js";
 
 /*

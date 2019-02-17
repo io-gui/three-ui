@@ -1,7 +1,7 @@
 /**
  * @author arodic / https://github.com/arodic
  */
-import {Vector3} from "../../../../../three.js/src/Three.js";
+import {Vector3} from "../../../../../three.js/build/three.module.js";
 import {TransformControlsMixin} from "../Transform.js";
 import {TranslateTransformHelper} from "../../core/helpers/transform/Translate.js";
 

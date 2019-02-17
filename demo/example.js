@@ -1,4 +1,4 @@
-import {html} from "../../../../io/build/io.js";
+import {html} from "../../../../io/src/io.js";
 import {ThreeViewport} from "../three-viewport/three-viewport.js";
 import {threeInspectorConfig} from "./inspector-config.js";
 import {IoInspector} from "../../../../io-inspector/src/io-inspector.js";

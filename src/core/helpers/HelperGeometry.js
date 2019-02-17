@@ -1,4 +1,4 @@
-import {Vector3, Euler, Quaternion, Matrix4, BufferGeometry, Float32BufferAttribute, Uint16BufferAttribute} from "../../../../three.js/src/Three.js";;
+import {Vector3, Euler, Quaternion, Matrix4, BufferGeometry, Float32BufferAttribute, Uint16BufferAttribute} from "../../../../three.js/build/three.module.js";
 import {BufferGeometryUtils} from "../../../lib/BufferGeometryUtils.js";
 
 // Reusable utility variables
