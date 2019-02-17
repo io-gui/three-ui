@@ -1,5 +1,5 @@
-import {html, IoElement} from "../../../io/src/io.js";
 import * as THREE from "../../../three.js/build/three.module.js";
+import {html, IoElement} from "../../../io/src/io.js";
 
 const renderer = new THREE.WebGLRenderer({antialias: false, preserveDrawingBuffer: true, alpha: true});
 const gl = renderer.getContext();
@@ -10,6 +10,7 @@ renderer.gammaInput = true;
 renderer.gammaOutput = true;
 renderer.shadowMap.enabled = true;
 renderer.setClearColor(0x000000, 0.0);
+renderer.autoClear = false;
 
 let host;
 
@@ -129,19 +130,23 @@ export class ThreeRenderer extends IoElement {
   preRender() {}
   postRender() {}
   updateCameraAspect() {
-    let aspect = this.size[0] / this.size[1];
-    if (this.camera instanceof THREE.PerspectiveCamera) {
-      this.camera.aspect = aspect;
+    if (this.size[0] && this.size[1]) {
+      const aspect = this.size[0] / this.size[1];
+      if (this.camera instanceof THREE.PerspectiveCamera) {
+        this.camera.aspect = aspect;
+      }
+      if (this.camera instanceof THREE.OrthographicCamera) {
+        const hh = (this.camera.top - this.camera.bottom) / 2;
+        let hw = hh * aspect;
+        this.camera.top = hh;
+        this.camera.bottom = - hh;
+        this.camera.right = hw;
+        this.camera.left = - hw;
+        this.camera.updateMatrix();
+        this.camera.updateMatrixWorld();
+      }
+      this.camera.updateProjectionMatrix();
     }
-    if (this.camera instanceof THREE.OrthographicCamera) {
-      let hh = (this.camera.top - this.camera.bottom) / 2;
-      let hw = hh * aspect;
-      this.camera.top = hh;
-      this.camera.bottom = - hh;
-      this.camera.right = hw;
-      this.camera.left = - hw;
-    }
-    this.camera.updateProjectionMatrix();
   }
   setHost() {
     if (!this.ishost) {

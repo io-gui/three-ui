@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js-controls</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				margin: 0px;
+				font-family:Monospace;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="module">
+
+			import {SelectionControls} from "./src/core/controls/Selection.js";
+
+			import {WebGLRenderer, PerspectiveCamera, OrthographicCamera, Scene, GridHelper, HemisphereLight,
+				BoxBufferGeometry, MeshLambertMaterial, Mesh, Object3D, TextureLoader, Color,
+				SphereBufferGeometry, Vector3,BufferGeometry, BufferAttribute} from "../three.js/build/three.module.js";
+
+			import {GLTFLoader} from "./lib/GLTFLoader.js";
+
+			let rendered = false;
+			let renderer, camera, scene, helperScene;
+			var selectionControls;
+
+			scene = new Scene();
+			helperScene = new Scene();
+
+			var loader = new GLTFLoader();
+			loader.load( 'demo/scene/cubes.gltf', function ( gltf ) {
+				scene.add( gltf.scene );
+				var light = new HemisphereLight(0x333333, 0xffffff, 3);
+				scene.add(light);
+				selectionControls.toggle(gltf.scene.children[0].children[0].children[0]);
+				render();
+			}, undefined, function ( e ) {
+				console.error( e );
+			} );
+
+			init();
+			render();
+
+			function init() {
+
+				renderer = new WebGLRenderer();
+				renderer.autoClear = false;
+				renderer.domElement.setAttribute('tabindex', 0);
+				document.body.appendChild(renderer.domElement);
+
+				camera = new PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
+				camera.position.set(4, 2, 4);
+				camera.lookAt(0, 0.5, 0);
+
+				onWindowResize();
+
+				selectionControls = new SelectionControls({domElement: renderer.domElement, camera: camera, object_: scene});
+				selectionControls.addEventListener('change', render);
+
+				helperScene.add(selectionControls);
+			}
+
+			function onWindowResize() {
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.setPixelRatio(window.devicePixelRatio);
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+			}
+
+			function render() {
+				renderer.clear();
+				renderer.render(scene, camera);
+				renderer.clearDepth();
+				renderer.render(helperScene, camera);
+			}
+
+		</script>
+
+	</body>
+</html>

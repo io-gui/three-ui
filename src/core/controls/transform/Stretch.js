@@ -4,7 +4,7 @@
 
 import {Vector3} from "../../../../../three.js/build/three.module.js";
 import {TransformControlsMixin} from "../Transform.js";
-import {StretchTransformHelper} from "../../core/helpers/transform/Stretch.js";
+import {StretchTransformHelper} from "../../helpers/transform/Stretch.js";
 
 // Reusable utility variables
 const offset = new Vector3();

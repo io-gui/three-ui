@@ -3,7 +3,7 @@
  */
 import {Vector3} from "../../../../../three.js/build/three.module.js";
 import {TransformControlsMixin} from "../Transform.js";
-import {TranslateTransformHelper} from "../../core/helpers/transform/Translate.js";
+import {TranslateTransformHelper} from "../../helpers/transform/Translate.js";
 
 const offset = new Vector3();
 

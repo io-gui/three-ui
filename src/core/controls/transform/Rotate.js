@@ -4,7 +4,7 @@
 
 import {Vector3, Quaternion} from "../../../../../three.js/build/three.module.js";
 import {TransformControlsMixin} from "../Transform.js";
-import {RotateTransformHelper} from "../../core/helpers/transform/Rotate.js";
+import {RotateTransformHelper} from "../../helpers/transform/Rotate.js";
 
 // Reusable utility variables
 const tempVector = new Vector3();

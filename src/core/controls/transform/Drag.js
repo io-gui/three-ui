@@ -3,7 +3,7 @@
  */
 
 import {TransformControlsMixin} from "../Transform.js";
-import {TransformHelper} from "../../core/helpers/Transform.js";
+import {TransformHelper} from "../../helpers/Transform.js";
 
 // TODO: Drag Controls should use object as picker and no handle.
 export class DragTransformControls extends TransformControlsMixin(TransformHelper) {

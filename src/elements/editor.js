@@ -1,20 +1,11 @@
-import * as THREE from "../../three.js/build/three.module.js";
-import {IoElement, html} from "../../io/src/io.js";
-import "../src/three-ui.js";
-import {GLTFLoader} from "../lib/GLTFLoader.js";
+import * as THREE from "../../../three.js/build/three.module.js";
+import {IoElement, html} from "../../../io/src/io.js";
+import {GLTFLoader} from "../../lib/GLTFLoader.js";
 
 const loader = new GLTFLoader();
 const scene = new THREE.Scene();
 
-loader.load('/three-ui/demo/scene/cubes.gltf', gltf => {
-  gltf.scene.children.forEach(child => { scene.add( child ); });
-  scene.add(new THREE.AmbientLight());
-  window.dispatchEvent(new CustomEvent('object-mutated', {detail: {object: scene}}));
-}, undefined, function ( e ) {
-  console.error( e );
-} );
-
-const perspCamera = new THREE.PerspectiveCamera(50, 1, 0.001, 10);
+const perspCamera = new THREE.PerspectiveCamera(90, 1, 0.0001, 100);
 perspCamera.position.set(1, 1, 1);
 perspCamera.target = new THREE.Vector3(0, 0.75, 0);
 
@@ -43,6 +34,19 @@ export class ThreeEditor extends IoElement {
       }
     </style>
     `;
+  }
+  connectedCallback() {
+    super.connectedCallback();
+    if (!scene.loaded) {
+      loader.load('/three-ui/demo/scene/cubes.gltf', gltf => {
+        window.dispatchEvent(new CustomEvent('object-mutated', {detail: {object: scene}}));
+        gltf.scene.children.forEach(child => { scene.add( child ); });
+        scene.add(new THREE.HemisphereLight(0x333333, 0xffffff, 3));
+      }, undefined, function ( e ) {
+        console.error( e );
+      } );
+      scene.loaded = true;
+    }
   }
   constructor(props) {
     super(props);

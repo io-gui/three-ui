@@ -28,11 +28,11 @@ export class HelperMaterial extends IoLiteMixin(ShaderMaterial) {
 		const res = new Vector3(window.innerWidth, window.innerHeight, window.devicePixelRatio);
 
 		this.defineProperties({
-			color: { value: color, observer: 'uniformChanged'},
-			opacity: { value: opacity, observer: 'uniformChanged'},
-			depthBias: { value: props.depthBias || 0, observer: 'uniformChanged'},
-			highlight: { value: props.highlight || 0, observer: 'uniformChanged'},
-			resolution: { value: res, observer: 'uniformChanged'},
+			color: { value: color, change: 'uniformChanged'},
+			opacity: { value: opacity, change: 'uniformChanged'},
+			depthBias: { value: props.depthBias || 0, change: 'uniformChanged'},
+			highlight: { value: props.highlight || 0, change: 'uniformChanged'},
+			resolution: { value: res, change: 'uniformChanged'},
 		});
 
 		this.uniforms = UniformsUtils.merge([this.uniforms, {

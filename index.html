@@ -33,12 +33,11 @@
     <link href="../io/lib/mocha.css" rel="stylesheet" />
     <script type="module">
 
-    import "../io/lib/md-view.js";
     import {html, IoElement, IoStorage as $} from "../io/src/io.js";
-    import {ThreePlayer} from "./src/three-ui.js";
-    import "./demo/editor.js";
+    import "../io/lib/md-view.js";
+    import "./src/three-ui.js";
 
-    import "./examples/animation-keyframes.js";
+    // import "./examples/animation-keyframes.js";
     import "./examples/cloth.js";
     import "./examples/geometries.js";
     import "./examples/geometry-colors.js";
@@ -99,7 +98,7 @@
               ['three-editor', {label: 'Editor'}],
             ]}],
             ['div', {label: 'Examples', className: 'examples'}, [
-              ['three-example-animation-keyframes'],
+              // ['three-example-animation-keyframes'],
               ['three-example-cloth'],
               ['three-example-geometries'],
               ['three-example-geometry-colors'],

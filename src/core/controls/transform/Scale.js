@@ -4,7 +4,7 @@
 
 import {Vector3} from "../../../../../three.js/build/three.module.js";
 import {TransformControlsMixin} from "../Transform.js";
-import {ScaleTransformHelper} from "../../core/helpers/transform/Scale.js";
+import {ScaleTransformHelper} from "../../helpers/transform/Scale.js";
 
 // Reusable utility variables
 const scaleFactor = new Vector3();

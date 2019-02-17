@@ -3,7 +3,7 @@
  */
 import {Vector3, Quaternion} from "../../../../../three.js/build/three.module.js";
 import {TransformControlsMixin} from "../Transform.js";
-import {CombinedTransformHelper} from "../../core/helpers/transform/Combined.js";
+import {CombinedTransformHelper} from "../../helpers/transform/Combined.js";
 
 const offset = new Vector3();
 const scaleFactor = new Vector3();
