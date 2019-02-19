@@ -73,8 +73,8 @@ export const InteractiveMixin = (superclass) => class extends superclass {
 		this._pointerEvents.removeEventListener('blur', this.onBlur);
 		this._listening = false;
 	}
-	enabledChanged(value) {
-		value ? this._addEvents() : this._removeEvents();
+	enabledChanged(detail) {
+		detail.value ? this._addEvents() : this._removeEvents();
 	}
 	// Control methods - implemented in subclass!
 	onContextmenu(/*event*/) {}

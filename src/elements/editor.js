@@ -1,6 +1,7 @@
 import * as THREE from "../../../three.js/build/three.module.js";
 import {IoElement, html} from "../../../io/src/io.js";
 import {GLTFLoader} from "../../lib/GLTFLoader.js";
+import "./viewport.js";
 
 const loader = new GLTFLoader();
 const scene = new THREE.Scene();

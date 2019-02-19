@@ -1,7 +1,7 @@
 import * as THREE from "../../../three.js/build/three.module.js";
 import {html, IoElement} from "../../../io/src/io.js";
 
-const renderer = new THREE.WebGLRenderer({antialias: false, preserveDrawingBuffer: true, alpha: true});
+const renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true, alpha: true});
 const gl = renderer.getContext();
 
 renderer.domElement.className = 'canvas3d';
@@ -9,7 +9,7 @@ renderer.gammaFactor = 2.2;
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 renderer.shadowMap.enabled = true;
-renderer.setClearColor(0x000000, 0.0);
+renderer.setClearColor(0x000000, 1.0);
 renderer.autoClear = false;
 
 let host;

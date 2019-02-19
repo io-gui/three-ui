@@ -106,7 +106,6 @@ export class SelectionControls extends Interactive {
 		time = Date.now();
 	}
 	onPointerUp(pointers) {
-		console.log(pointers.removed[0].position	)
 		dtime = Date.now() - time;
 		if (pointers.length === 0 && dtime < CLICK_TIME) {
 			if (pointers.removed[0].distance.length() < CLICK_DIST) {

@@ -21,9 +21,9 @@ const _m2 = new Matrix4();
 const _one = new Vector3(1, 1, 1);
 
 const corner3Geometry = new HelperGeometry([
-	[new CylinderBufferGeometry(EPS, EPS, 1, 4, 2, true), {color: [1, 0, 0], position: [0.5, 0, 0], rotation: [0, 0, HPI], thickness: 1}],
-	[new CylinderBufferGeometry(EPS, EPS, 1, 4, 2, true), {color: [0, 1, 0], position: [0, 0.5, 0], rotation: [0, HPI, 0], thickness: 1}],
-	[new CylinderBufferGeometry(EPS, EPS, 1, 4, 2, true), {color: [0, 0, 1], position: [0, 0, 0.5], rotation: [HPI, 0, 0], thickness: 1}],
+	[new CylinderBufferGeometry(EPS, EPS, 1, 4, 2, true), {color: [1, 0, 0], position: [0.5, 0, 0], rotation: [0, 0, HPI], thickness: 2, outlineThickness: 2}],
+	[new CylinderBufferGeometry(EPS, EPS, 1, 4, 2, true), {color: [0, 1, 0], position: [0, 0.5, 0], rotation: [0, HPI, 0], thickness: 2, outlineThickness: 2}],
+	[new CylinderBufferGeometry(EPS, EPS, 1, 4, 2, true), {color: [0, 0, 1], position: [0, 0, 0.5], rotation: [HPI, 0, 0], thickness: 2, outlineThickness: 2}],
 ]);
 
 const handleGeometry = {

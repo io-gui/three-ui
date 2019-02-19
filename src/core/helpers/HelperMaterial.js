@@ -116,7 +116,7 @@ export class HelperMaterial extends IoLiteMixin(ShaderMaterial) {
 				vec3 color = vColor.rgb;
 
 				if (isOutline > 0.0) {
-					color = mix(color * vec3(0.25), vec3(1.0), max(0.0, uHighlight) );
+					color = mix(color * vec3(0.25), vec3(0.0), max(0.0, uHighlight) );
 					color = mix(color, vColor.rgb, max(0.0, -uHighlight) );
 				}
 
