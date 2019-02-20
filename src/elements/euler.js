@@ -1,4 +1,4 @@
-import {html, IoProperties} from "../../../io/src/io.js";
+import {html, IoProperties} from "../../../io/build/io.js";
 
 //TODO: test
 

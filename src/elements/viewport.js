@@ -58,7 +58,7 @@ export class ThreeViewport extends ThreeRenderer {
   }
   postRender() {
     this.renderer.clearDepth();
-    this.renderer.render(this.helperScene, this.camera, false, false);
+    this.renderer.render(this.helperScene, this.camera);
   }
 }
 

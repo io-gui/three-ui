@@ -3,7 +3,7 @@
  */
 
 import {Mesh, Vector3, BoxBufferGeometry} from "../../../../three.js/build/three.module.js";
-import {IoLiteMixin} from "../../../../io/src/io-lite.js";
+import {IoLiteMixin} from "../../../../io/build/io-lite.js";
 import {HelperMaterial} from "./HelperMaterial.js";
 import {TextHelper} from "./Text.js";
 

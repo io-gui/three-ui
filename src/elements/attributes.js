@@ -1,4 +1,4 @@
-import {IoProperties} from "../../../io/src/io.js";
+import {IoProperties} from "../../../io/build/io.js";
 
 export class ThreeAttributes extends IoProperties {
   // static get listeners() {

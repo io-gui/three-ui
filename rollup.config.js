@@ -10,7 +10,10 @@ export default [
         indent: '  '
       }
     ],
-    external: [ path.resolve('../three.js/build/three.module.js') ]
+    external: [
+      path.resolve('../three.js/build/three.module.js'),
+      path.resolve('../io/build/io.js')
+    ]
   },
   {
     input: 'src/core/controls/transform/Combined.js',
