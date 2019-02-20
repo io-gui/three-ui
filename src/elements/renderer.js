@@ -1,7 +1,7 @@
-import * as THREE from "../../../three.js/build/three.module.js";
+import {WebGLRenderer, Scene, PerspectiveCamera, OrthographicCamera} from "../../../three.js/build/three.module.js";
 import {html, IoElement} from "../../../io/src/io.js";
 
-const renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true, alpha: true});
+const renderer = new WebGLRenderer({antialias: true, preserveDrawingBuffer: true, alpha: true});
 const gl = renderer.getContext();
 
 renderer.domElement.className = 'canvas3d';
@@ -71,11 +71,11 @@ export class ThreeRenderer extends IoElement {
   static get properties() {
     return {
       scene: {
-        type: THREE.Scene,
+        type: Scene,
         change: 'renderableChanged',
       },
       camera: {
-        type: THREE.PerspectiveCamera,
+        type: PerspectiveCamera,
         change: 'renderableChanged',
       },
       ishost: {
@@ -132,10 +132,10 @@ export class ThreeRenderer extends IoElement {
   updateCameraAspect() {
     if (this.size[0] && this.size[1]) {
       const aspect = this.size[0] / this.size[1];
-      if (this.camera instanceof THREE.PerspectiveCamera) {
+      if (this.camera instanceof PerspectiveCamera) {
         this.camera.aspect = aspect;
       }
-      if (this.camera instanceof THREE.OrthographicCamera) {
+      if (this.camera instanceof OrthographicCamera) {
         const hh = (this.camera.top - this.camera.bottom) / 2;
         let hw = hh * aspect;
         this.camera.top = hh;

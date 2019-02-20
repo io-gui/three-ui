@@ -1,4 +1,4 @@
-import * as THREE from "../../../three.js/build/three.module.js";
+import {Clock} from "../../../three.js/build/three.module.js";
 import {html} from "../../../io/src/io.js";
 import {ThreeRenderer} from "./renderer.js";
 import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";
@@ -77,7 +77,7 @@ export class ThreePlayer extends ThreeRenderer {
       autoplay: false,
       time: 0,
       controls: null,
-      clock: THREE.Clock,
+      clock: Clock,
     };
   }
   static get listeners() {

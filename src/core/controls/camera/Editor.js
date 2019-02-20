@@ -6,16 +6,16 @@
  * @author arodic / http://github.com/arodic
  */
 
-import * as THREE from "../../../../../three.js/build/three.module.js";
+import {Vector3, Box3, Matrix3, Spherical, Sphere} from "../../../../../three.js/build/three.module.js";
 import {CameraControls} from "../Camera.js";
 
 // Reusable utility variables
-const center = new THREE.Vector3();
-const delta = new THREE.Vector3();
-const box = new THREE.Box3();
-const normalMatrix = new THREE.Matrix3();
-const spherical = new THREE.Spherical();
-const sphere = new THREE.Sphere();
+const center = new Vector3();
+const delta = new Vector3();
+const box = new Box3();
+const normalMatrix = new Matrix3();
+const spherical = new Spherical();
+const sphere = new Sphere();
 
 export class EditorCameraControls extends CameraControls {
 	orbit(orbit) {

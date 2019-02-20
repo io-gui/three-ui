@@ -1,26 +1,26 @@
-import * as THREE from "../../../three.js/build/three.module.js";
+import {Scene, PerspectiveCamera, Vector3, OrthographicCamera, HemisphereLight} from "../../../three.js/build/three.module.js";
 import {IoElement, html} from "../../../io/src/io.js";
 import {GLTFLoader} from "../../lib/GLTFLoader.js";
 import "./viewport.js";
 
 const loader = new GLTFLoader();
-const scene = new THREE.Scene();
+const scene = new Scene();
 
-const perspCamera = new THREE.PerspectiveCamera(90, 1, 0.0001, 100);
+const perspCamera = new PerspectiveCamera(90, 1, 0.0001, 100);
 perspCamera.position.set(1, 1, 1);
-perspCamera.target = new THREE.Vector3(0, 0.75, 0);
+perspCamera.target = new Vector3(0, 0.75, 0);
 
-const topCamera = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.001, 20);
+const topCamera = new OrthographicCamera(-0.5, 0.5, 0.5, -0.5, 0.001, 20);
 topCamera.position.set(0, 10, 0);
-topCamera.target = new THREE.Vector3(0, 0.75, 0);
+topCamera.target = new Vector3(0, 0.75, 0);
 
-const leftCamera = new THREE.OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001, 20);
+const leftCamera = new OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001, 20);
 leftCamera.position.set(10, 0.75, 0);
-leftCamera.target = new THREE.Vector3(0, 0.75, 0);
+leftCamera.target = new Vector3(0, 0.75, 0);
 
-const frontCamera = new THREE.OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001, 20);
+const frontCamera = new OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001, 20);
 frontCamera.position.set(0, 0.75, 10);
-frontCamera.target = new THREE.Vector3(0, 0.75, 0);
+frontCamera.target = new Vector3(0, 0.75, 0);
 
 export class ThreeEditor extends IoElement {
   static get style() {
@@ -42,7 +42,7 @@ export class ThreeEditor extends IoElement {
       loader.load('/three-ui/demo/scene/cubes.gltf', gltf => {
         window.dispatchEvent(new CustomEvent('object-mutated', {detail: {object: scene}}));
         gltf.scene.children.forEach(child => { scene.add( child ); });
-        scene.add(new THREE.HemisphereLight(0x333333, 0xffffff, 3));
+        scene.add(new HemisphereLight(0x333333, 0xffffff, 3));
       }, undefined, function ( e ) {
         console.error( e );
       } );

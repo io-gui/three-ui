@@ -7,7 +7,7 @@
  * @author arodic / http://github.com/arodic
  */
 
-import * as THREE from "../../../../../three.js/build/three.module.js";
+import {Vector3, Quaternion, Spherical} from "../../../../../three.js/build/three.module.js";
 import {CameraControls} from "../Camera.js";
 
 /*
@@ -20,11 +20,11 @@ import {CameraControls} from "../Camera.js";
  */
 
 // Temp variables
-const eye = new THREE.Vector3();
-const offset = new THREE.Vector3();
-const offset2 = new THREE.Vector3();
-const unitY = new THREE.Vector3(0, 1, 0);
-const tempQuat = new THREE.Quaternion();
+const eye = new Vector3();
+const offset = new Vector3();
+const offset2 = new Vector3();
+const unitY = new Vector3(0, 1, 0);
+const tempQuat = new Quaternion();
 const tempQuatInverse = tempQuat.clone().inverse();
 
 export class OrbitCameraControls extends CameraControls {
@@ -41,7 +41,7 @@ export class OrbitCameraControls extends CameraControls {
 			minAzimuthAngle: - Infinity, // radians (-Math.PI to Math.PI)
 			maxAzimuthAngle: Infinity, // radians (-Math.PI to Math.PI)
 			screenSpacePanning: false,
-			_spherical: new THREE.Spherical()
+			_spherical: new Spherical()
 		});
 	}
 	orbit(orbit) {

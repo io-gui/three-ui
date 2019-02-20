@@ -1,4 +1,4 @@
-import * as THREE from "../../../three.js/build/three.module.js";
+import {Scene, Vector3} from "../../../three.js/build/three.module.js";
 import {ThreeRenderer} from "./renderer.js";
 import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";
 import {SelectionControls} from "../core/controls/Selection.js";
@@ -8,7 +8,7 @@ export class ThreeViewport extends ThreeRenderer {
   static get properties() {
     return {
       // controls: OrbitCameraControls
-      helperScene: THREE.Scene
+      helperScene: Scene
     };
   }
   constructor(props) {
@@ -41,7 +41,7 @@ export class ThreeViewport extends ThreeRenderer {
     }
 
     this.selectionControls.addEventListener('change', this.render);
-    this.selectionControls.addEventListener('selected-changed', (event) => {
+    this.selectionControls.addEventListener('selected-changed', () => {
       // TODO: test with objects and selection
       this.transformControls.object = this.selectionControls;
       // this.transformControls.object = event.detail.selected[0];
@@ -49,7 +49,7 @@ export class ThreeViewport extends ThreeRenderer {
   }
   preRender() {
     this.selectionControls.camera = this.camera;
-    let res = new THREE.Vector3(this.size[0], this.size[1], window.devicePixelRatio);
+    let res = new Vector3(this.size[0], this.size[1], window.devicePixelRatio);
     this.helperScene.traverse(child => {
       if (child.material) {
         child.material.resolution = res;

@@ -49,7 +49,7 @@
       constructor(props) {
         super(props);
         this.template([
-          ['io-selector', {precache: true, selected: $('page', 0), elements: [
+          ['io-selector', {precache: true, selected: $('page', 0, true), elements: [
             ['md-view', {label: 'About', path :'./readme.md'}],
             ['io-selector', {label: 'Docs', precache: true, selected: $('doc', 0), elements: [
               ['io-selector', {label: 'Core', precache: true, vertical: true, selected: $('doc_core', 0), elements: [
