@@ -419,14 +419,6 @@ const defineProperty = function(scope, prop, def) {
   scope[prop] = def.value;
 };
 
-/**
- * @author arodic / https://github.com/arodic
- *
- * Minimal implementation of io mixin: https://github.com/arodic/io
- * Includes event listener/dispatcher and defineProperties() method.
- * Changed properties trigger "[prop]-changed" event, and execution of changed() and [prop]Changed() functions.
- */
-
 // TODO: pixel-perfect outlines
 class HelperMaterial extends IoLiteMixin(ShaderMaterial) {
 	constructor(props = {}) {
