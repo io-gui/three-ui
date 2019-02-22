@@ -97,15 +97,15 @@
       constructor(props) {
         super(props);
         this.template([
-          ['io-selector', {precache: true, selected: $('page', 0, true), elements: [
+          ['io-selector', {selected: $('page', 0, true), elements: [
             ['md-view', {label: 'About', path :'./readme.md'}],
-            ['io-selector', {label: 'Docs', precache: true, selected: $('doc', 0), elements: [
-              ['io-selector', {label: 'Core', precache: true, vertical: true, selected: $('doc_core', 0), elements: [
+            ['io-selector', {label: 'Docs', selected: $('doc', 0), elements: [
+              ['io-selector', {label: 'Core', vertical: true, selected: $('doc_core', 0), elements: [
                 ['md-view', {label: 'color', path :'./docs/core/color.md'}],
                 ['md-view', {label: 'interactive', path :'./docs/core/interactive.md'}],
                 ['md-view', {label: 'shot', path :'./docs/core/shot.md'}],
               ]}],
-              ['io-selector', {label: 'Elements', precache: true, vertical: true, selected: $('doc_elements', 0), elements: [
+              ['io-selector', {label: 'Elements', vertical: true, selected: $('doc_elements', 0), elements: [
                 ['md-view', {label: 'three-attributes', path :'./docs/elements/attributes.md'}],
                 ['md-view', {label: 'three-color', path :'./docs/elements/color.md'}],
                 ['md-view', {label: 'three-euler', path :'./docs/elements/euler.md'}],
@@ -116,7 +116,7 @@
                 ['md-view', {label: 'three-renderer', path :'./docs/elements/renderer.md'}],
                 ['md-view', {label: 'three-viewport', path :'./docs/elements/viewport.md'}],
               ]}],
-              ['io-selector', {label: 'Helpers', precache: true, vertical: true, selected: $('doc_helpers', 0), elements: [
+              ['io-selector', {label: 'Helpers', vertical: true, selected: $('doc_helpers', 0), elements: [
                 ['md-view', {label: 'Helper', path :'./docs/core/helpers/helper.md'}],
                 ['md-view', {label: 'SelectionHelper', path :'./docs/core/helpers/selection.md'}],
                 ['md-view', {label: 'textHelper', path :'./docs/core/helpers/text.md'}],
@@ -127,7 +127,7 @@
                 ['md-view', {label: 'StretchTransformHelper', path :'./docs/core/helpers/transform/stretch.md'}],
                 ['md-view', {label: 'TranslateTransformHelper', path :'./docs/core/helpers/transform/translate.md'}],
               ]}],
-              ['io-selector', {label: 'Controls', precache: true, vertical: true, selected: $('doc_controls', 0), elements: [
+              ['io-selector', {label: 'Controls', vertical: true, selected: $('doc_controls', 0), elements: [
                 ['md-view', {label: 'selectionControls', path :'./docs/core/controls/selection.md'}],
                 ['md-view', {label: 'CameraControls', path :'./docs/core/controls/camera.md'}],
                 ['md-view', {label: 'EditorCameraControls', path :'./docs/core/controls/camera/editor.md'}],
