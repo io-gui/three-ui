@@ -4,8 +4,8 @@
 
 // TODO: marquee selection
 
+import {IoCore} from "../../..///io/build/io-core.js";
 import {Raycaster} from "../../../../three.js/build/three.module.js";
-// import {Interactive} from "../Interactive.js";
 import {Vector3, Quaternion, Box3} from "../../../../three.js/build/three.module.js";
 import {SelectionHelper} from "../helpers/Selection.js";
 
@@ -69,7 +69,7 @@ const CLICK_TIME = 250;
  * @event selected-changed - also fired on selection change (includes selection payload).
  */
 
-export class SelectionControls extends Interactive {
+export class SelectionControls extends IoCore {
   constructor(props) {
     super(props);
 

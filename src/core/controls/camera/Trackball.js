@@ -47,7 +47,7 @@ export class TrackballCameraControls extends CameraControls {
     eye.applyQuaternion(rotationQuat);
     camera.up.applyQuaternion(rotationQuat);
   }
-  dolly(dolly, camera) {
+  dolly(dolly, /*camera*/) {
     let dollyScale = (dolly < 0) ? 1 + dolly : 1 / (1 - dolly);
     eye.multiplyScalar(dollyScale);
   }

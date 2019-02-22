@@ -102,7 +102,7 @@ export class CameraControls extends ViewportTool {
     let dt = timestep / 1000;
     let maxV = 0;
 
-    for (var i = this.viewports.length; i--;) {
+    for (let i = this.viewports.length; i--;) {
 
       const camera = this.cameras.get(this.viewports[i]);
 
@@ -205,7 +205,7 @@ export class CameraControls extends ViewportTool {
         break;
     }
   }
-  onPointerUp(pointers, camera) {
+  onPointerUp(/*pointers, camera*/) {
     this.state = STATE.NONE;
   }
   onContextmenu(event) {
@@ -259,6 +259,7 @@ export class CameraControls extends ViewportTool {
   }
   onWheel(event) {
     this.state = STATE.DOLLY;
+    const camera = event.detail.camera;
     this._setDolly(camera, event.detail.delta * this.wheelDollySpeed);
     this.state = STATE.NONE;
     this.animation.startAnimation(0);
@@ -291,16 +292,16 @@ export class CameraControls extends ViewportTool {
   }
 
   // CameraControl methods. Implement in subclass!
-  pan(pan, camera) {
+  pan(/*pan, camera*/) {
     console.warn('CameraControls: pan() not implemented!');
   }
-  dolly(dolly, camera) {
+  dolly(/*dolly, camera*/) {
     console.warn('CameraControls: dolly() not implemented!');
   }
-  orbit(orbit, camera) {
+  orbit(/*orbit, camera*/) {
     console.warn('CameraControls: orbit() not implemented!');
   }
-  focus(focus, camera) {
+  focus(/*focus, camera*/) {
     console.warn('CameraControls: focus() not implemented!');
   }
 }

@@ -61,7 +61,7 @@ export class Pointers extends IoCore {
   }
   dispose() {
     super.dispose();
-    for (var i = this.domElements.length; i--;) {
+    for (let i = this.domElements.length; i--;) {
       this.detachElement(this.domElements[i]);
     }
     delete this.domElements;
@@ -141,7 +141,7 @@ export class Pointers extends IoCore {
     if (!this.enabled) return false;
     this.dispatchEvent('blur', {event: event});
   }
-};
+}
 
 class Pointer {
   constructor(event, start) {
@@ -167,6 +167,6 @@ class Pointer {
       distance: {x: x - start.x, y: y - start.y},
       buttons: event.buttons,
       button: button0 ? 0 : button1 ? 1 : button2 ? 2 : -1,
-    }
+    };
   }
 }

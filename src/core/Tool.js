@@ -126,7 +126,7 @@ export class ViewportTool extends IoCore {
   //
   dispose() {
     super.dispose();
-    for (var i = this.viewports.length; i--;) {
+    for (let i = this.viewports.length; i--;) {
       this.detachViewport(this.viewports[i]);
     }
     this.pointers.dispose();
@@ -144,4 +144,4 @@ export class ViewportTool extends IoCore {
     delete this.onViewportFocus;
     delete this.onViewportBlur;
   }
-};
+}

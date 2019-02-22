@@ -108,7 +108,7 @@ export class OrbitCameraControls extends CameraControls {
     camera.position.copy(camera._target).add(offset);
     camera.lookAt(camera._target);
   }
-  focus(camera) {
+  focus(/*camera*/) {
     // console.log(this.selection);
   }
   // utility getters

@@ -2,15 +2,15 @@
  * @author arodic / https://github.com/arodic
  */
 
+import {IoCoreMixin} from "../../../../io/build/io-core.js";
 import {Raycaster, Vector3, Quaternion, Plane} from "../../../../three.js/build/three.module.js";
-import {InteractiveMixin} from "../Interactive.js";
 
 // Reusable utility variables
 const _ray = new Raycaster();
 const _rayTarget = new Vector3();
 const _tempVector = new Vector3();
 
-export const TransformControlsMixin = (superclass) => class extends InteractiveMixin(superclass) {
+export const TransformControlsMixin = (superclass) => class extends IoCoreMixin(superclass) {
   constructor(props) {
     super(props);
 

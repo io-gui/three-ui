@@ -1,4 +1,4 @@
-import {Scene, Vector3, WebGLRenderTarget, MeshBasicMaterial, VertexColors, Float32BufferAttribute, Color} from "../../../three.js/build/three.module.js";
+import {Scene} from "../../../three.js/build/three.module.js";
 import {ThreeRenderer} from "./renderer.js";
 import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";
 // import {SelectionControls} from "../core/controls/Selection.js";

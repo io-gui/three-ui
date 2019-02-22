@@ -1,7 +1,7 @@
 import {Vector3, CylinderBufferGeometry} from "../../../../three.js/build/three.module.js";
 import {Helper} from "./Helper.js";
 import {HelperGeometry} from "./HelperGeometry.js";
-import {Animation} from "../../../lib/Animation.js";
+import {Animation} from "../Animation.js";
 
 // Reusable utility variables
 const PI = Math.PI;

@@ -1,6 +1,6 @@
 // export {EditorCameraControls} from "./core/cashot.js";
 
-export {Shot} from "./core/shot.js";
+export {Shot} from "./core/Shot.js";
 
 export {ThreeAttributes} from "./elements/attributes.js";
 export {ThreeColor} from "./elements/color.js";
