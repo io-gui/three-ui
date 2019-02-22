@@ -1,7 +1,9 @@
 import {Scene, PerspectiveCamera, Vector3, OrthographicCamera, HemisphereLight} from "../../../three.js/build/three.module.js";
 import {IoElement, html} from "../../../io/build/io.js";
 import {GLTFLoader} from "../../lib/GLTFLoader.js";
+import {EditorCameraControls} from "../core/controls/camera/Editor.js";
 import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";
+import {TrackballCameraControls} from "../core/controls/camera/Trackball.js";
 import "./viewport.js";
 
 const loader = new GLTFLoader();
@@ -23,7 +25,7 @@ const frontCamera = new OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001, 20);
 frontCamera.position.set(0, 0.75, 10);
 frontCamera._target = new Vector3(0, 0.75, 0);
 
-const controls = new OrbitCameraControls();
+const controls = new EditorCameraControls();
 
 export class ThreeEditor extends IoElement {
   static get style() {

@@ -2,7 +2,7 @@
  * @author arodic / https://github.com/arodic
  */
 
-import {IoLiteMixin} from "../../../io/build/io-lite.js";
+import {IoCore} from "../../../io/build/io-core.js";
 
 /*
  * Creates a single requestAnimationFrame loop.
@@ -22,7 +22,7 @@ const animate = function() {
 };
 requestAnimationFrame(animate);
 
-export class Animation extends IoLiteMixin(Object) {
+export class Animation extends IoCore {
   constructor() {
     super();
     this._time = 0;

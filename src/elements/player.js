@@ -1,9 +1,9 @@
 import {Clock} from "../../../three.js/build/three.module.js";
 import {html} from "../../../io/build/io.js";
-import {ThreeRenderer} from "./renderer.js";
+import {ThreeViewport} from "./viewport.js";
 import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";
 
-export class ThreePlayer extends ThreeRenderer {
+export class ThreePlayer extends ThreeViewport {
   static get style() {
     return html`
     <style>
@@ -76,7 +76,7 @@ export class ThreePlayer extends ThreeRenderer {
       },
       autoplay: false,
       time: 0,
-      controls: null,
+      // controls: null,
       clock: Clock,
     };
   }
@@ -88,19 +88,20 @@ export class ThreePlayer extends ThreeRenderer {
   connectedCallback() {
     if (this.autoplay) this.play();
     super.connectedCallback();
-    this.controls = new OrbitCameraControls({domElement: this, camera: this.camera});
+    // this.attachControls(this.controls);
+    // this.controls = new OrbitCameraControls();
     // TODO: handle camera change
   }
   disconnectedCallback() {
     this.stop();
     super.disconnectedCallback();
   }
-  controlsChanged(event) {
-    if (event.detail.oldValue) event.detail.oldValue.dispose();
-    if (this.controls) {
-      this.controls.addEventListener('change', this.queueRender);
-    }
-  }
+  // controlsChanged(event) {
+  //   if (event.detail.oldValue) event.detail.oldValue.dispose();
+  //   if (this.controls) {
+  //     this.controls.addEventListener('change', this.queueRender);
+  //   }
+  // }
   autoplayChanged() {
     if (this.autoplay) this.play();
   }
@@ -132,7 +133,6 @@ export class ThreePlayer extends ThreeRenderer {
       if (child.material) child.material.dispose();
       if (child.geometry) child.geometry.dispose();
     });
-    if (this.controls) this.controls.dispose();
     super.dispose();
   }
 }

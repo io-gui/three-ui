@@ -18,48 +18,46 @@ const spherical = new Spherical();
 const sphere = new Sphere();
 
 export class EditorCameraControls extends CameraControls {
-	orbit(orbit) {
-		delta.copy(this.camera.position).sub(this.target);
-		spherical.setFromVector3(delta);
-		spherical.theta -= orbit.x;
-		spherical.phi += orbit.y;
-		spherical.makeSafe();
-		delta.setFromSpherical(spherical);
-		this.camera.position.copy(this.target).add(delta);
-		this.camera.lookAt(this.target);
-	}
-	dolly(dolly) {
-		delta.set(0, 0, dolly);
-		let distance = this.camera.position.distanceTo(this.target);
-		delta.multiplyScalar(distance * this.dollySpeed);
-		if (delta.length() > distance) return;
-		delta.applyMatrix3(normalMatrix.getNormalMatrix(this.camera.matrix));
-		this.camera.position.add(delta);
-	}
-	pan(pan) {
-		let distance = this.camera.position.distanceTo(this.target);
-		delta.set(-pan.x, -pan.y, 0);
-		delta.multiplyScalar(distance);
-		delta.applyMatrix3(normalMatrix.getNormalMatrix(this.camera.matrix));
-		this.camera.position.add(delta);
-		this.target.add(delta);
-	}
-	focus() {
-		if (this.object) {
-			let distance;
-			box.setFromObject(this.object);
-			if (box.isEmpty() === false) {
-				this.target.copy(box.getCenter(center));
-				distance = box.getBoundingSphere(sphere).radius;
-			} else {
-				// Focusing on an Group, AmbientLight, etc
-				this.target.setFromMatrixPosition(this.object.matrixWorld);
-				distance = 0.1;
-			}
-			delta.set(0, 0, 1);
-			delta.applyQuaternion(this.camera.quaternion);
-			delta.multiplyScalar(distance * 4);
-			this.camera.position.copy(this.target).add(delta);
-		}
-	}
+  orbit(orbit, camera) {
+    delta.copy(camera.position).sub(camera._target);
+    spherical.setFromVector3(delta);
+    spherical.theta -= orbit.x;
+    spherical.phi += orbit.y;
+    spherical.makeSafe();
+    delta.setFromSpherical(spherical);
+    camera.position.copy(camera._target).add(delta);
+    camera.lookAt(camera._target);
+  }
+  dolly(dolly, camera) {
+    delta.set(0, 0, dolly);
+    let distance = camera.position.distanceTo(camera._target);
+    delta.multiplyScalar(distance * this.dollySpeed);
+    if (delta.length() > distance) return;
+    delta.applyMatrix3(normalMatrix.getNormalMatrix(camera.matrix));
+    camera.position.add(delta);
+  }
+  pan(pan, camera) {
+    let distance = camera.position.distanceTo(camera._target);
+    delta.set(-pan.x, -pan.y, 0);
+    delta.multiplyScalar(distance);
+    delta.applyMatrix3(normalMatrix.getNormalMatrix(camera.matrix));
+    camera.position.add(delta);
+    camera._target.add(delta);
+  }
+  focus(object, camera) {
+    let distance;
+    box.setFromObject(object);
+    if (box.isEmpty() === false) {
+      camera._target.copy(box.getCenter(center));
+      distance = box.getBoundingSphere(sphere).radius;
+    } else {
+      // Focusing on an Group, AmbientLight, etc
+      camera._target.setFromMatrixPosition(object.matrixWorld);
+      distance = 0.1;
+    }
+    delta.set(0, 0, 1);
+    delta.applyQuaternion(camera.quaternion);
+    delta.multiplyScalar(distance * 4);
+    camera.position.copy(camera._target).add(delta);
+  }
 }

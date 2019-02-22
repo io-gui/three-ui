@@ -22,9 +22,14 @@ export class ThreeViewport extends ThreeRenderer {
       controls: OrbitCameraControls,
     };
   }
-  // objectMutated(event) {
-  //   if (event.detail.object === this.scene) this.sceneChanged();
-  // }
+  connectedCallback() {
+    super.connectedCallback();
+    this.attachControls(this.controls);
+  }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.detachControls(this.controls);
+  }
   sceneChanged() {
     this.scene._helpers = this.scene._helpers || new Scene();
   }
@@ -44,48 +49,46 @@ export class ThreeViewport extends ThreeRenderer {
   detachControls(controls) {
     controls.removeEventListener('change', this.render);
     controls.detachViewport(this);
-    // console.log('asd', controls)
   }
-  constructor(props) {
-    super(props);
-    this.attachControls(this.controls);
-    // this.controlsChanged();
-
-    // this.pickingTexture = new WebGLRenderTarget(1, 1);
-
-    // this.controls = new OrbitCameraControls();
-    // this.controls = new OrbitCameraControls({domElement: this, camera: this.camera});
-
-    // this.selectionControls = new SelectionControls({domElement: this, camera: this.camera, object_: this.scene});
-    // this.scene._helpers.add(this.selectionControls);
-
-    // this.transformControls = new CombinedTransformControls({domElement: this, camera: this.camera});
-    // this.transformControls.addEventListener('change', this.render);
-    // this.transformControls.size = 0.1;
-    // this.transformControls.space = 'local';
-    // this.transformControls.addEventListener('active-changed', transformControlsChanged);
-    // this.transformControls.addEventListener('space-changed', transformControlsChanged);
-    // this.transformControls.addEventListener('axis-changed', transformControlsChanged);
-    // this.scene._helpers.add(this.transformControls);
-
-
-    // const scope = this;
-    // function transformControlsChanged(event) {
-    //   if (event.detail.property === 'active') scope.controls.enabled = event.detail.value ? false : true;
-    //   if (event.detail.property === 'space') scope.selectionControls.transformSpace = event.detail.value;
-    //   if (event.detail.property === 'axis') {
-    //     scope.selectionControls.enabled = event.detail.value ? false : true;
-    //     scope.controls.enabled = event.detail.value ? false : true;
-    //   }
-    // }
-
-    // this.selectionControls.addEventListener('change', this.render);
-    // this.selectionControls.addEventListener('selected-changed', () => {
-    //   // TODO: test with objects and selection
-    //   // this.transformControls.object = this.selectionControls;
-    //   // this.transformControls.object = event.detail.selected[0];
-    // });
-  }
+  // constructor(props) {
+  //   // super(props)
+  //   // this.controlsChanged();
+  //
+  //   // this.pickingTexture = new WebGLRenderTarget(1, 1);
+  //
+  //   // this.controls = new OrbitCameraControls();
+  //   // this.controls = new OrbitCameraControls({domElement: this, camera: this.camera});
+  //
+  //   // this.selectionControls = new SelectionControls({domElement: this, camera: this.camera, object_: this.scene});
+  //   // this.scene._helpers.add(this.selectionControls);
+  //
+  //   // this.transformControls = new CombinedTransformControls({domElement: this, camera: this.camera});
+  //   // this.transformControls.addEventListener('change', this.render);
+  //   // this.transformControls.size = 0.1;
+  //   // this.transformControls.space = 'local';
+  //   // this.transformControls.addEventListener('active-changed', transformControlsChanged);
+  //   // this.transformControls.addEventListener('space-changed', transformControlsChanged);
+  //   // this.transformControls.addEventListener('axis-changed', transformControlsChanged);
+  //   // this.scene._helpers.add(this.transformControls);
+  //
+  //
+  //   // const scope = this;
+  //   // function transformControlsChanged(event) {
+  //   //   if (event.detail.property === 'active') scope.controls.enabled = event.detail.value ? false : true;
+  //   //   if (event.detail.property === 'space') scope.selectionControls.transformSpace = event.detail.value;
+  //   //   if (event.detail.property === 'axis') {
+  //   //     scope.selectionControls.enabled = event.detail.value ? false : true;
+  //   //     scope.controls.enabled = event.detail.value ? false : true;
+  //   //   }
+  //   // }
+  //
+  //   // this.selectionControls.addEventListener('change', this.render);
+  //   // this.selectionControls.addEventListener('selected-changed', () => {
+  //   //   // TODO: test with objects and selection
+  //   //   // this.transformControls.object = this.selectionControls;
+  //   //   // this.transformControls.object = event.detail.selected[0];
+  //   // });
+  // }
   preRender() {
     // this.selectionControls.camera = this.camera;
     // const res = new Vector3(this.size[0], this.size[1], window.devicePixelRatio);
