@@ -27,11 +27,13 @@ export class ThreeEditor extends IoElement {
     return html`
     <style>
       :host {
-        display: grid;
-        grid-template-columns: 50% 50%;
+        display: flex;
+        /* display: grid; */
+        /* grid-template-columns: 50% 50%; */
       }
       :host > three-viewport {
         display: flex;
+        flex: 1 1 auto;
       }
     </style>
     `;
@@ -53,9 +55,9 @@ export class ThreeEditor extends IoElement {
     super(props);
     this.template([
       ['three-viewport', {id: 'viewport0', clearAlpha: 0, scene: scene, camera: perspCamera}],
-      ['three-viewport', {id: 'viewport1', clearAlpha: 0, scene: scene, camera: topCamera}],
-      ['three-viewport', {id: 'viewport2', clearAlpha: 0, scene: scene, camera: leftCamera}],
-      ['three-viewport', {id: 'viewport3', clearAlpha: 0, scene: scene, camera: frontCamera}],
+      // ['three-viewport', {id: 'viewport1', clearAlpha: 0, scene: scene, camera: topCamera}],
+      // ['three-viewport', {id: 'viewport2', clearAlpha: 0, scene: scene, camera: leftCamera}],
+      // ['three-viewport', {id: 'viewport3', clearAlpha: 0, scene: scene, camera: frontCamera}],
     ]);
   }
 }
