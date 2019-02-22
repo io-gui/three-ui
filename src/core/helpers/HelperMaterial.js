@@ -78,7 +78,7 @@ export class HelperMaterial extends IoLiteMixin(ShaderMaterial) {
 				float extrude = 0.0;
 				if (outline > 0.0) {
 					extrude = outline;
-					pos.z += 0.01;
+					pos.z += 0.00001;
 					pos.z = max(-0.99, pos.z);
 				} else {
 					extrude -= outline;
@@ -87,8 +87,8 @@ export class HelperMaterial extends IoLiteMixin(ShaderMaterial) {
 
 				pos.xy /= pos.w;
 
-				float dx = nor.x * extrude;// * (1.0 + uResolution.z) / 2.0;
-				float dy = nor.y * extrude;// * (1.0 + uResolution.z) / 2.0;
+				float dx = nor.x * extrude * (1.0 + uResolution.z);
+				float dy = nor.y * extrude * (1.0 + uResolution.z);
 
 				pos.x += (dx) * (1.0 / uResolution.x);
 				pos.y += (dy) * (1.0 / uResolution.y);
