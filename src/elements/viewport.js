@@ -1,8 +1,8 @@
 import {Scene} from "../../../three.js/build/three.module.js";
 import {ThreeRenderer} from "./renderer.js";
-import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";
-// import {SelectionControls} from "../core/controls/Selection.js";
-// import {CombinedTransformControls} from "../core/controls/transform/Combined.js";
+import {OrbitCameraControls} from "../controls/camera/Orbit.js";
+// import {SelectionControls} from "../controls/Selection.js";
+// import {CombinedTransformControls} from "../controls/transform/Combined.js";
 
 // function setIdMaterial(object) {
 //   if (object._idMaterial) object.material = object._idMaterial;
@@ -21,6 +21,10 @@ export class ThreeViewport extends ThreeRenderer {
     return {
       controls: OrbitCameraControls,
     };
+  }
+  constructor(props) {
+    super(props);
+    this.sceneChanged();
   }
   connectedCallback() {
     super.connectedCallback();

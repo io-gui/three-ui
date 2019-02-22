@@ -1,9 +1,9 @@
 import {Scene, PerspectiveCamera, Vector3, OrthographicCamera, HemisphereLight} from "../../../three.js/build/three.module.js";
 import {IoElement, html} from "../../../io/build/io.js";
 import {GLTFLoader} from "../../lib/GLTFLoader.js";
-import {EditorCameraControls} from "../core/controls/camera/Editor.js";
-// import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";
-// import {TrackballCameraControls} from "../core/controls/camera/Trackball.js";
+import {EditorCameraControls} from "../controls/camera/Editor.js";
+// import {OrbitCameraControls} from "../controls/camera/Orbit.js";
+// import {TrackballCameraControls} from "../controls/camera/Trackball.js";
 import "./viewport.js";
 
 const loader = new GLTFLoader();

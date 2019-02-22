@@ -1,7 +1,7 @@
 import {Clock} from "../../../three.js/build/three.module.js";
 import {html} from "../../../io/build/io.js";
 import {ThreeViewport} from "./viewport.js";
-// import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";
+// import {OrbitCameraControls} from "../controls/camera/Orbit.js";
 
 export class ThreePlayer extends ThreeViewport {
   static get style() {

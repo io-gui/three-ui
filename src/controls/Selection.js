@@ -4,7 +4,7 @@
 
 // TODO: marquee selection
 
-import {IoCore} from "../../..///io/build/io-core.js";
+import {IoCore} from "../../../../io/build/io-core.js";
 import {Raycaster} from "../../../../three.js/build/three.module.js";
 import {Vector3, Quaternion, Box3} from "../../../../three.js/build/three.module.js";
 import {SelectionHelper} from "../helpers/Selection.js";

@@ -3,8 +3,8 @@
  */
 
 import {Vector2, Vector3, MOUSE} from "../../../../three.js/build/three.module.js";
-import {ViewportTool} from "../Tool.js";
-import {Animation} from "../Animation.js";
+import {ViewportTool} from "../core/Tool.js";
+import {Animation} from "../core/Animation.js";
 
 /*
  * CameraControls is a base class for controls performing orbiting, dollying, and panning.
