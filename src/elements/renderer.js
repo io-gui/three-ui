@@ -63,6 +63,7 @@ export class ThreeRenderer extends IoElement {
         position: absolute;
         top: 0;
         left: 0;
+        pointer-events: none;
       }
       :host[ishost] > canvas:not(.canvas3d) {
         display: none;

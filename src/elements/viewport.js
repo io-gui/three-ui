@@ -1,8 +1,8 @@
 import {Scene, Vector3, WebGLRenderTarget, MeshBasicMaterial, VertexColors, Float32BufferAttribute, Color} from "../../../three.js/build/three.module.js";
 import {ThreeRenderer} from "./renderer.js";
 import {OrbitCameraControls} from "../core/controls/camera/Orbit.js";
-import {SelectionControls} from "../core/controls/Selection.js";
-import {CombinedTransformControls} from "../core/controls/transform/Combined.js";
+// import {SelectionControls} from "../core/controls/Selection.js";
+// import {CombinedTransformControls} from "../core/controls/transform/Combined.js";
 
 // function setIdMaterial(object) {
 //   if (object._idMaterial) object.material = object._idMaterial;
@@ -19,8 +19,7 @@ import {CombinedTransformControls} from "../core/controls/transform/Combined.js"
 export class ThreeViewport extends ThreeRenderer {
   static get properties() {
     return {
-      // controls: null,
-      // transformControlscontrols: null,
+      controls: OrbitCameraControls,
     };
   }
   // objectMutated(event) {
@@ -29,16 +28,36 @@ export class ThreeViewport extends ThreeRenderer {
   sceneChanged() {
     this.scene._helpers = this.scene._helpers || new Scene();
   }
+  cameraChanged() {
+    this.attachControls(this.controls);
+  }
+  controlsChanged(event) {
+    this.detachControls(event.detail.oldValue);
+    this.attachControls(event.detail.value);
+  }
+  attachControls(controls) {
+    if (controls) {
+      controls.addEventListener('change', this.render);
+      controls.attachViewport(this, this.camera);
+    }
+  }
+  detachControls(controls) {
+    controls.removeEventListener('change', this.render);
+    controls.detachViewport(this);
+    // console.log('asd', controls)
+  }
   constructor(props) {
     super(props);
+    this.attachControls(this.controls);
+    // this.controlsChanged();
 
     // this.pickingTexture = new WebGLRenderTarget(1, 1);
 
-    this.controls = new OrbitCameraControls({domElement: this, camera: this.camera});
-    this.controls.addEventListener('change', this.render);
+    // this.controls = new OrbitCameraControls();
+    // this.controls = new OrbitCameraControls({domElement: this, camera: this.camera});
 
-    this.selectionControls = new SelectionControls({domElement: this, camera: this.camera, object_: this.scene});
-    this.scene._helpers.add(this.selectionControls);
+    // this.selectionControls = new SelectionControls({domElement: this, camera: this.camera, object_: this.scene});
+    // this.scene._helpers.add(this.selectionControls);
 
     // this.transformControls = new CombinedTransformControls({domElement: this, camera: this.camera});
     // this.transformControls.addEventListener('change', this.render);
@@ -60,12 +79,12 @@ export class ThreeViewport extends ThreeRenderer {
     //   }
     // }
 
-    this.selectionControls.addEventListener('change', this.render);
-    this.selectionControls.addEventListener('selected-changed', () => {
-      // TODO: test with objects and selection
-      // this.transformControls.object = this.selectionControls;
-      // this.transformControls.object = event.detail.selected[0];
-    });
+    // this.selectionControls.addEventListener('change', this.render);
+    // this.selectionControls.addEventListener('selected-changed', () => {
+    //   // TODO: test with objects and selection
+    //   // this.transformControls.object = this.selectionControls;
+    //   // this.transformControls.object = event.detail.selected[0];
+    // });
   }
   preRender() {
     // this.selectionControls.camera = this.camera;
@@ -77,6 +96,9 @@ export class ThreeViewport extends ThreeRenderer {
     //   }
     // });
   }
+  // render() {
+  //   super.render();
+  // }
   postRender() {
     this.renderer.clearDepth();
     this.renderer.render(this.scene._helpers, this.camera);

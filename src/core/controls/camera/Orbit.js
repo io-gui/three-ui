@@ -44,11 +44,11 @@ export class OrbitCameraControls extends CameraControls {
 			_spherical: new Spherical()
 		});
 	}
-	orbit(orbit) {
+	orbit(orbit, camera) {
 		// camera.up is the orbit axis
-		tempQuat.setFromUnitVectors(this.camera.up, unitY);
+		tempQuat.setFromUnitVectors(camera.up, unitY);
 		tempQuatInverse.copy(tempQuat).inverse();
-		eye.copy(this.camera.position).sub(this.target);
+		eye.copy(camera.position).sub(camera._target);
 		// rotate eye to "y-axis-is-up" space
 		eye.applyQuaternion(tempQuat);
 		// angle from z-axis around y-axis
@@ -60,59 +60,59 @@ export class OrbitCameraControls extends CameraControls {
 		// restrict phi to be between desired limits
 		this._spherical.phi = Math.max(this.minPolarAngle, Math.min(this.maxPolarAngle, this._spherical.phi));
 	}
-	dolly(dolly) {
+	dolly(dolly, camera) {
 		let dollyScale = (dolly > 0) ? 1 - dolly : 1 / (1 + dolly);
-		if (this.camera.isPerspectiveCamera) {
+		if (camera.isPerspectiveCamera) {
 			this._spherical.radius /= dollyScale;
-		} else if (this.camera.isOrthographicCamera) {
-			this.camera.zoom = Math.max(this.minZoom, Math.min(this.maxZoom, this.camera.zoom * dollyScale));
+		} else if (camera.isOrthographicCamera) {
+			camera.zoom = Math.max(this.minZoom, Math.min(this.maxZoom, camera.zoom * dollyScale));
 		}
-		this.camera.updateProjectionMatrix();
+		camera.updateProjectionMatrix();
 
 		this._spherical.makeSafe();
 		// restrict radius to be between desired limits
 		this._spherical.radius = Math.max(this.minDistance, Math.min(this.maxDistance, this._spherical.radius));
 	}
-	pan(pan) {
+	pan(pan, camera) {
 		// move target to panned location
 
 		let panLeftDist;
 		let panUpDist;
-		if (this.camera.isPerspectiveCamera) {
+		if (camera.isPerspectiveCamera) {
 			// half of the fov is center to top of screen
-			let fovFactor = Math.tan((this.camera.fov / 2) * Math.PI / 180.0);
+			let fovFactor = Math.tan((camera.fov / 2) * Math.PI / 180.0);
 			panLeftDist = pan.x * eye.length() * fovFactor;
 			panUpDist = -pan.y * eye.length() * fovFactor;
-		} else if (this.camera.isOrthographicCamera) {
-			panLeftDist = pan.x * (this.camera.right - this.camera.left) / this.camera.zoom;
-			panUpDist = -pan.y * (this.camera.top - this.camera.bottom) / this.camera.zoom;
+		} else if (camera.isOrthographicCamera) {
+			panLeftDist = pan.x * (camera.right - camera.left) / camera.zoom;
+			panUpDist = -pan.y * (camera.top - camera.bottom) / camera.zoom;
 		}
 
 		// panLeft
-		offset.setFromMatrixColumn(this.camera.matrix, 0);
+		offset.setFromMatrixColumn(camera.matrix, 0);
 		offset.multiplyScalar(-panLeftDist);
 		offset2.copy(offset);
 
 		// panUp
 		if (this.screenSpacePanning) {
-			offset.setFromMatrixColumn(this.camera.matrix, 1);
+			offset.setFromMatrixColumn(camera.matrix, 1);
 		} else {
-			offset.setFromMatrixColumn(this.camera.matrix, 0);
-			offset.crossVectors(this.camera.up, offset);
+			offset.setFromMatrixColumn(camera.matrix, 0);
+			offset.crossVectors(camera.up, offset);
 		}
 		offset.multiplyScalar(panUpDist);
 		offset2.add(offset);
 
 
-		this.target.add(offset2);
+		camera._target.add(offset2);
 		offset.setFromSpherical(this._spherical);
 		// rotate offset back to "camera-up-vector-is-up" space
 		offset.applyQuaternion(tempQuatInverse);
-		this.camera.position.copy(this.target).add(offset);
-		this.camera.lookAt(this.target);
+		camera.position.copy(camera._target).add(offset);
+		camera.lookAt(camera._target);
 	}
-	focus() {
-		console.log(this.selection);
+	focus(camera) {
+		// console.log(this.selection);
 	}
 	// utility getters
 	get polarAngle() {

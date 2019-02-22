@@ -3,8 +3,8 @@
  */
 
 import {Vector2, Vector3, MOUSE} from "../../../../three.js/build/three.module.js";
-import {Interactive} from "../Interactive.js";
-import {Animation} from "../../../lib/Animation.js";
+import {ViewportTool} from "../Tool.js";
+import {Animation} from "../Animation.js";
 
 /*
  * CameraControls is a base class for controls performing orbiting, dollying, and panning.
@@ -29,7 +29,7 @@ function dampTo(source, target, smoothing, dt) {
 	return source * (1 - t) + target * t;
 }
 
-export class CameraControls extends Interactive {
+export class CameraControls extends ViewportTool {
 	constructor(props) {
 		super(props);
 
@@ -51,118 +51,120 @@ export class CameraControls extends Interactive {
 			enableDamping: true,
 			dampingFactor: 0.05,
 			KEYS: {
-				PAN_LEFT: 37, // left
-				PAN_UP: 38, // up
-				PAN_RIGHT: 39, // right
-				PAN_DOWN: 40, // down
-				ORBIT_LEFT: 65, // A
-				ORBIT_RIGHT: 68, // D
-				ORBIT_UP: 83, // S
-				ORBIT_DOWN: 87, // W
-				DOLLY_OUT: 189, // +
-				DOLLY_IN: 187, // -
-				FOCUS: 70 // F
+				PAN_LEFT: 37, /* left */
+				PAN_UP: 38, /* up */
+				PAN_RIGHT: 39, /* right */
+				PAN_DOWN: 40, /* down */
+				ORBIT_LEFT: 65, /* A */
+				ORBIT_RIGHT: 68, /* D */
+				ORBIT_UP: 83, /* S */
+				ORBIT_DOWN: 87, /* W */
+				DOLLY_OUT: 189, /* + */
+				DOLLY_IN: 187, /* - */
+				FOCUS: 70 /* F */
 			},
 			BUTTON: {LEFT: MOUSE.LEFT, MIDDLE: MOUSE.MIDDLE, RIGHT: MOUSE.RIGHT}, // Mouse buttons
 			state: STATE.NONE,
-			_orbitOffset: new Vector2(),
-			_orbitInertia: new Vector2(),
-			_panOffset: new Vector2(),
-			_panInertia: new Vector2(),
-			_dollyOffset: 0,
-			_dollyInertia: 0
 		});
 
 		this.animation = new Animation();
 
-		this.animation.addEventListener('update', event => {
+		this.animation.addEventListener('animation', event => {
 			this.update(event.detail.timestep);
 			this.dispatchEvent('change');
 		});
 
-		this.cameraChanged();
 	}
-	cameraChanged() {
-		this.camera.target = this.camera.target || new Vector3();
-		this.target = this.camera.target;
-		this.camera.lookAt(this.target);
+	attachViewport(domElement, camera) {
+		super.attachViewport(domElement, camera);
+		camera._target = camera._target || new Vector3();
+		camera._state = camera._state || {
+			_orbit: new Vector2(),
+			_orbitV: new Vector2(),
+			_pan: new Vector2(),
+			_panV: new Vector2(),
+			_dolly: 0,
+			_dollyV: 0
+		};
+		camera.lookAt(camera._target);
 		this.animation.startAnimation(0);
 	}
-	// targetChanged() {
-	// 	this.camera.lookAt(this.target);
-	// 	this.animation.startAnimation(0);
-	// }
 	stateChanged() {
 		this.active = this.state !== STATE.NONE;
 		this.animation.startAnimation(0);
 	}
 	update(timestep) {
 		let dt = timestep / 1000;
-		// Apply orbit intertia
-		if (this.state !== STATE.ORBIT) {
+		let maxV = 0;
+
+		for (var i = this.viewports.length; i--;) {
+
+			const camera = this.cameras.get(this.viewports[i]);
+
+			// Apply orbit intertia
+			if (this.state !== STATE.ORBIT) {
+				if (this.enableDamping) {
+					camera._state._orbitV.x = dampTo(camera._state._orbitV.x, this.autoOrbit.x, this.dampingFactor, dt);
+					camera._state._orbitV.y = dampTo(camera._state._orbitV.y, 0.0, this.dampingFactor, dt);
+				}
+			} else {
+				camera._state._orbitV.set(this.autoOrbit.x, 0);
+			}
+
+			camera._state._orbit.x += camera._state._orbitV.x;
+			camera._state._orbit.y += camera._state._orbitV.y;
+
+			// Apply pan intertia
+			if (this.state !== STATE.PAN) {
+				camera._state._panV.x = dampTo(camera._state._panV.x, 0.0, this.dampingFactor, dt);
+				camera._state._panV.y = dampTo(camera._state._panV.y, 0.0, this.dampingFactor, dt);
+			} else {
+				camera._state._panV.set(0, 0);
+			}
+			camera._state._pan.x += camera._state._panV.x;
+			camera._state._pan.y += camera._state._panV.y;
+
+			// Apply dolly intertia
+			if (this.state !== STATE.DOLLY) {
+				camera._state._dollyV = dampTo(camera._state._dollyV, 0.0, this.dampingFactor, dt);
+			} else {
+				camera._state._dollyV = 0;
+			}
+			camera._state._dolly += camera._state._dollyV;
+
+			// set inertiae from current offsets
 			if (this.enableDamping) {
-				this._orbitInertia.x = dampTo(this._orbitInertia.x, this.autoOrbit.x, this.dampingFactor, dt);
-				this._orbitInertia.y = dampTo(this._orbitInertia.y, 0.0, this.dampingFactor, dt);
+				if (this.state === STATE.ORBIT) {
+					camera._state._orbitV.copy(camera._state._orbit);
+				}
+				if (this.state === STATE.PAN) {
+					camera._state._panV.copy(camera._state._pan);
+				}
+				if (this.state === STATE.DOLLY) {
+					camera._state._dollyV = camera._state._dolly;
+				}
 			}
-		} else {
-			this._orbitInertia.set(this.autoOrbit.x, 0);
+
+			this.orbit(orbit.copy(camera._state._orbit), camera);
+			this.dolly(camera._state._dolly, camera);
+			this.pan(pan.copy(camera._state._pan), camera);
+			camera.lookAt(camera._target);
+
+			camera._state._orbit.set(0, 0);
+			camera._state._pan.set(0, 0);
+			camera._state._dolly = 0;
+
+			maxV = Math.max(maxV, Math.abs(camera._state._orbitV.x));
+			maxV = Math.max(maxV, Math.abs(camera._state._orbitV.y));
+			maxV = Math.max(maxV, Math.abs(camera._state._panV.x));
+			maxV = Math.max(maxV, Math.abs(camera._state._panV.y));
+			maxV = Math.max(maxV, Math.abs(camera._state._dollyV));
 		}
 
-		this._orbitOffset.x += this._orbitInertia.x;
-		this._orbitOffset.y += this._orbitInertia.y;
-
-		// Apply pan intertia
-		if (this.state !== STATE.PAN) {
-			this._panInertia.x = dampTo(this._panInertia.x, 0.0, this.dampingFactor, dt);
-			this._panInertia.y = dampTo(this._panInertia.y, 0.0, this.dampingFactor, dt);
-		} else {
-			this._panInertia.set(0, 0);
-		}
-		this._panOffset.x += this._panInertia.x;
-		this._panOffset.y += this._panInertia.y;
-
-		// Apply dolly intertia
-		if (this.state !== STATE.DOLLY) {
-			this._dollyInertia = dampTo(this._dollyInertia, 0.0, this.dampingFactor, dt);
-		} else {
-			this._dollyInertia = 0;
-		}
-		this._dollyOffset += this._dollyInertia;
-
-		// set inertiae from current offsets
-		if (this.enableDamping) {
-			if (this.state === STATE.ORBIT) {
-				this._orbitInertia.copy(this._orbitOffset);
-			}
-			if (this.state === STATE.PAN) {
-				this._panInertia.copy(this._panOffset);
-			}
-			if (this.state === STATE.DOLLY) {
-				this._dollyInertia = this._dollyOffset;
-			}
-		}
-
-		this.orbit(orbit.copy(this._orbitOffset));
-		this.dolly(this._dollyOffset);
-		this.pan(pan.copy(this._panOffset));
-
-		this._orbitOffset.set(0, 0);
-		this._panOffset.set(0, 0);
-		this._dollyOffset = 0;
-
-		this.camera.lookAt(this.target);
-
-		// Determine if animation needs to continue
-		let maxVelocity = 0;
-		maxVelocity = Math.max(maxVelocity, Math.abs(this._orbitInertia.x));
-		maxVelocity = Math.max(maxVelocity, Math.abs(this._orbitInertia.y));
-		maxVelocity = Math.max(maxVelocity, Math.abs(this._panInertia.x));
-		maxVelocity = Math.max(maxVelocity, Math.abs(this._panInertia.y));
-		maxVelocity = Math.max(maxVelocity, Math.abs(this._dollyInertia));
-		if (maxVelocity > EPS) this.animation.startAnimation(0);
+		if (maxV > EPS) this.animation.startAnimation(0);
 	}
-	onPointerMove(pointers) {
-		let rect = this.domElement.getBoundingClientRect();
+	onPointerMove(event, pointers, camera) {
+		let rect = event.target.getBoundingClientRect();
 		let prevDistance, distance;
 		aspectMultiplier.set(rect.width / rect.height, 1);
 		switch (pointers.length) {
@@ -171,18 +173,18 @@ export class CameraControls extends Interactive {
 				switch (pointers[0].button) {
 					case this.BUTTON.LEFT:
 						if (pointers.ctrlKey) {
-							this._setPan(direction.multiplyScalar(this.panSpeed));
+							this._setPan(camera, direction.multiplyScalar(this.panSpeed));
 						} else if (pointers.altKey) {
-							this._setDolly(pointers[0].movement.y * this.dollySpeed);
+							this._setDolly(camera, pointers[0].movement.y * this.dollySpeed);
 						} else {
-							this._setOrbit(direction.multiplyScalar(this.orbitSpeed));
+							this._setOrbit(camera, direction.multiplyScalar(this.orbitSpeed));
 						}
 						break;
 					case this.BUTTON.MIDDLE:
-						this._setDolly(pointers[0].movement.y * this.dollySpeed);
+						this._setDolly(camera, pointers[0].movement.y * this.dollySpeed);
 						break;
 					case this.BUTTON.RIGHT:
-						this._setPan(direction.multiplyScalar(this.panSpeed));
+						this._setPan(camera, direction.multiplyScalar(this.panSpeed));
 						break;
 				}
 				break;
@@ -192,51 +194,49 @@ export class CameraControls extends Interactive {
 				distance = pointers[0].position.distanceTo(pointers[1].position);
 				prevDistance = pointers[0].previous.distanceTo(pointers[1].previous);
 				direction.copy(pointers[0].movement).add(pointers[1].movement).multiply(aspectMultiplier);
-				this._setDollyPan((prevDistance - distance) * this.dollySpeed, direction.multiplyScalar(this.panSpeed));
+				this._setDollyPan(camera, (prevDistance - distance) * this.dollySpeed, direction.multiplyScalar(this.panSpeed));
 				break;
 		}
 	}
-	onPointerUp(pointers) {
-		if (pointers.length === 0) {
-			this.state = STATE.NONE;
-		}
+	onPointerUp(event, pointers, camera) {
+		this.state = STATE.NONE;
 	}
 	// onKeyDown(event) {
 	// 	TODO: key inertia
 	// 	TODO: better state setting
 	// 	switch (event.keyCode) {
 	// 		case this.KEYS.PAN_UP:
-	// 			this._setPan(direction.set(0, -this.keyPanSpeed));
+	// 			this._setPan(camera, direction.set(0, -this.keyPanSpeed));
 	// 			break;
 	// 		case this.KEYS.PAN_DOWN:
-	// 			this._setPan(direction.set(0, this.keyPanSpeed));
+	// 			this._setPan(camera, direction.set(0, this.keyPanSpeed));
 	// 			break;
 	// 		case this.KEYS.PAN_LEFT:
-	// 			this._setPan(direction.set(this.keyPanSpeed, 0));
+	// 			this._setPan(camera, direction.set(this.keyPanSpeed, 0));
 	// 			break;
 	// 		case this.KEYS.PAN_RIGHT:
-	// 			this._setPan(direction.set(-this.keyPanSpeed, 0));
+	// 			this._setPan(camera, direction.set(-this.keyPanSpeed, 0));
 	// 			break;
 	// 		case this.KEYS.ORBIT_LEFT:
-	// 			this._setOrbit(direction.set(this.keyOrbitSpeed, 0));
+	// 			this._setOrbit(camera, direction.set(this.keyOrbitSpeed, 0));
 	// 			break;
 	// 		case this.KEYS.ORBIT_RIGHT:
-	// 			this._setOrbit(direction.set(-this.keyOrbitSpeed, 0));
+	// 			this._setOrbit(camera, direction.set(-this.keyOrbitSpeed, 0));
 	// 			break;
 	// 		case this.KEYS.ORBIT_UP:
-	// 			this._setOrbit(direction.set(0, this.keyOrbitSpeed));
+	// 			this._setOrbit(camera, direction.set(0, this.keyOrbitSpeed));
 	// 			break;
 	// 		case this.KEYS.ORBIT_DOWN:
-	// 			this._setOrbit(direction.set(0, -this.keyOrbitSpeed));
+	// 			this._setOrbit(camera, direction.set(0, -this.keyOrbitSpeed));
 	// 			break;
 	// 		case this.KEYS.DOLLY_IN:
-	// 			this._setDolly(-this.keyDollySpeed);
+	// 			this._setDolly(camera, -this.keyDollySpeed);
 	// 			break;
 	// 		case this.KEYS.DOLLY_OUT:
-	// 			this._setDolly(this.keyDollySpeed);
+	// 			this._setDolly(camera, this.keyDollySpeed);
 	// 			break;
 	// 		case this.KEYS.FOCUS:
-	// 			this._setFocus();
+	// 			this._setFocus(camera, );
 	// 			break;
 	// 		default:
 	// 			break;
@@ -249,47 +249,48 @@ export class CameraControls extends Interactive {
 	}
 	onWheel(event) {
 		this.state = STATE.DOLLY;
-		this._setDolly(event.detail.delta * this.wheelDollySpeed);
+		this._setDolly(camera, event.detail.delta * this.wheelDollySpeed);
 		this.state = STATE.NONE;
 		this.animation.startAnimation(0);
 	}
-	_setPan(dir) {
+	_setPan(camera, dir) {
 		this.state = STATE.PAN;
-		if (this.enablePan) this._panOffset.copy(dir);
+		if (this.enablePan) camera._state._pan.copy(dir);
 		this.animation.startAnimation(0);
 	}
-	_setDolly(dir) {
+	_setDolly(camera, dir) {
 		this.state = STATE.DOLLY;
-		if (this.enableDolly) this._dollyOffset = dir;
+		if (this.enableDolly) camera._state._dolly = dir;
 		this.animation.startAnimation(0);
 	}
-	_setDollyPan(dollyDir, panDir) {
+	_setDollyPan(camera, dollyDir, panDir) {
 		this.state = STATE.DOLLY_PAN;
-		if (this.enableDolly) this._dollyOffset = dollyDir;
-		if (this.enablePan) this._panOffset.copy(panDir);
+		if (this.enableDolly) camera._state._dolly = dollyDir;
+		if (this.enablePan) camera._state._pan.copy(panDir);
 		this.animation.startAnimation(0);
 	}
-	_setOrbit(dir) {
+	_setOrbit(camera, dir) {
 		this.state = STATE.ORBIT;
-		if (this.enableOrbit) this._orbitOffset.copy(dir);
+		if (this.enableOrbit) camera._state._orbit.copy(dir);
 		this.animation.startAnimation(0);
 	}
-	_setFocus() {
+	_setFocus(camera, ) {
 		this.state = STATE.NONE;
 		if (this.object && this.enableFocus) this.focus(this.object);
 		this.animation.startAnimation(0);
 	}
-	// ViewportControl control methods. Implement in subclass!
-	pan() {
+
+	// CameraControl methods. Implement in subclass!
+	pan(pan, camera) {
 		console.warn('CameraControls: pan() not implemented!');
 	}
-	dolly() {
+	dolly(dolly, camera) {
 		console.warn('CameraControls: dolly() not implemented!');
 	}
-	orbit() {
+	orbit(orbit, camera) {
 		console.warn('CameraControls: orbit() not implemented!');
 	}
-	focus() {
+	focus(focus, camera) {
 		console.warn('CameraControls: focus() not implemented!');
 	}
 }
