@@ -1,7 +1,7 @@
 import {WebGLRenderer, Scene, PerspectiveCamera, OrthographicCamera} from "../../../three.js/build/three.module.js";
 import {html, IoElement} from "../../../io/build/io.js";
 
-const renderer = new WebGLRenderer({antialias: true, preserveDrawingBuffer: true, alpha: true});
+const renderer = new WebGLRenderer({antialias: false, preserveDrawingBuffer: true, alpha: true});
 const gl = renderer.getContext();
 
 renderer.domElement.className = 'canvas3d';
@@ -54,6 +54,7 @@ export class ThreeRenderer extends IoElement {
         position: relative;
         touch-action: none;
         user-select: none;
+        box-sizing: border-box;
       }
       :host:focus {
         z-index: 2;
@@ -157,24 +158,21 @@ export class ThreeRenderer extends IoElement {
         gl.flush();
         host.ishost = false;
       }
-      if (this.size[0] && this.size[1]) {
-        this.renderer.setSize(this.size[0], this.size[1]);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.setClearColor(this.clearColor, this.clearAlpha);
-      }
       host = this;
       this.appendChild(this.renderer.domElement);
       this.ishost = true;
       _performanceCheck();
-      // TODO: remove debug
-      window._hostrenderer = this;
+    }
+    if (this.size[0] && this.size[1]) {
+      this.renderer.setSize(this.size[0], this.size[1]);
+      this.renderer.setPixelRatio(window.devicePixelRatio);
+      this.renderer.setClearColor(this.clearColor, this.clearAlpha);
     }
   }
   resized() {
-    const style = getComputedStyle(this, null);
-    this.size[0] = Math.round(style.width.substring(0, style.width.length - 2));
-    this.size[1] = Math.round(style.height.substring(0, style.height.length - 2));
-
+    const rect = this.getBoundingClientRect();
+    this.size[0] = Math.floor(rect.width);
+    this.size[1] = Math.floor(rect.height);
     const ratio =  (window.devicePixelRatio || 1) / this._ctx.backingStorePixelRatio || 1;
     this.$.canvas.width = this.size[0] * ratio;
     this.$.canvas.height = this.size[1] * ratio;
