@@ -40,9 +40,9 @@ export class ThreeEditor extends IoElement {
     super.connectedCallback();
     if (!scene.loaded) {
       loader.load('/three-ui/demo/scene/cubes.gltf', gltf => {
-        window.dispatchEvent(new CustomEvent('object-mutated', {detail: {object: scene}}));
         gltf.scene.children.forEach(child => { scene.add( child ); });
         scene.add(new HemisphereLight(0x333333, 0xffffff, 3));
+        window.dispatchEvent(new CustomEvent('object-mutated', {detail: {object: scene}}));
       }, undefined, function ( e ) {
         console.error( e );
       } );
