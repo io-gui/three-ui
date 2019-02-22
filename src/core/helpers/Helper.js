@@ -3,7 +3,7 @@
  */
 
 import {Mesh, Vector3, BoxBufferGeometry} from "../../../../three.js/build/three.module.js";
-import {IoLiteMixin} from "../../../../io/build/io-lite.js";
+import {IoCoreMixin} from "../../../../io/build/io-core.js";
 import {HelperMaterial} from "./HelperMaterial.js";
 import {TextHelper} from "./Text.js";
 
@@ -16,17 +16,18 @@ const _cameraPosition = new Vector3();
  * Helpers will auto-scale in view space if `size` property is non-zero.
  */
 
-export class Helper extends IoLiteMixin(Mesh) {
-  constructor(props = {}) {
-    super();
-
-    this.defineProperties({
-      object: props.object || null,
-      camera: props.camera || null,
+export class Helper extends IoCoreMixin(Mesh) {
+  static get properties() {
+    return {
+      object: null,
+      camera: null,
       depthBias: 0,
       space: 'local',
       size: 0
-    });
+    };
+  }
+  constructor(props = {}) {
+    super(props);
 
     this.eye = new Vector3();
 

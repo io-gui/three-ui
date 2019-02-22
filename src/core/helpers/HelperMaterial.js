@@ -1,16 +1,19 @@
-import {IoLiteMixin} from "../../../../io/build/io-lite.js";
+import {IoCoreMixin} from "../../../../io/build/io-core.js";
 import {UniformsUtils, Vector3, Color, FrontSide, ShaderMaterial,
   DataTexture, RGBAFormat, FloatType, NearestFilter} from "../../../../three.js/build/three.module.js";
 
 // TODO: pixel-perfect outlines
-export class HelperMaterial extends IoLiteMixin(ShaderMaterial) {
-  constructor(props = {}) {
-    super({
+export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
+  static get properties() {
+    return {
       depthTest: true,
       depthWrite: true,
-      transparent: !!props.opacity,
+      transparent: false,
       side: FrontSide,
-    });
+    };
+  }
+  constructor(props = {}) {
+    super(props);
 
     const data = new Float32Array([
       1.0 / 17.0, 0,0,0, 9.0 / 17.0, 0,0,0, 3.0 / 17.0, 0,0,0, 11.0 / 17.0, 0,0,0,
