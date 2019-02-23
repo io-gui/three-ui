@@ -16,7 +16,7 @@ export default [
     ]
   },
   {
-    input: 'src/core/controls/transform/Combined.js',
+    input: 'src/controls/transform/Combined.js',
     output: [
       {
         format: 'es',

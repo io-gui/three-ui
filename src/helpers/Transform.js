@@ -1,7 +1,7 @@
-import {Vector3, CylinderBufferGeometry} from "../../../../three.js/build/three.module.js";
+import {Vector3, CylinderBufferGeometry} from "../../../three.js/build/three.module.js";
 import {Helper} from "./Helper.js";
 import {HelperGeometry} from "./HelperGeometry.js";
-import {Animation} from "../Animation.js";
+import {Animation} from "../core/Animation.js";
 
 // Reusable utility variables
 const PI = Math.PI;
@@ -26,22 +26,8 @@ const handleGeometry = {
 };
 
 export class TransformHelper extends Helper {
-  get handleGeometry() {
-    return handleGeometry;
-  }
-  get pickerGeometry() {
-    return {};
-  }
-  get guideGeometry() {
-    return {};
-  }
-  get textGeometry() {
-    return {};
-  }
-  constructor(props) {
-    super(props);
-
-    this.defineProperties({
+  static get properties() {
+    return {
       showX: true,
       showY: true,
       showZ: true,
@@ -59,7 +45,22 @@ export class TransformHelper extends Helper {
       flipY: false,
       flipZ: false,
       size: 0.05,
-    });
+    };
+  }
+  get handleGeometry() {
+    return handleGeometry;
+  }
+  get pickerGeometry() {
+    return {};
+  }
+  get guideGeometry() {
+    return {};
+  }
+  get textGeometry() {
+    return {};
+  }
+  constructor(props) {
+    super(props);
 
     this.worldX = new Vector3();
     this.worldY = new Vector3();

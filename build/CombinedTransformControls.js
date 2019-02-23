@@ -1,4 +1,4 @@
-import { Raycaster, Vector3, Quaternion, Plane, Vector2, BufferGeometry, BufferAttribute, Euler, Matrix4, Float32BufferAttribute, Uint16BufferAttribute, UniformsUtils, Color, FrontSide, ShaderMaterial, DataTexture, RGBAFormat, FloatType, NearestFilter, Sprite, Texture, Mesh, BoxBufferGeometry, CylinderBufferGeometry, TorusBufferGeometry, OctahedronBufferGeometry, PlaneBufferGeometry } from '../../../../../three.js/build/three.module.js';
+import { Raycaster, Vector3, Quaternion, Plane, Vector2, BufferGeometry, BufferAttribute, Euler, Matrix4, Float32BufferAttribute, Uint16BufferAttribute, UniformsUtils, Color, FrontSide, ShaderMaterial, DataTexture, RGBAFormat, FloatType, NearestFilter, Sprite, Texture, Mesh, BoxBufferGeometry, CylinderBufferGeometry, TorusBufferGeometry, OctahedronBufferGeometry, PlaneBufferGeometry } from '../../../../three.js/build/three.module.js';
 
 class Binding {
   constructor(source, sourceProp) {
@@ -560,6 +560,11 @@ if (window.ResizeObserver !== undefined) {
 }
 
 const _stagingElement = document.createElement('div');
+
+/**
+ * @author arodic / https://github.com/arodic
+ *
+ */
 
 /**
  * @author arodic / https://github.com/arodic
@@ -1239,7 +1244,7 @@ class HelperGeometry extends BufferGeometry {
   }
 }
 
-// TODO: pixel-perfect outlines
+// Material for outlines
 class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
   static get properties() {
     return {
@@ -1247,6 +1252,12 @@ class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
       depthWrite: true,
       transparent: false,
       side: FrontSide,
+
+      color: { type: Color, change: 'uniformChanged'},
+      opacity: { value: 1, change: 'uniformChanged'},
+      depthBias: { value: 0, change: 'uniformChanged'},
+      highlight: { value: 0, change: 'uniformChanged'},
+      resolution: { type: Vector3, change: 'uniformChanged'},
     };
   }
   constructor(props = {}) {
@@ -1265,15 +1276,11 @@ class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
     let color = props.color || new Color(0xffffff);
     let opacity = props.opacity !== undefined ? props.opacity : 1;
 
-    const res = new Vector3(window.innerWidth, window.innerHeight, window.devicePixelRatio);
-
-    this.defineProperties({
-      color: { value: color, change: 'uniformChanged'},
-      opacity: { value: opacity, change: 'uniformChanged'},
-      depthBias: { value: props.depthBias || 0, change: 'uniformChanged'},
-      highlight: { value: props.highlight || 0, change: 'uniformChanged'},
-      resolution: { value: res, change: 'uniformChanged'},
-    });
+    this.color.copy(color);
+    this.opacity = opacity;
+    this.depthBias = props.depthBias || 0;
+    this.highlight = props.highlight || 0;
+    this.resolution.set(window.innerWidth, window.innerHeight, window.devicePixelRatio);
 
     this.uniforms = UniformsUtils.merge([this.uniforms, {
       "uColor":  {value: this.color},
@@ -1377,14 +1384,11 @@ class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
     `;
   }
   uniformChanged() {
-    this.uniforms.uColor.value = this.color;
-    this.uniforms.uOpacity.value = this.opacity;
-    this.uniforms.uDepthBias.value = this.depthBias;
-    this.uniforms.uHighlight.value = this.highlight;
-    this.uniforms.uResolution.value = this.resolution;
-    this.uniformsNeedUpdate = true;
+    if (this.uniforms) ;
   }
 }
+
+HelperMaterial.Register = IoCoreMixin.Register;
 
 /**
  * @author arodic / https://github.com/arodic
@@ -1570,6 +1574,8 @@ class Helper extends IoCoreMixin(Mesh) {
     return texts;
   }
 }
+Helper.Register = IoCoreMixin.Register;
+// Helper.Register();
 
 /**
  * @author arodic / https://github.com/arodic
@@ -1647,22 +1653,8 @@ const handleGeometry = {
 };
 
 class TransformHelper extends Helper {
-  get handleGeometry() {
-    return handleGeometry;
-  }
-  get pickerGeometry() {
-    return {};
-  }
-  get guideGeometry() {
-    return {};
-  }
-  get textGeometry() {
-    return {};
-  }
-  constructor(props) {
-    super(props);
-
-    this.defineProperties({
+  static get properties() {
+    return {
       showX: true,
       showY: true,
       showZ: true,
@@ -1680,7 +1672,22 @@ class TransformHelper extends Helper {
       flipY: false,
       flipZ: false,
       size: 0.05,
-    });
+    };
+  }
+  get handleGeometry() {
+    return handleGeometry;
+  }
+  get pickerGeometry() {
+    return {};
+  }
+  get guideGeometry() {
+    return {};
+  }
+  get textGeometry() {
+    return {};
+  }
+  constructor(props) {
+    super(props);
 
     this.worldX = new Vector3();
     this.worldY = new Vector3();

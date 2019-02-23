@@ -1,8 +1,8 @@
-import {IoCoreMixin} from "../../../../io/build/io-core.js";
+import {IoCoreMixin} from "../../../io/build/io-core.js";
 import {UniformsUtils, Vector3, Color, FrontSide, ShaderMaterial,
-  DataTexture, RGBAFormat, FloatType, NearestFilter} from "../../../../three.js/build/three.module.js";
+  DataTexture, RGBAFormat, FloatType, NearestFilter} from "../../../three.js/build/three.module.js";
 
-// TODO: pixel-perfect outlines
+// Material for outlines
 export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
   static get properties() {
     return {
@@ -10,6 +10,12 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
       depthWrite: true,
       transparent: false,
       side: FrontSide,
+
+      color: { type: Color, change: 'uniformChanged'},
+      opacity: { value: 1, change: 'uniformChanged'},
+      depthBias: { value: 0, change: 'uniformChanged'},
+      highlight: { value: 0, change: 'uniformChanged'},
+      resolution: { type: Vector3, change: 'uniformChanged'},
     };
   }
   constructor(props = {}) {
@@ -28,15 +34,11 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
     let color = props.color || new Color(0xffffff);
     let opacity = props.opacity !== undefined ? props.opacity : 1;
 
-    const res = new Vector3(window.innerWidth, window.innerHeight, window.devicePixelRatio);
-
-    this.defineProperties({
-      color: { value: color, change: 'uniformChanged'},
-      opacity: { value: opacity, change: 'uniformChanged'},
-      depthBias: { value: props.depthBias || 0, change: 'uniformChanged'},
-      highlight: { value: props.highlight || 0, change: 'uniformChanged'},
-      resolution: { value: res, change: 'uniformChanged'},
-    });
+    this.color.copy(color);
+    this.opacity = opacity;
+    this.depthBias = props.depthBias || 0;
+    this.highlight = props.highlight || 0;
+    this.resolution.set(window.innerWidth, window.innerHeight, window.devicePixelRatio);
 
     this.uniforms = UniformsUtils.merge([this.uniforms, {
       "uColor":  {value: this.color},
@@ -140,11 +142,15 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
     `;
   }
   uniformChanged() {
-    this.uniforms.uColor.value = this.color;
-    this.uniforms.uOpacity.value = this.opacity;
-    this.uniforms.uDepthBias.value = this.depthBias;
-    this.uniforms.uHighlight.value = this.highlight;
-    this.uniforms.uResolution.value = this.resolution;
-    this.uniformsNeedUpdate = true;
+    if (this.uniforms) {
+      // this.uniforms.uColor.value = this.color;
+      // this.uniforms.uOpacity.value = this.opacity;
+      // this.uniforms.uDepthBias.value = this.depthBias;
+      // this.uniforms.uHighlight.value = this.highlight;
+      // this.uniforms.uResolution.value = this.resolution;
+      // this.uniformsNeedUpdate = true;
+    }
   }
 }
+
+HelperMaterial.Register = IoCoreMixin.Register;

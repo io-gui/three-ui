@@ -7,7 +7,7 @@
  * @author arodic / http://github.com/arodic
  */
 
-import {Vector3, Quaternion, Spherical} from "../../../../../three.js/build/three.module.js";
+import {Vector3, Quaternion, Spherical} from "../../../../three.js/build/three.module.js";
 import {CameraControls} from "../Camera.js";
 
 /*

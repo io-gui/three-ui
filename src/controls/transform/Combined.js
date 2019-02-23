@@ -1,7 +1,7 @@
 /**
  * @author arodic / https://github.com/arodic
  */
-import {Vector3, Quaternion} from "../../../../../three.js/build/three.module.js";
+import {Vector3, Quaternion} from "../../../../three.js/build/three.module.js";
 import {TransformControlsMixin} from "../Transform.js";
 import {CombinedTransformHelper} from "../../helpers/transform/Combined.js";
 

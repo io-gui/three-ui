@@ -2,7 +2,7 @@
  * @author arodic / http://github.com/arodic
  */
 
-import {Vector2, Vector3, MOUSE} from "../../../../three.js/build/three.module.js";
+import {Vector2, Vector3, MOUSE} from "../../../three.js/build/three.module.js";
 import {ViewportTool} from "../core/Tool.js";
 import {Animation} from "../core/Animation.js";
 
@@ -73,12 +73,10 @@ export class CameraControls extends ViewportTool {
 
     this.animation.addEventListener('animation', event => {
       this.update(event.detail.timestep);
-      this.dispatchEvent('change');
     });
 
     this.addEventListener('pointermove', this.onPointerMove.bind(this));
     this.addEventListener('pointerup', this.onPointerUp.bind(this));
-    this.addEventListener('contextmenu', this.onContextmenu.bind(this));
   }
   attachViewport(domElement, camera) {
     super.attachViewport(domElement, camera);
@@ -100,7 +98,6 @@ export class CameraControls extends ViewportTool {
   }
   update(timestep) {
     let dt = timestep / 1000;
-    let maxV = 0;
 
     for (let i = this.viewports.length; i--;) {
 
@@ -159,14 +156,19 @@ export class CameraControls extends ViewportTool {
       camera._state._pan.set(0, 0);
       camera._state._dolly = 0;
 
-      maxV = Math.max(maxV, Math.abs(camera._state._orbitV.x));
-      maxV = Math.max(maxV, Math.abs(camera._state._orbitV.y));
-      maxV = Math.max(maxV, Math.abs(camera._state._panV.x));
-      maxV = Math.max(maxV, Math.abs(camera._state._panV.y));
-      maxV = Math.max(maxV, Math.abs(camera._state._dollyV));
-    }
+      let viewportMaxV = 0;
 
-    if (maxV > EPS) this.animation.startAnimation(0);
+      viewportMaxV = Math.max(viewportMaxV, Math.abs(camera._state._orbitV.x));
+      viewportMaxV = Math.max(viewportMaxV, Math.abs(camera._state._orbitV.y));
+      viewportMaxV = Math.max(viewportMaxV, Math.abs(camera._state._panV.x));
+      viewportMaxV = Math.max(viewportMaxV, Math.abs(camera._state._panV.y));
+      viewportMaxV = Math.max(viewportMaxV, Math.abs(camera._state._dollyV));
+
+      if (viewportMaxV > EPS) {
+        this.dispatchEvent('change', {viewport: this.viewports[i]});
+        this.animation.startAnimation(0);
+      }
+    }
   }
   onPointerMove(event) {
     const pointers = event.detail.pointers;
@@ -207,9 +209,6 @@ export class CameraControls extends ViewportTool {
   }
   onPointerUp(/*pointers, camera*/) {
     this.state = STATE.NONE;
-  }
-  onContextmenu(event) {
-    event.detail.event.preventDefault();
   }
   // onKeyDown(event) {
   //   TODO: key inertia

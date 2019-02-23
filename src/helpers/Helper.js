@@ -2,8 +2,8 @@
  * @author arodic / https://github.com/arodic
  */
 
-import {Mesh, Vector3, BoxBufferGeometry} from "../../../../three.js/build/three.module.js";
-import {IoCoreMixin} from "../../../../io/build/io-core.js";
+import {Mesh, Vector3, BoxBufferGeometry} from "../../../three.js/build/three.module.js";
+import {IoCoreMixin} from "../../../io/build/io-core.js";
 import {HelperMaterial} from "./HelperMaterial.js";
 import {TextHelper} from "./Text.js";
 
@@ -130,3 +130,5 @@ export class Helper extends IoCoreMixin(Mesh) {
     return texts;
   }
 }
+Helper.Register = IoCoreMixin.Register;
+// Helper.Register();

@@ -4,6 +4,9 @@ import {GLTFLoader} from "../../lib/GLTFLoader.js";
 import {EditorCameraControls} from "../controls/camera/Editor.js";
 // import {OrbitCameraControls} from "../controls/camera/Orbit.js";
 // import {TrackballCameraControls} from "../controls/camera/Trackball.js";
+import {SelectionControls} from "../controls/Selection.js";
+// import {CombinedTransformControls} from "../controls/transform/Combined.js";
+
 import "./viewport.js";
 
 const loader = new GLTFLoader();
@@ -25,8 +28,6 @@ const frontCamera = new OrthographicCamera(-0.75, 0.75, 0.75, -0.75, 0.001, 20);
 frontCamera.position.set(0, 0.75, 10);
 frontCamera._target = new Vector3(0, 0.75, 0);
 
-const controls = new EditorCameraControls();
-
 export class ThreeEditor extends IoElement {
   static get style() {
     return html`
@@ -42,11 +43,13 @@ export class ThreeEditor extends IoElement {
     </style>
     `;
   }
-  // static get properties() {
-  //   return {
-  //     controls: OrbitCameraControls,
-  //   }
-  // }
+  static get properties() {
+    return {
+      cameraControls: EditorCameraControls,
+      selectionControls: SelectionControls,
+      // transformControls: CombinedTransformControls,
+    };
+  }
   connectedCallback() {
     super.connectedCallback();
     if (!scene.loaded) {
@@ -62,11 +65,18 @@ export class ThreeEditor extends IoElement {
   }
   constructor(props) {
     super(props);
+    const viewportProps = {
+      clearAlpha: 0,
+      scene: scene,
+      cameraTool: this.cameraControls,
+      selectTool: this.selectionControls,
+      // editTool: this.transformControls,
+    };
     this.template([
-      ['three-viewport', {id: 'viewport0', clearAlpha: 0, scene: scene, camera: perspCamera, controls: controls}],
-      ['three-viewport', {id: 'viewport1', clearAlpha: 0, scene: scene, camera: topCamera, controls: controls}],
-      ['three-viewport', {id: 'viewport2', clearAlpha: 0, scene: scene, camera: leftCamera, controls: controls}],
-      ['three-viewport', {id: 'viewport3', clearAlpha: 0, scene: scene, camera: frontCamera, controls: controls}],
+      ['three-viewport', Object.assign({id: 'viewport0', camera: perspCamera}, viewportProps)],
+      ['three-viewport', Object.assign({id: 'viewport1', camera: topCamera}, viewportProps)],
+      ['three-viewport', Object.assign({id: 'viewport2', camera: leftCamera}, viewportProps)],
+      ['three-viewport', Object.assign({id: 'viewport3', camera: frontCamera}, viewportProps)],
     ]);
   }
 }

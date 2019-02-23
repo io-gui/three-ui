@@ -6,7 +6,7 @@
  * @author arodic / http://github.com/arodic
  */
 
-import {Vector3, Box3, Matrix3, Spherical, Sphere} from "../../../../../three.js/build/three.module.js";
+import {Vector3, Box3, Matrix3, Spherical, Sphere} from "../../../../three.js/build/three.module.js";
 import {CameraControls} from "../Camera.js";
 
 // Reusable utility variables

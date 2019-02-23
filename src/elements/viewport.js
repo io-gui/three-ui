@@ -1,7 +1,7 @@
 import {Scene} from "../../../three.js/build/three.module.js";
 import {ThreeRenderer} from "./renderer.js";
 import {OrbitCameraControls} from "../controls/camera/Orbit.js";
-// import {SelectionControls} from "../controls/Selection.js";
+import {SelectionControls} from "../controls/Selection.js";
 // import {CombinedTransformControls} from "../controls/transform/Combined.js";
 
 // function setIdMaterial(object) {
@@ -19,7 +19,8 @@ import {OrbitCameraControls} from "../controls/camera/Orbit.js";
 export class ThreeViewport extends ThreeRenderer {
   static get properties() {
     return {
-      controls: OrbitCameraControls,
+      cameraTool: OrbitCameraControls,
+      selectionTool: SelectionControls,
     };
   }
   constructor(props) {
@@ -28,40 +29,52 @@ export class ThreeViewport extends ThreeRenderer {
   }
   connectedCallback() {
     super.connectedCallback();
-    this.attachControls(this.controls);
+    this.attachControls(this.cameraTool);
+    this.attachControls(this.selectionTool);
   }
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.detachControls(this.controls);
+    this.detachControls(this.cameraTool);
+    this.detachControls(this.selectionTool);
   }
   sceneChanged() {
     this.scene._helpers = this.scene._helpers || new Scene();
   }
   cameraChanged() {
-    this.attachControls(this.controls);
+    this.attachControls(this.cameraTool);
+    this.attachControls(this.selectionTool);
   }
-  controlsChanged(event) {
+  cameraToolChanged(event) {
     this.detachControls(event.detail.oldValue);
     this.attachControls(event.detail.value);
   }
-  attachControls(controls) {
-    if (controls) {
-      controls.addEventListener('change', this.render);
-      controls.attachViewport(this, this.camera);
+  selectionToolChanged(event) {
+    this.detachControls(event.detail.oldValue);
+    this.attachControls(event.detail.value);
+  }
+  attachControls(cameraTool) {
+    if (cameraTool) {
+      cameraTool.addEventListener('change', this.onCameraToolChange);
+      cameraTool.attachViewport(this, this.camera);
     }
   }
-  detachControls(controls) {
-    controls.removeEventListener('change', this.render);
-    controls.detachViewport(this);
+  detachControls(cameraTool) {
+    cameraTool.removeEventListener('change', this.onCameraToolChange);
+    cameraTool.detachViewport(this);
+  }
+  onCameraToolChange(event) {
+    if (event.detail.viewport === this) {
+      this.render();
+    }
   }
   // constructor(props) {
   //   // super(props)
-  //   // this.controlsChanged();
+  //   // this.cameraToolChanged();
   //
   //   // this.pickingTexture = new WebGLRenderTarget(1, 1);
   //
-  //   // this.controls = new OrbitCameraControls();
-  //   // this.controls = new OrbitCameraControls({domElement: this, camera: this.camera});
+  //   // this.cameraTool = new OrbitCameraControls();
+  //   // this.cameraTool = new OrbitCameraControls({domElement: this, camera: this.camera});
   //
   //   // this.selectionControls = new SelectionControls({domElement: this, camera: this.camera, object_: this.scene});
   //   // this.scene._helpers.add(this.selectionControls);
@@ -78,11 +91,11 @@ export class ThreeViewport extends ThreeRenderer {
   //
   //   // const scope = this;
   //   // function transformControlsChanged(event) {
-  //   //   if (event.detail.property === 'active') scope.controls.enabled = event.detail.value ? false : true;
+  //   //   if (event.detail.property === 'active') scope.cameraTool.enabled = event.detail.value ? false : true;
   //   //   if (event.detail.property === 'space') scope.selectionControls.transformSpace = event.detail.value;
   //   //   if (event.detail.property === 'axis') {
   //   //     scope.selectionControls.enabled = event.detail.value ? false : true;
-  //   //     scope.controls.enabled = event.detail.value ? false : true;
+  //   //     scope.cameraTool.enabled = event.detail.value ? false : true;
   //   //   }
   //   // }
   //

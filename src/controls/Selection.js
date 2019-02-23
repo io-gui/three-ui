@@ -4,10 +4,9 @@
 
 // TODO: marquee selection
 
-import {IoCore} from "../../../../io/build/io-core.js";
-import {Raycaster} from "../../../../three.js/build/three.module.js";
-import {Vector3, Quaternion, Box3} from "../../../../three.js/build/three.module.js";
+import {Vector3, Quaternion, Box3, Scene, Group, Raycaster} from "../../../three.js/build/three.module.js";
 import {SelectionHelper} from "../helpers/Selection.js";
+import {ViewportTool} from "../core/Tool.js";
 
 // Reusable utility variables
 const pos = new Vector3();
@@ -69,26 +68,29 @@ const CLICK_TIME = 250;
  * @event selected-changed - also fired on selection change (includes selection payload).
  */
 
-export class SelectionControls extends IoCore {
-  constructor(props) {
-    super(props);
-
-    this.defineProperties({
-      object_: props.object_ || null, // TODO: remove
+export class SelectionControls extends ViewportTool {
+  static get properties() {
+    return {
+      scene_: Scene, // TODO: remove
       selected: [],
       transformSelection: true,
       transformSpace: 'local',
-      boundingBox: new Box3()
+      boundingBox: Box3,
+      helper: Group,
       // translationSnap: null,
       // rotationSnap: null
-    });
+    };
   }
-  select(position, add) {
+  constructor(props) {
+    super(props);
+    this.addEventListener('pointerdown', this.onPointerdown.bind(this));
+    this.addEventListener('pointerup', this.onPointerup.bind(this));
+  }
+  select(position, camera, add) {
 
-    const camera = this.camera;
     raycaster.setFromCamera(position, camera);
 
-    const intersects = raycaster.intersectObjects(this.object_.children, true);
+    const intersects = raycaster.intersectObjects(this.scene_.children, true);
     if (intersects.length > 0) {
       const object = intersects[0].object;
       // TODO: handle helper selection
@@ -102,14 +104,16 @@ export class SelectionControls extends IoCore {
     }
     this.dispatchEvent('change');
   }
-  onPointerDown() {
+  onPointerdown() {
     time = Date.now();
   }
-  onPointerUp(pointers) {
+  onPointerup(event) {
+    const pointers = event.detail.pointers;
+    // const camera = event.detail.camera;
     dtime = Date.now() - time;
-    if (pointers.length === 0 && dtime < CLICK_TIME) {
-      if (pointers.removed[0].distance.length() < CLICK_DIST) {
-        this.select(pointers.removed[0].position, pointers.removed[0].ctrlKey);
+    if (pointers[0] && dtime < CLICK_TIME) {
+      if (pointers[0].distance.x < CLICK_DIST) {
+        // this.select(pointers[0].position, camera, pointers[0].ctrlKey);
       }
     }
   }
