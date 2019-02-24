@@ -167,6 +167,9 @@ class Pointer {
       distance: {x: x - start.x, y: y - start.y},
       buttons: event.buttons,
       button: button0 ? 0 : button1 ? 1 : button2 ? 2 : -1,
+      ctrlKey: event.ctrlKey,
+      altKey: event.altKey,
+      shiftKey: event.shiftKey,
     };
   }
 }
