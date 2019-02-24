@@ -1,10 +1,10 @@
 import {Scene, PerspectiveCamera, Vector3, OrthographicCamera, HemisphereLight} from "../../../three.js/build/three.module.js";
 import {IoElement, html} from "../../../io/build/io.js";
 import {GLTFLoader} from "../../lib/GLTFLoader.js";
-import {EditorCameraControls} from "../controls/camera/Editor.js";
+// import {EditorCameraControls} from "../controls/camera/Editor.js";
 // import {OrbitCameraControls} from "../controls/camera/Orbit.js";
 // import {TrackballCameraControls} from "../controls/camera/Trackball.js";
-import {SelectionControls} from "../controls/Selection.js";
+// import {SelectionControls} from "../controls/Selection.js";
 // import {CombinedTransformControls} from "../controls/transform/Combined.js";
 
 import "./viewport.js";
@@ -45,8 +45,8 @@ export class ThreeEditor extends IoElement {
   }
   static get properties() {
     return {
-      cameraControls: EditorCameraControls,
-      selectionControls: SelectionControls,
+      // cameraControls: EditorCameraControls,
+      // selectionControls: SelectionControls,
       // transformControls: CombinedTransformControls,
     };
   }
@@ -68,8 +68,8 @@ export class ThreeEditor extends IoElement {
     const viewportProps = {
       clearAlpha: 0,
       scene: scene,
-      cameraTool: this.cameraControls,
-      selectTool: this.selectionControls,
+      // cameraTool: this.cameraControls, // TODO: previous controlls do not disconnect!
+      // selectTool: this.selectionControls,
       // editTool: this.transformControls,
     };
     this.template([

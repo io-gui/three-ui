@@ -21,8 +21,8 @@ export class ThreeViewport extends ThreeRenderer {
     super.connectedCallback();
     this.attachCameraTool(this.cameraTool);
     this.attachSelectionTool(this.selectionTool);
-    this.selectionTool.scene = this.scene;
-    this.selectionTool.selection = this.selection;
+    // this.selectionTool.scene = this.scene;
+    // this.selectionTool.selection = this.selection;
   }
   disconnectedCallback() {
     super.disconnectedCallback();
@@ -43,7 +43,6 @@ export class ThreeViewport extends ThreeRenderer {
     this.attachSelectionTool(event.detail.value);
     this.selectionTool.scene = this.scene;
     this.selectionTool.selection = this.selection;
-    this.render();
   }
   cameraToolChanged(event) {
     this.detachCameraTool(event.detail.oldValue);

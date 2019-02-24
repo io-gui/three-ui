@@ -74,6 +74,9 @@ export class CameraControls extends Tool {
     this.addEventListener('pointermove', this.onPointermove.bind(this));
     this.addEventListener('pointerup', this.onPointerup.bind(this));
   }
+  dispose() {
+    super.dispose();
+  }
   attachViewport(domElement, camera) {
     super.attachViewport(domElement, camera);
     camera._target = camera._target || new Vector3();
@@ -160,8 +163,6 @@ export class CameraControls extends Tool {
       viewportMaxV = Math.max(viewportMaxV, Math.abs(camera._state._panV.y));
       viewportMaxV = Math.max(viewportMaxV, Math.abs(camera._state._dollyV));
 
-      console.log(this.state, viewportMaxV)
-
       if (viewportMaxV > EPS) {
         this.dispatchEvent('object-mutated', {object: camera}, false, window);
         this.animation.startAnimation(0);
@@ -204,8 +205,10 @@ export class CameraControls extends Tool {
       //   this._setDollyPan(camera, (prevDistance - distance) * this.dollySpeed, direction.multiplyScalar(this.panSpeed));
       //   break;
     }
+    console.log('m')
   }
   onPointerup(/*pointers, camera*/) {
+    console.log('u')
     this.state = STATE.NONE;
   }
   // onKeyDown(event) {
