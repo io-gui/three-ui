@@ -3,7 +3,7 @@
  */
 
 import {Vector2, Vector3, MOUSE} from "../../../three.js/build/three.module.js";
-import {ViewportTool} from "../core/Tool.js";
+import {Tool} from "../core/Tool.js";
 import {Animation} from "../core/Animation.js";
 
 /*
@@ -29,7 +29,7 @@ function dampTo(source, target, smoothing, dt) {
   return source * (1 - t) + target * t;
 }
 
-export class CameraControls extends ViewportTool {
+export class CameraControls extends Tool {
   static get properties() {
     return {
       active: false,
@@ -70,11 +70,9 @@ export class CameraControls extends ViewportTool {
     this.BUTTON = {LEFT: MOUSE.LEFT, MIDDLE: MOUSE.MIDDLE, RIGHT: MOUSE.RIGHT}, // Mouse buttons
 
     this.animation = new Animation();
-
     this.animation.addEventListener('animation', event => {
       this.update(event.detail.timestep);
     });
-
     this.addEventListener('pointermove', this.onPointerMove.bind(this));
     this.addEventListener('pointerup', this.onPointerUp.bind(this));
   }
@@ -165,7 +163,7 @@ export class CameraControls extends ViewportTool {
       viewportMaxV = Math.max(viewportMaxV, Math.abs(camera._state._dollyV));
 
       if (viewportMaxV > EPS) {
-        this.dispatchEvent('change', {viewport: this.viewports[i]});
+        this.dispatchEvent('object-mutated', {object: camera}, false, window);
         this.animation.startAnimation(0);
       }
     }
@@ -173,7 +171,7 @@ export class CameraControls extends ViewportTool {
   onPointerMove(event) {
     const pointers = event.detail.pointers;
     const camera = event.detail.camera;
-    let rect = event.detail.event.target.getBoundingClientRect();
+    const rect = event.detail.rect;
     let prevDistance, distance;
     aspectMultiplier.set(rect.width / rect.height, 1);
     switch (pointers.length) {

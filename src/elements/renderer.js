@@ -172,8 +172,8 @@ export class ThreeRenderer extends IoElement {
   }
   resized() {
     const rect = this.getBoundingClientRect();
-    this.size[0] = Math.floor(rect.width);
-    this.size[1] = Math.floor(rect.height);
+    this.size[0] = Math.ceil(rect.width);
+    this.size[1] = Math.ceil(rect.height);
     const ratio =  (window.devicePixelRatio || 1) / this._ctx.backingStorePixelRatio || 1;
     this.$.canvas.width = this.size[0] * ratio;
     this.$.canvas.height = this.size[1] * ratio;

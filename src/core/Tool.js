@@ -5,7 +5,7 @@
 import {IoCore} from "../../../io/build/io-core.js";
 import {Pointers} from "./Pointers.js";
 
-export class ViewportTool extends IoCore {
+export class Tool extends IoCore {
   static get properties() {
     return {
       enabled: true,
@@ -57,71 +57,82 @@ export class ViewportTool extends IoCore {
     const target = event.detail.event.target;
     const pointers = event.detail.pointers;
     const camera = this.cameras.get(target);
-    this.dispatchEvent('pointerdown', {event: event.detail.event, pointers: pointers, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('pointerdown', {event: event.detail.event, target: target, rect: rect, pointers: pointers, camera: camera});
   }
   onViewportPointerHover(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const pointers = event.detail.pointers;
     const camera = this.cameras.get(target);
-    this.dispatchEvent('pointerhover', {event: event.detail.event, pointers: pointers, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('pointerhover', {event: event.detail.event, target: target, rect: rect, pointers: pointers, camera: camera});
   }
   onViewportPointerMove(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const pointers = event.detail.pointers;
     const camera = this.cameras.get(target);
-    this.dispatchEvent('pointermove', {event: event.detail.event, target: target, pointers: pointers, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('pointermove', {event: event.detail.event, target: target, rect: rect, pointers: pointers, camera: camera});
   }
   onViewportPointerUp(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const pointers = event.detail.pointers;
     const camera = this.cameras.get(target);
-    this.dispatchEvent('pointerup', {event: event.detail.event, target: target, pointers: pointers, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('pointerup', {event: event.detail.event, target: target, rect: rect, pointers: pointers, camera: camera});
   }
   onViewportPointerLeave(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const pointers = event.detail.pointers;
     const camera = this.cameras.get(target);
-    this.dispatchEvent('pointerleave', {event: event.detail.event, target: target, pointers: pointers, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('pointerleave', {event: event.detail.event, target: target, rect: rect, pointers: pointers, camera: camera});
   }
   onViewportContextmenu(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const camera = this.cameras.get(event.target);
-    this.dispatchEvent('contextmenu', {event: event.detail.event, target: target, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('contextmenu', {event: event.detail.event, target: target, rect: rect, camera: camera});
   }
   onViewportKeyDown(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const camera = this.cameras.get(event.target);
-    this.dispatchEvent('keykown', {event: event.detail.event, target: target, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('keykown', {event: event.detail.event, target: target, rect: rect, camera: camera});
   }
   onViewportKeyUp(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const camera = this.cameras.get(event.target);
-    this.dispatchEvent('keyup', {event: event.detail.event, target: target, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('keyup', {event: event.detail.event, target: target, rect: rect, camera: camera});
   }
   onViewportWheel(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const camera = this.cameras.get(event.target);
-    this.dispatchEvent('wheel', {event: event.detail.event, target: target, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('wheel', {event: event.detail.event, target: target, rect: rect, camera: camera});
   }
   onViewportFocus(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const camera = this.cameras.get(event.target);
-    this.dispatchEvent('focus', {event: event.detail.event, target: target, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('focus', {event: event.detail.event, target: target, rect: rect, camera: camera});
   }
   onViewportBlur(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const camera = this.cameras.get(event.target);
-    this.dispatchEvent('blur', {event: event.detail.event, target: target, camera: camera});
+    const rect = target.getBoundingClientRect();
+    this.dispatchEvent('blur', {event: event.detail.event, target: target, rect: rect, camera: camera});
   }
   //
   dispose() {
