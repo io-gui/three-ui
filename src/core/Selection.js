@@ -2,7 +2,6 @@
  * @author arodic / http://github.com/arodic
  */
 
-import {SelectionHelper} from "../helpers/Selection.js";
 import {IoCore} from "../../../io/build/io.js";
 
 const selectedOld = [];

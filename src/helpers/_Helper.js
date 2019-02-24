@@ -2,7 +2,7 @@
  * @author arodic / https://github.com/arodic
  */
 
-import {Object3D, Mesh, Vector3, BoxBufferGeometry} from "../../../three.js/build/three.module.js";
+import {Mesh, Vector3, BoxBufferGeometry} from "../../../three.js/build/three.module.js";
 import {IoCoreMixin} from "../../../io/build/io-core.js";
 import {HelperMaterial} from "./HelperMaterial.js";
 import {TextHelper} from "./Text.js";
@@ -16,7 +16,7 @@ const _cameraPosition = new Vector3();
  * Helpers will auto-scale in view space if `size` property is non-zero.
  */
 
-export class Helper extends IoCoreMixin(Object3D) {
+export class Helper extends IoCoreMixin(Mesh) {
   static get properties() {
     return {
       object: null,
@@ -28,7 +28,12 @@ export class Helper extends IoCoreMixin(Object3D) {
   }
   constructor(props = {}) {
     super(props);
+
     this.eye = new Vector3();
+
+    this.geometry = new BoxBufferGeometry(1,1,1,1,1,1);
+    this.material.colorWrite = false;
+    this.material.depthWrite = false;
   }
   onBeforeRender(renderer, scene, camera) {
     this.camera = camera;

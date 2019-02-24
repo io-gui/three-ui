@@ -32,7 +32,6 @@ function dampTo(source, target, smoothing, dt) {
 export class CameraControls extends Tool {
   static get properties() {
     return {
-      active: false,
       enableOrbit: true,
       enableDolly: true,
       enablePan: true,
@@ -48,7 +47,6 @@ export class CameraControls extends Tool {
       autoDollyPan: Vector3,
       enableDamping: true,
       dampingFactor: 0.05,
-      state: STATE.NONE,
     };
   }
   constructor(props) {
@@ -73,8 +71,8 @@ export class CameraControls extends Tool {
     this.animation.addEventListener('animation', event => {
       this.update(event.detail.timestep);
     });
-    this.addEventListener('pointermove', this.onPointerMove.bind(this));
-    this.addEventListener('pointerup', this.onPointerUp.bind(this));
+    this.addEventListener('pointermove', this.onPointermove.bind(this));
+    this.addEventListener('pointerup', this.onPointerup.bind(this));
   }
   attachViewport(domElement, camera) {
     super.attachViewport(domElement, camera);
@@ -162,13 +160,15 @@ export class CameraControls extends Tool {
       viewportMaxV = Math.max(viewportMaxV, Math.abs(camera._state._panV.y));
       viewportMaxV = Math.max(viewportMaxV, Math.abs(camera._state._dollyV));
 
+      console.log(this.state, viewportMaxV)
+
       if (viewportMaxV > EPS) {
         this.dispatchEvent('object-mutated', {object: camera}, false, window);
         this.animation.startAnimation(0);
       }
     }
   }
-  onPointerMove(event) {
+  onPointermove(event) {
     const pointers = event.detail.pointers;
     const camera = event.detail.camera;
     const rect = event.detail.rect;
@@ -195,17 +195,17 @@ export class CameraControls extends Tool {
             break;
         }
         break;
-      default: // 2 or more
-        // two-fingered touch: dolly-pan
-        // TODO: apply aspectMultiplier?
-        distance = pointers[0].position.distanceTo(pointers[1].position);
-        prevDistance = pointers[0].previous.distanceTo(pointers[1].previous);
-        direction.copy(pointers[0].movement).add(pointers[1].movement).multiply(aspectMultiplier);
-        this._setDollyPan(camera, (prevDistance - distance) * this.dollySpeed, direction.multiplyScalar(this.panSpeed));
-        break;
+      // default: // 2 or more
+      //   // two-fingered touch: dolly-pan
+      //   // TODO: apply aspectMultiplier?
+      //   distance = pointers[0].position.distanceTo(pointers[1].position);
+      //   prevDistance = pointers[0].previous.distanceTo(pointers[1].previous);
+      //   direction.copy(pointers[0].movement).add(pointers[1].movement).multiply(aspectMultiplier);
+      //   this._setDollyPan(camera, (prevDistance - distance) * this.dollySpeed, direction.multiplyScalar(this.panSpeed));
+      //   break;
     }
   }
-  onPointerUp(/*pointers, camera*/) {
+  onPointerup(/*pointers, camera*/) {
     this.state = STATE.NONE;
   }
   // onKeyDown(event) {

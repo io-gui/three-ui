@@ -2,6 +2,7 @@
  * @author arodic / https://github.com/arodic
  */
 
+import {Scene} from "../../../three.js/build/three.module.js";
 import {IoCore} from "../../../io/build/io-core.js";
 import {Pointers} from "./Pointers.js";
 
@@ -9,6 +10,10 @@ export class Tool extends IoCore {
   static get properties() {
     return {
       enabled: true,
+      active: false,
+      state: -1,
+      scene: Scene,
+      helperScene: Scene,
     };
   }
   constructor(props = {}) {

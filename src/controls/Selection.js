@@ -6,6 +6,7 @@
 
 import {Scene, Raycaster} from "../../../three.js/build/three.module.js";
 import {Selection} from "../core/Selection.js";
+import {SelectionHelper} from "../helpers/Selection.js";
 import {Tool} from "../core/Tool.js";
 
 // Temp variables
@@ -18,8 +19,8 @@ const CLICK_TIME = 250;
 export class SelectionControls extends Tool {
   static get properties() {
     return {
-      scene: Scene,
       selection: Selection,
+      helper: SelectionHelper,
     };
   }
   constructor(props) {
@@ -27,13 +28,21 @@ export class SelectionControls extends Tool {
     this.addEventListener('pointerdown', this.onPointerdown.bind(this));
     this.addEventListener('pointerup', this.onPointerup.bind(this));
   }
+  helperChanged(event) {
+    const oldHelper = event.detail.oldValue;
+    const helper = event.detail.value;
+    if (oldHelper) this.helperScene.remove(oldHelper);
+    if (helper) this.helperScene.remove(helper);
+  }
+  selectionChanged() {
+    this.helper.selection = this.selection;
+  }
   select(viewport, pointer, camera) {
     raycaster.setFromCamera(pointer.position, camera);
     const intersects = raycaster.intersectObjects(this.scene.children, true);
     if (intersects.length > 0) {
       const object = intersects[0].object;
       // TODO: handle helper selection
-      console.log(pointer.ctrlKey)
       if (pointer.ctrlKey) {
         this.selection.toggle(object);
       } else {
@@ -42,8 +51,6 @@ export class SelectionControls extends Tool {
     } else {
       this.selection.clear();
     }
-    console.log(this.selection.selected)
-    this.dispatchEvent('change', {viewport: viewport});
   }
   onPointerdown() {
     time = Date.now();

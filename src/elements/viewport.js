@@ -29,30 +29,25 @@ export class ThreeViewport extends ThreeRenderer {
     this.detachCameraTool(this.cameraTool);
     this.detachSelectionTool(this.selectionTool);
   }
-  objectMutated(event) {
-    if (event.detail.object === this.scene) this.render();
-    if (event.detail.object === this.camera) this.render();
-    if (event.detail.object === this.selection) this.render();
-  }
   sceneChanged() {
     this.selectionTool.scene = this.scene;
-  }
-  selectionToolChanged() {
-    this.selectionTool.scene = this.scene;
-    this.selectionTool.selection = this.selection;
+    this.render();
   }
   cameraChanged() {
     this.attachCameraTool(this.cameraTool);
     this.attachSelectionTool(this.selectionTool);
-  }
-  cameraToolChanged(event) {
-    this.detachCameraTool(event.detail.oldValue);
-    this.attachCameraTool(event.detail.value);
+    this.render();
   }
   selectionToolChanged(event) {
     this.detachSelectionTool(event.detail.oldValue);
     this.attachSelectionTool(event.detail.value);
+    this.selectionTool.scene = this.scene;
     this.selectionTool.selection = this.selection;
+    this.render();
+  }
+  cameraToolChanged(event) {
+    this.detachCameraTool(event.detail.oldValue);
+    this.attachCameraTool(event.detail.value);
   }
   attachCameraTool(tool) {
     if (tool) {
@@ -76,11 +71,6 @@ export class ThreeViewport extends ThreeRenderer {
       delete tool.scene;
     }
   }
-  onCameraToolChange(event) {
-    if (event.detail.viewport === this) {
-      this.render();
-    }
-  }
   dispose() {
     // TODO
   }
@@ -88,8 +78,8 @@ export class ThreeViewport extends ThreeRenderer {
   }
   postRender() {
     this.renderer.clearDepth();
-    // this.scene._helpers = this.scene._helpers || new Scene();
-    if (this.scene._helpers) this.renderer.render(this.scene._helpers, this.camera);
+    if (this.cameraTool.helperScene) this.renderer.render(this.cameraTool.helperScene, this.camera);
+    if (this.selectionTool.helperScene) this.renderer.render(this.selectionTool.helperScene, this.camera);
   }
 }
 
