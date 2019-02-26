@@ -82,8 +82,8 @@ export class Pointers extends IoCore {
     if (!this.enabled) return false;
     event.target.setPointerCapture(event.pointerId);
     const pointers = this.pointers.get(event.target);
-    pointers[event.pointerID] = new Pointer(event);
-    this.dispatchEvent('pointerdown', {event: event, pointers: [pointers[event.pointerID]]});
+    pointers[event.pointerId] = new Pointer(event);
+    this.dispatchEvent('pointerdown', {event: event, pointers: [pointers[event.pointerId]]});
   }
   onPointerhover(event) {
     if (!this.enabled) return false;
@@ -97,7 +97,7 @@ export class Pointers extends IoCore {
   onPointermove(event) {
     if (!this.enabled) return false;
     const pointers = this.pointers.get(event.target);
-    pointers[event.pointerID] = new Pointer(event, pointers[event.pointerID].start);
+    pointers[event.pointerId] = new Pointer(event, pointers[event.pointerId].start);
     const pointerArray = [];
     for (let i in pointers) pointerArray.push(pointers[i]);
     this.dispatchEvent('pointermove', {event: event, pointers: pointerArray});
@@ -106,15 +106,15 @@ export class Pointers extends IoCore {
     if (!this.enabled) return false;
     event.target.releasePointerCapture(event.pointerId);
     const pointers = this.pointers.get(event.target);
-    const pointer = new Pointer(event, pointers[event.pointerID].start);
-    delete pointers[event.pointerID];
+    const pointer = new Pointer(event, pointers[event.pointerId].start);
+    delete pointers[event.pointerId];
     this.dispatchEvent('pointerup', {event: event, pointers: [pointer]});
   }
   onPointerleave(event) {
     if (!this.enabled) return false;
     const pointers = this.pointers.get(event.target);
     const pointer = new Pointer(event);
-    delete pointers[event.pointerID];
+    delete pointers[event.pointerId];
     this.dispatchEvent('pointerleave', {event: event, pointers: [pointer]});
   }
   onContextmenu(event) {
@@ -155,7 +155,7 @@ class Pointer {
     const dy = (event.movementY / rect.height) * - 2.0;
     start = start || {x: x, y: y};
     return {
-      pointerID: event.pointerID,
+      pointerId: event.pointerId,
       target: event.target,
       rect: rect,
       type: event.type,
