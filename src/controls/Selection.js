@@ -4,7 +4,7 @@
 
 // TODO: marquee selection
 
-import {Scene, Raycaster} from "../../../three.js/build/three.module.js";
+import {Raycaster} from "../../../three.js/build/three.module.js";
 import {Selection} from "../core/Selection.js";
 import {SelectionHelper} from "../helpers/Selection.js";
 import {Tool} from "../core/Tool.js";

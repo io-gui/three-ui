@@ -22,7 +22,7 @@ export class Tool extends IoCore {
   get bindings() {
     return {
       pointers: {enabled: this.bind('enabled')}
-    }
+    };
   }
   constructor(props = {}) {
     super(props);

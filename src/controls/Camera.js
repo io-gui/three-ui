@@ -173,7 +173,7 @@ export class CameraControls extends Tool {
     const pointers = event.detail.pointers;
     const camera = event.detail.camera;
     const rect = event.detail.rect;
-    let prevDistance, distance;
+    // let prevDistance, distance;
     aspectMultiplier.set(rect.width / rect.height, 1);
     switch (pointers.length) {
       case 1:

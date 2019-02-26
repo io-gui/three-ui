@@ -4,7 +4,7 @@
 
 import {Vector3, Quaternion, Matrix4, CylinderBufferGeometry} from "../../../three.js/build/three.module.js";
 import {Helper} from "./Helper.js";
-import {TransformHelper} from "./Transform.js";
+// import {TransformHelper} from "./Transform.js";
 import {HelperGeometry} from "./HelperGeometry.js";
 
 // Reusable utility variables
@@ -56,7 +56,7 @@ export class SelectionHelper extends Helper {
     // axis.doHide = false;
     // super.add(axis);
   }
-  selectionChanged(event) {
+  selectionChanged() {
     const selected = this.selection.selected;
 
     if (selected.length && selected[0].geometry) {

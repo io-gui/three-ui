@@ -1,4 +1,3 @@
-import {Scene} from "../../../three.js/build/three.module.js";
 import {ThreeRenderer} from "./renderer.js";
 import {OrbitCameraControls} from "../controls/camera/Orbit.js";
 import {SelectionControls} from "../controls/Selection.js";
@@ -17,7 +16,7 @@ export class ThreeViewport extends ThreeRenderer {
     return {
       cameraTool: {scene: this.bind('scene')},
       selectionTool: {scene: this.bind('scene'), selection: this.bind('selection')},
-    }
+    };
   }
   connectedCallback() {
     super.connectedCallback();
@@ -32,7 +31,7 @@ export class ThreeViewport extends ThreeRenderer {
   sceneChanged() {
     this.selectionTool.scene = this.scene;
   }
-  cameraChanged(event) {
+  cameraChanged() {
     this.cameraTool.attachViewport(this, this.camera);
     this.selectionTool.attachViewport(this, this.camera);
   }
