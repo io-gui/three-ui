@@ -70,4 +70,8 @@ export class Selection extends IoCore {
     this.selected.length = 0;
     this.dispatchEvent('object-mutated', {object: this}, false, window);
   }
+  dispose() {
+    // TODO:
+    console.log('dispose');
+  }
 }

@@ -14,14 +14,18 @@ export class Tool extends IoCore {
       state: -1,
       scene: Scene,
       helperScene: Scene,
+      viewports: [],
+      cameras: WeakMap,
+      pointers: Pointers,
     };
+  }
+  get bindings() {
+    return {
+      pointers: {enabled: this.bind('enabled')}
+    }
   }
   constructor(props = {}) {
     super(props);
-
-    this.viewports = [];
-    this.cameras = new WeakMap();
-    this.pointers = new Pointers({enabled: this.enabled});
 
     this.pointers.addEventListener('pointerdown', this.onViewportPointerdown.bind(this));
     this.pointers.addEventListener('pointerhover', this.onViewportPointerhover.bind(this));

@@ -6,6 +6,7 @@ import {EditorCameraControls} from "../controls/camera/Editor.js";
 // import {TrackballCameraControls} from "../controls/camera/Trackball.js";
 import {SelectionControls} from "../controls/Selection.js";
 // import {CombinedTransformControls} from "../controls/transform/Combined.js";
+import {Selection} from "../core/Selection.js";
 
 import "./viewport.js";
 
@@ -47,6 +48,7 @@ export class ThreeEditor extends IoElement {
     return {
       cameraControls: EditorCameraControls,
       selectionControls: SelectionControls,
+      selection: Selection,
       // transformControls: CombinedTransformControls,
     };
   }
@@ -68,6 +70,7 @@ export class ThreeEditor extends IoElement {
     const viewportProps = {
       clearAlpha: 0,
       scene: scene,
+      selection: this.selection,
       // TODO: make sure previous controls do disconnect!
       cameraTool: this.cameraControls,
       selectTool: this.selectionControls,
@@ -79,6 +82,9 @@ export class ThreeEditor extends IoElement {
       ['three-viewport', Object.assign({id: 'viewport2', camera: leftCamera}, viewportProps)],
       ['three-viewport', Object.assign({id: 'viewport3', camera: frontCamera}, viewportProps)],
     ]);
+  }
+  selectionMutated(event) {
+    console.log('EDITOR !!!! selection mutated', event.detail, this);
   }
 }
 
