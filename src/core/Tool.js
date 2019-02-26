@@ -44,7 +44,6 @@ export class Tool extends IoCore {
   }
   attachViewport(domElement, camera) {
     if (this.viewports.indexOf(domElement) === -1) {
-      // console.log('a', this)
       this.viewports.push(domElement);
     }
     this.pointers.attachElement(domElement);
@@ -52,7 +51,6 @@ export class Tool extends IoCore {
   }
   detachViewport(domElement) {
     if (this.viewports.indexOf(domElement) !== -1) {
-      // console.log('bs', this)
       this.viewports.splice(this.viewports.indexOf(domElement), 1);
     }
     this.pointers.detachElement(domElement);

@@ -108,3 +108,5 @@ export class CombinedTransformControls extends TransformControlsMixin(CombinedTr
     }
   }
 }
+
+CombinedTransformControls.Register = TransformControlsMixin.Register;

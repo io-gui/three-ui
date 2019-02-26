@@ -15,7 +15,6 @@ export class ThreeViewport extends ThreeRenderer {
   }
   constructor(props) {
     super(props);
-    // this.sceneChanged();
     this.mapProperties({
       cameraTool: {scene: this.scene},
       selectionTool: {scene: this.scene, selection: this.selection},
@@ -31,18 +30,16 @@ export class ThreeViewport extends ThreeRenderer {
     this.cameraTool.detachViewport(this, this.camera);
     this.selectionTool.detachViewport(this, this.camera);
   }
-  changed() {
-    // console.log('ss');
+  objectMutated(event) {
+    super.objectMutated(event);
+    if (event.detail.object === this.selection) {
+      this.queueRender();
+    }
   }
-  // sceneChanged() {
-  //   this.selectionTool.scene = this.scene;
-  //   this.render();
-  // }
-  // cameraChanged() {
-  //   this.attachCameraTool(this.cameraTool);
-  //   this.attachSelectionTool(this.selectionTool);
-  //   this.render();
-  // }
+  cameraChanged() {
+    this.cameraTool.attachViewport(this, this.camera);
+    this.selectionTool.attachViewport(this, this.camera);
+  }
   selectionToolChanged(event) {
     if (event.detail.oldValue) event.detail.oldValue.detachViewport(this);
     event.detail.value.attachViewport(this, this.camera);
@@ -53,6 +50,8 @@ export class ThreeViewport extends ThreeRenderer {
   }
   dispose() {
     // TODO
+    this.cameraTool.detachViewport(this, this.camera);
+    this.selectionTool.detachViewport(this, this.camera);
   }
   preRender() {
   }
