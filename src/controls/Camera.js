@@ -205,10 +205,8 @@ export class CameraControls extends Tool {
       //   this._setDollyPan(camera, (prevDistance - distance) * this.dollySpeed, direction.multiplyScalar(this.panSpeed));
       //   break;
     }
-    console.log('m')
   }
   onPointerup(/*pointers, camera*/) {
-    console.log('u')
     this.state = STATE.NONE;
   }
   // onKeyDown(event) {

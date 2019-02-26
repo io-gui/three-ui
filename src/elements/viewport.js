@@ -15,60 +15,41 @@ export class ThreeViewport extends ThreeRenderer {
   }
   constructor(props) {
     super(props);
-    this.sceneChanged();
+    // this.sceneChanged();
+    this.mapProperties({
+      cameraTool: {scene: this.scene},
+      selectionTool: {scene: this.scene, selection: this.selection},
+    })
   }
   connectedCallback() {
     super.connectedCallback();
-    this.attachCameraTool(this.cameraTool);
-    this.attachSelectionTool(this.selectionTool);
-    // this.selectionTool.scene = this.scene;
-    // this.selectionTool.selection = this.selection;
+    this.cameraTool.attachViewport(this, this.camera);
+    this.selectionTool.attachViewport(this, this.camera);
   }
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.detachCameraTool(this.cameraTool);
-    this.detachSelectionTool(this.selectionTool);
+    this.cameraTool.detachViewport(this, this.camera);
+    this.selectionTool.detachViewport(this, this.camera);
   }
-  sceneChanged() {
-    this.selectionTool.scene = this.scene;
-    this.render();
+  changed() {
+    // console.log('ss');
   }
-  cameraChanged() {
-    this.attachCameraTool(this.cameraTool);
-    this.attachSelectionTool(this.selectionTool);
-    this.render();
-  }
+  // sceneChanged() {
+  //   this.selectionTool.scene = this.scene;
+  //   this.render();
+  // }
+  // cameraChanged() {
+  //   this.attachCameraTool(this.cameraTool);
+  //   this.attachSelectionTool(this.selectionTool);
+  //   this.render();
+  // }
   selectionToolChanged(event) {
-    this.detachSelectionTool(event.detail.oldValue);
-    this.attachSelectionTool(event.detail.value);
-    this.selectionTool.scene = this.scene;
-    this.selectionTool.selection = this.selection;
+    if (event.detail.oldValue) event.detail.oldValue.detachViewport(this);
+    event.detail.value.attachViewport(this, this.camera);
   }
   cameraToolChanged(event) {
-    this.detachCameraTool(event.detail.oldValue);
-    this.attachCameraTool(event.detail.value);
-  }
-  attachCameraTool(tool) {
-    if (tool) {
-      tool.attachViewport(this, this.camera);
-    }
-  }
-  detachCameraTool(tool) {
-    if (tool) {
-      tool.detachViewport(this);
-    }
-  }
-  attachSelectionTool(tool) {
-    if (tool) {
-      tool.attachViewport(this, this.camera);
-      tool.scene = this.scene;
-    }
-  }
-  detachSelectionTool(tool) {
-    if (tool) {
-      tool.detachViewport(this);
-      delete tool.scene;
-    }
+    if (event.detail.oldValue) event.detail.oldValue.detachViewport(this);
+    event.detail.value.attachViewport(this, this.camera);
   }
   dispose() {
     // TODO
