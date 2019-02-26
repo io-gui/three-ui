@@ -23,15 +23,15 @@ export class Tool extends IoCore {
     this.cameras = new WeakMap();
     this.pointers = new Pointers({enabled: this.enabled});
 
-    this.pointers.addEventListener('pointerdown', this.onViewportPointerDown.bind(this));
-    this.pointers.addEventListener('pointerhover', this.onViewportPointerHover.bind(this));
-    this.pointers.addEventListener('pointermove', this.onViewportPointerMove.bind(this));
-    this.pointers.addEventListener('pointerup', this.onViewportPointerUp.bind(this));
-    this.pointers.addEventListener('pointerleave', this.onViewportPointerLeave.bind(this));
+    this.pointers.addEventListener('pointerdown', this.onViewportPointerdown.bind(this));
+    this.pointers.addEventListener('pointerhover', this.onViewportPointerhover.bind(this));
+    this.pointers.addEventListener('pointermove', this.onViewportPointermove.bind(this));
+    this.pointers.addEventListener('pointerup', this.onViewportPointerup.bind(this));
+    this.pointers.addEventListener('pointerleave', this.onViewportPointerleave.bind(this));
     this.pointers.addEventListener('contextmenu', this.onViewportContextmenu.bind(this));
     this.pointers.addEventListener('wheel', this.onViewportWheel.bind(this));
-    this.pointers.addEventListener('keydown', this.onViewportKeyDown.bind(this));
-    this.pointers.addEventListener('keyup', this.onViewportKeyUp.bind(this));
+    this.pointers.addEventListener('keydown', this.onViewportKeydown.bind(this));
+    this.pointers.addEventListener('keyup', this.onViewportKeyup.bind(this));
     this.pointers.addEventListener('focus', this.onViewportFocus.bind(this));
     this.pointers.addEventListener('blur', this.onViewportBlur.bind(this));
 
@@ -57,7 +57,7 @@ export class Tool extends IoCore {
     this.cameras.delete(domElement);
   }
   // Viewport event handlers
-  onViewportPointerDown(event) {
+  onViewportPointerdown(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const pointers = event.detail.pointers;
@@ -65,7 +65,7 @@ export class Tool extends IoCore {
     const rect = target.getBoundingClientRect();
     this.dispatchEvent('pointerdown', {event: event.detail.event, target: target, rect: rect, pointers: pointers, camera: camera});
   }
-  onViewportPointerHover(event) {
+  onViewportPointerhover(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const pointers = event.detail.pointers;
@@ -73,7 +73,7 @@ export class Tool extends IoCore {
     const rect = target.getBoundingClientRect();
     this.dispatchEvent('pointerhover', {event: event.detail.event, target: target, rect: rect, pointers: pointers, camera: camera});
   }
-  onViewportPointerMove(event) {
+  onViewportPointermove(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const pointers = event.detail.pointers;
@@ -81,7 +81,7 @@ export class Tool extends IoCore {
     const rect = target.getBoundingClientRect();
     this.dispatchEvent('pointermove', {event: event.detail.event, target: target, rect: rect, pointers: pointers, camera: camera});
   }
-  onViewportPointerUp(event) {
+  onViewportPointerup(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const pointers = event.detail.pointers;
@@ -89,7 +89,7 @@ export class Tool extends IoCore {
     const rect = target.getBoundingClientRect();
     this.dispatchEvent('pointerup', {event: event.detail.event, target: target, rect: rect, pointers: pointers, camera: camera});
   }
-  onViewportPointerLeave(event) {
+  onViewportPointerleave(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const pointers = event.detail.pointers;
@@ -104,14 +104,14 @@ export class Tool extends IoCore {
     const rect = target.getBoundingClientRect();
     this.dispatchEvent('contextmenu', {event: event.detail.event, target: target, rect: rect, camera: camera});
   }
-  onViewportKeyDown(event) {
+  onViewportKeydown(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const camera = this.cameras.get(event.target);
     const rect = target.getBoundingClientRect();
     this.dispatchEvent('keykown', {event: event.detail.event, target: target, rect: rect, camera: camera});
   }
-  onViewportKeyUp(event) {
+  onViewportKeyup(event) {
     if (!this.enabled) return false;
     const target = event.detail.event.target;
     const camera = this.cameras.get(event.target);
@@ -139,7 +139,6 @@ export class Tool extends IoCore {
     const rect = target.getBoundingClientRect();
     this.dispatchEvent('blur', {event: event.detail.event, target: target, rect: rect, camera: camera});
   }
-  //
   dispose() {
     super.dispose();
     for (let i = this.viewports.length; i--;) {
@@ -149,14 +148,14 @@ export class Tool extends IoCore {
     delete this.viewports;
     delete this.cameras;
     delete this.pointers;
-    delete this.onViewportPointerDown;
-    delete this.onViewportPointerHover;
-    delete this.onViewportPointerMove;
-    delete this.onViewportPointerUp;
+    delete this.onViewportPointerdown;
+    delete this.onViewportPointerhover;
+    delete this.onViewportPointermove;
+    delete this.onViewportPointerup;
     delete this.onViewportContextmenu;
     delete this.onViewportWheel;
-    delete this.onViewportKeyDown;
-    delete this.onViewportKeyUp;
+    delete this.onViewportKeydown;
+    delete this.onViewportKeyup;
     delete this.onViewportFocus;
     delete this.onViewportBlur;
   }

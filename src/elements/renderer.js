@@ -104,10 +104,11 @@ export class ThreeRenderer extends IoElement {
   renderableChanged() {
     this.queueRender();
   }
-  objectMutated(event) {
-    if (event.detail.object === this.scene || event.detail.object === this.camera) {
-      this.queueRender();
-    }
+  sceneMutated() {
+    this.queueRender();
+  }
+  cameraMutated() {
+    this.queueRender();
   }
   queueRender() {
     if (!this.scheduled) {

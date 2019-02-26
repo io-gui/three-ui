@@ -17,11 +17,9 @@ export class ThreeExampleGeometryTeapot extends ThreePlayer {
       shading: { value: 'textured', config: { tag: 'io-option', options: [ 'wireframe', 'flat', 'smooth', 'glossy', 'textured', 'reflective' ] } }
     };
   }
-  objectMutated(event) {
-    if (event.object === this) {
-      this.createNewTeapot();
-      this.queueRender();
-    }
+  change(event) {
+    this.createNewTeapot();
+    this.queueRender();
   }
   constructor(props) {
     super(props);

@@ -30,13 +30,7 @@ export class ThreeViewport extends ThreeRenderer {
     this.cameraTool.detachViewport(this, this.camera);
     this.selectionTool.detachViewport(this, this.camera);
   }
-  objectMutated(event) {
-    super.objectMutated(event);
-    if (event.detail.object === this.selection) {
-      this.queueRender();
-    }
-  }
-  cameraChanged() {
+  cameraChanged(event) {
     this.cameraTool.attachViewport(this, this.camera);
     this.selectionTool.attachViewport(this, this.camera);
   }
