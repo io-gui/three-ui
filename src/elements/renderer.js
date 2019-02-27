@@ -63,7 +63,15 @@ export class ThreeRenderer extends IoElement {
         position: absolute;
         top: 0;
         left: 0;
+        width: 100%;
+        height: 100%;
         pointer-events: none;
+        image-rendering: optimizeSpeed;             /* Older versions of FF          */
+        image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+        image-rendering: -webkit-optimize-contrast; /* Safari                        */
+        image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+        image-rendering: pixelated;                 /* Awesome future-browsers       */
+        -ms-interpolation-mode: nearest-neighbor;
       }
       :host[ishost] > canvas:not(.canvas3d) {
         display: none;
@@ -100,6 +108,7 @@ export class ThreeRenderer extends IoElement {
     super(props);
     this.template([['canvas', {id: 'canvas'}]]);
     this._ctx = this.$.canvas.getContext('2d');
+    this.$.canvas.imageSmoothingEnabled = false;
   }
   renderableChanged() {
     this.queueRender();
@@ -154,9 +163,9 @@ export class ThreeRenderer extends IoElement {
   setHost() {
     if (!this.ishost) {
       if (host) {
-        const ratio =  (window.devicePixelRatio || 1) / host._ctx.backingStorePixelRatio || 1;
-        host._ctx.clearRect(0, 0, host.size[0] * ratio, host.size[1] * ratio);
-        host._ctx.drawImage(host.renderer.domElement, 0, 0, host.size[0] * ratio, host.size[1] * ratio);
+        const r = window.devicePixelRatio || 1;
+        host._ctx.clearRect(0, 0, host.size[0] * r, host.size[1] * r);
+        host._ctx.drawImage(host.renderer.domElement, 0, 0, host.size[0] * r, host.size[1] * r);
         gl.flush();
         host.ishost = false;
       }
@@ -175,10 +184,9 @@ export class ThreeRenderer extends IoElement {
     const rect = this.getBoundingClientRect();
     this.size[0] = Math.ceil(rect.width);
     this.size[1] = Math.ceil(rect.height);
-    const ratio =  (window.devicePixelRatio || 1) / this._ctx.backingStorePixelRatio || 1;
-    this.$.canvas.width = this.size[0] * ratio;
-    this.$.canvas.height = this.size[1] * ratio;
-
+    const r = window.devicePixelRatio || 1;
+    this.$.canvas.width = this.size[0] * r;
+    this.$.canvas.height = this.size[1] * r;
     if (this.size[0] && this.size[1]) {
       this.renderer.setSize(this.size[0], this.size[1]);
       this.renderer.setPixelRatio(window.devicePixelRatio);
