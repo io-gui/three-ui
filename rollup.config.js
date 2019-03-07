@@ -12,18 +12,11 @@ export default [
     ],
     external: [
       path.resolve('../three.js/build/three.module.js'),
-      path.resolve('../io/build/io.js')
+      path.resolve('./lib/BufferGeometryUtils.js'),
+      path.resolve('./lib/GLTFLoader.js'),
+      path.resolve('./lib/DRACOLoader.js'),
+      path.resolve('../io/build/io-core.js'),
+      path.resolve('../io/build/io.js'),
     ]
-  },
-  {
-    input: 'src/controls/transform/Combined.js',
-    output: [
-      {
-        format: 'es',
-        file: 'build/CombinedTransformControls.js',
-        indent: '  '
-      }
-    ],
-    external: [ path.resolve('../three.js/build/three.module.js') ]
   }
 ];
