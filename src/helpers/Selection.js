@@ -2,7 +2,7 @@
  * @author arodic / https://github.com/arodic
  */
 
-import {Vector3, Quaternion, Matrix4, CylinderBufferGeometry} from "../../../three.js/build/three.module.js";
+import {CylinderBufferGeometry} from "../../../three.js/build/three.module.js";
 import {Helper} from "./Helper.js";
 // import {TransformHelper} from "./Transform.js";
 import {HelperGeometry} from "./HelperGeometry.js";
@@ -11,14 +11,6 @@ import {HelperGeometry} from "./HelperGeometry.js";
 const PI = Math.PI;
 const HPI = PI / 2;
 const EPS = 0.000001;
-
-// TODO: consider supporting objects with skewed transforms.
-const _position = new Vector3();
-const _quaternion = new Quaternion();
-const _scale = new Vector3();
-const _m1 = new Matrix4();
-const _m2 = new Matrix4();
-const _one = new Vector3(1, 1, 1);
 
 const corner3Geometry = new HelperGeometry([
   [new CylinderBufferGeometry(EPS, EPS, 1, 4, 2, true), {color: [1, 0, 0], position: [0.5, 0, 0], rotation: [0, 0, HPI], thickness: 1}],
