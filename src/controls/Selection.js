@@ -23,10 +23,11 @@ export class SelectionControls extends Tool {
       helper: SelectionHelper,
     };
   }
-  constructor(props) {
-    super(props);
-    this.addEventListener('pointerdown', this.onPointerdown.bind(this));
-    this.addEventListener('pointerup', this.onPointerup.bind(this));
+  static get listeners() {
+    return {
+      pointerdown: 'onPointerdown',
+      pointerup: 'onPointerup',
+    };
   }
   helperChanged(event) {
     const oldHelper = event.detail.oldValue;
