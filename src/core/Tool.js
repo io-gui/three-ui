@@ -2,8 +2,8 @@
  * @author arodic / https://github.com/arodic
  */
 
-import {Scene} from "../../../three.js/build/three.module.js";
 import {IoCore} from "../../../io/build/io-core.js";
+import {Scene} from "../../../three.js/build/three.module.js";
 import {Pointers} from "./Pointers.js";
 
 export class Tool extends IoCore {

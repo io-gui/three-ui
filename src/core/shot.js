@@ -1,4 +1,4 @@
-import {IoCore} from "../../../io/build/io.js";
+import {IoCore} from "../../../io/build/io-core.js";
 import * as THREE from "../../../three.js/build/three.module.js";
 
 // TODO: consider IoLite
