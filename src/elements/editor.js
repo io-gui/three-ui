@@ -73,7 +73,7 @@ export class ThreeEditor extends IoElement {
       selection: this.selection,
       // TODO: make sure previous controls do disconnect!
       cameraTool: this.cameraControls,
-      selectTool: this.selectionControls,
+      selectionTool: this.selectionControls,
       // editTool: this.transformControls,
     };
     this.template([
@@ -82,9 +82,6 @@ export class ThreeEditor extends IoElement {
       ['three-viewport', Object.assign({id: 'viewport2', camera: leftCamera}, viewportProps)],
       ['three-viewport', Object.assign({id: 'viewport3', camera: frontCamera}, viewportProps)],
     ]);
-  }
-  selectionMutated(event) {
-    console.log('EDITOR !!!! selection mutated', event.detail, this);
   }
 }
 

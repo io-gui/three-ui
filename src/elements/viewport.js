@@ -14,13 +14,11 @@ export class ThreeViewport extends ThreeRenderer {
   }
   get bindings() {
     return {
-      // This is top-down data flow so no bindings are needed.
-      // However, using bindings here should still work.
-      // TODO: investgate why it doesent.
-      // cameraTool: {scene: this.bind('scene')},
-      // selectionTool: {scene: this.bind('scene'), selection: this.bind('selection')},
-      cameraTool: {scene: this.scene},
-      selectionTool: {scene: this.scene, selection: this.selection},
+      cameraTool: {scene: this.bind('scene')},
+      selectionTool: {scene: this.bind('scene'), selection: this.bind('selection')},
+      // TODO: make work without bindings
+      // cameraTool: {scene: this.scene},
+      // selectionTool: {scene: this.scene, selection: this.selection},
     };
   }
   connectedCallback() {
@@ -49,7 +47,6 @@ export class ThreeViewport extends ThreeRenderer {
     event.detail.value.attachViewport(this, this.camera);
   }
   selectionMutated(event) {
-    console.log('!!!! selection mutated', event.detail, this);
     this.render();
   }
   dispose() {
