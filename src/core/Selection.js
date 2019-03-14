@@ -1,7 +1,3 @@
-/**
- * @author arodic / http://github.com/arodic
- */
-
 import {IoCore} from "../../../io/build/io-core.js";
 
 const selectedOld = [];

@@ -1,7 +1,3 @@
-/**
- * @author arodic / http://github.com/arodic
- */
-
 // TODO: marquee selection
 
 import {Raycaster} from "../../../three.js/build/three.module.js";

@@ -1,8 +1,6 @@
 import {IoCore} from "../../../io/build/io-core.js";
 import * as THREE from "../../../three.js/build/three.module.js";
 
-// TODO: consider IoLite
-
 export class Shot extends IoCore {
   static get properties() {
     return {

@@ -1,7 +1,3 @@
-/**
- * @author arodic / https://github.com/arodic
- */
-
 import {CylinderBufferGeometry} from "../../../three.js/build/three.module.js";
 import {Helper} from "./Helper.js";
 // import {TransformHelper} from "./Transform.js";

@@ -1,3 +1,7 @@
+/**
+ * @author arodic / https://github.com/arodic
+ */
+ 
 export {ThreeAttributes} from "./elements/attributes.js";
 export {ThreeColor} from "./elements/color.js";
 export {ThreeEditor} from "./elements/editor.js";

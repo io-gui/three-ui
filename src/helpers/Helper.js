@@ -1,7 +1,3 @@
-/**
- * @author arodic / https://github.com/arodic
- */
-
 import {Object3D, Mesh, Vector3} from "../../../three.js/build/three.module.js";
 import {IoCoreMixin} from "../../../io/build/io-core.js";
 import {HelperMaterial} from "./HelperMaterial.js";

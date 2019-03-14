@@ -1,7 +1,3 @@
-/**
- * @author arodic / https://github.com/arodic
- */
-
 import {TransformControlsMixin} from "../Transform.js";
 import {TransformHelper} from "../../helpers/Transform.js";
 
