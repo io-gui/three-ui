@@ -99,6 +99,7 @@ export class Tool extends IoCore {
   }
   onViewportContextmenu(event) {
     if (!this.enabled) return false;
+    // event.detail.event.preventDefault();
     const target = event.detail.event.target;
     const camera = this.cameras.get(event.target);
     const rect = target.getBoundingClientRect();

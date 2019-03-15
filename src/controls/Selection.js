@@ -25,14 +25,16 @@ export class SelectionControls extends Tool {
       pointerup: 'onPointerup',
     };
   }
+  get bindings() {
+    return {
+      helper: {selection: this.bind('selection')},
+    };
+  }
   helperChanged(event) {
     const oldHelper = event.detail.oldValue;
     const helper = event.detail.value;
     if (oldHelper) this.helperScene.remove(oldHelper);
-    if (helper) this.helperScene.remove(helper);
-  }
-  selectionChanged() {
-    this.helper.selection = this.selection;
+    if (helper) this.helperScene.add(helper);
   }
   select(viewport, pointer, camera) {
     raycaster.setFromCamera(pointer.position, camera);
