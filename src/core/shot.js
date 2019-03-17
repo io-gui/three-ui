@@ -1,9 +1,9 @@
-import {IoCore} from "../../../io/build/io-core.js";
+import {IoNode} from "../../../io/build/io-core.js";
 import * as THREE from "../../../three.js/build/three.module.js";
 
 // TODO: consider IoLite
 
-export class Shot extends IoCore {
+export class Shot extends IoNode {
   static get properties() {
     return {
       camera: THREE.PerspectiveCamera,

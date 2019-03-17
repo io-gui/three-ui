@@ -2,7 +2,7 @@
  * @author arodic / http://github.com/arodic
  */
 
-import {IoCore} from "../../../io/build/io-core.js";
+import {IoNode} from "../../../io/build/io-core.js";
 
 const selectedOld = [];
 
@@ -19,7 +19,7 @@ function filterItems(list, hierarchy, filter) {
   return filtered;
 }
 
-export class Selection extends IoCore {
+export class Selection extends IoNode {
   static get properties() {
     return {
       selected: [],

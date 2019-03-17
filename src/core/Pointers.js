@@ -2,9 +2,9 @@
  * @author arodic / https://github.com/arodic
  */
 
-import {IoCore} from "../../../io/build/io-core.js";
+import {IoNode} from "../../../io/build/io-core.js";
 
-export class Pointers extends IoCore {
+export class Pointers extends IoNode {
   static get properties() {
     return {
       enabled: true,
