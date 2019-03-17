@@ -1,1 +1,0 @@
-### `ThreeColor` `<three-color>` ###

@@ -1,1 +1,0 @@
-### `ThreeRenderer` `<three-renderer>` ###

@@ -1,1 +1,0 @@
-### `ThreePlayer` `<three-player>` ###

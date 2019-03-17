@@ -1,1 +1,0 @@
-### `ThreeMatrix` `<three-matrix>` ###

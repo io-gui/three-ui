@@ -1,1 +1,0 @@
-### `ThreeEditor` `<three-editor>` ###
