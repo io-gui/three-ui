@@ -1,7 +1,3 @@
-/**
- * @author arodic / https://github.com/arodic
- */
-
 import {IoNode} from "../../../io/build/io-core.js";
 
 export class Pointers extends IoNode {
@@ -87,12 +83,13 @@ export class Pointers extends IoNode {
   }
   onPointerhover(event) {
     if (!this.enabled) return false;
+    const pointers = this.pointers.get(event.target);
+    pointers[event.pointerId] = new Pointer(event);
     if (event.buttons !== 0) {
       this.onPointermove(event);
       return;
     }
-    const pointer = new Pointer(event);
-    this.dispatchEvent('pointerhover', {event: event, pointers: [pointer]});
+    this.dispatchEvent('pointerhover', {event: event, pointers: [pointers[event.pointerId]]});
   }
   onPointermove(event) {
     if (!this.enabled) return false;

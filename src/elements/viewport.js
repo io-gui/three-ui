@@ -58,6 +58,14 @@ export class ThreeViewport extends ThreeRenderer {
   }
   postRender() {
     this.renderer.clearDepth();
+
+    this.selectionTool.helperScene.traverse(child => {
+      if (child.material) {
+        child.material.resolution.set(this.size[0], this.size[1], window.devicePixelRatio);
+        child.material.uniformChanged()
+      }
+    });
+
     if (this.cameraTool.helperScene) this.renderer.render(this.cameraTool.helperScene, this.camera);
     if (this.selectionTool.helperScene) this.renderer.render(this.selectionTool.helperScene, this.camera);
   }

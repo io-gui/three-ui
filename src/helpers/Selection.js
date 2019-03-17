@@ -1,7 +1,3 @@
-/**
- * @author arodic / https://github.com/arodic
- */
-
 import {CylinderBufferGeometry} from "../../../three.js/build/three.module.js";
 import {Helper} from "./Helper.js";
 // import {TransformHelper} from "./Transform.js";
@@ -14,9 +10,9 @@ const HPI = PI / 2;
 const EPS = 0.000001;
 
 const corner3Geometry = new HelperGeometry([
-  [new CylinderBufferGeometry(EPS, EPS, 1, 4, 2, true), {color: [1, 0, 0], position: [0.5, 0, 0], rotation: [0, 0, HPI], thickness: 1}],
-  [new CylinderBufferGeometry(EPS, EPS, 1, 4, 2, true), {color: [0, 1, 0], position: [0, 0.5, 0], rotation: [0, HPI, 0], thickness: 1}],
-  [new CylinderBufferGeometry(EPS, EPS, 1, 4, 2, true), {color: [0, 0, 1], position: [0, 0, 0.5], rotation: [HPI, 0, 0], thickness: 1}],
+  [new CylinderBufferGeometry(EPS, EPS, 1, 8, 1, true), {color: [1, 0, 0], position: [0.5, 0, 0], rotation: [0, 0, HPI], thickness: 1}],
+  [new CylinderBufferGeometry(EPS, EPS, 1, 8, 1, true), {color: [0, 1, 0], position: [0, 0.5, 0], rotation: [0, HPI, 0], thickness: 1}],
+  [new CylinderBufferGeometry(EPS, EPS, 1, 8, 1, true), {color: [0, 0, 1], position: [0, 0, 0.5], rotation: [HPI, 0, 0], thickness: 1}],
 ]);
 
 const handleGeometry = {
@@ -50,17 +46,17 @@ export class SelectionHelper extends Helper {
     // super.add(axis);
   }
   selectionMutated(event) {
-    // const selected = this.selection.selected;
-    // console.log(this, selected)
-    //
+    const selected = this.selection.selected;
+    console.log(selected)
+
     // if (selected.length && selected[0].geometry) {
     //   const object = selected[0];
     //
     //   if (!object.geometry.boundingBox) object.geometry.computeBoundingBox();
     //   const bbMax = object.geometry.boundingBox.max;
     //   const bbMin = object.geometry.boundingBox.min;
-    //   // bbMax.applyMatrix4(object.matrixWorld);
-    //   // bbMin.applyMatrix4(object.matrixWorld);
+    //   bbMax.applyMatrix4(object.matrixWorld);
+    //   bbMin.applyMatrix4(object.matrixWorld);
     //
     //   this.corners['XYZ'].position.set(bbMax.x, bbMax.y, bbMax.z);
     //   this.corners['XYz'].position.set(bbMax.x, bbMax.y, bbMin.z);

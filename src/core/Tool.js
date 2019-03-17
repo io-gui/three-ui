@@ -1,7 +1,3 @@
-/**
- * @author arodic / https://github.com/arodic
- */
-
 import {IoNode} from "../../../io/build/io-core.js";
 import {Scene} from "../../../three.js/build/three.module.js";
 import {Pointers} from "./Pointers.js";
@@ -103,6 +99,7 @@ export class Tool extends IoNode {
   }
   onViewportContextmenu(event) {
     if (!this.enabled) return false;
+    // event.detail.event.preventDefault();
     const target = event.detail.event.target;
     const camera = this.cameras.get(event.target);
     const rect = target.getBoundingClientRect();

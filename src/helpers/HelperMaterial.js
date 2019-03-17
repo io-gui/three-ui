@@ -2,7 +2,6 @@ import {IoCoreMixin} from "../../../io/build/io-core.js";
 import {UniformsUtils, Vector3, Color, FrontSide, ShaderMaterial,
   DataTexture, RGBAFormat, FloatType, NearestFilter} from "../../../three.js/build/three.module.js";
 
-// Material for outlines
 export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
   static get properties() {
     return {
@@ -10,7 +9,6 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
       depthWrite: true,
       transparent: false,
       side: FrontSide,
-
       color: { type: Color, change: 'uniformChanged'},
       opacity: { value: 1, change: 'uniformChanged'},
       depthBias: { value: 0, change: 'uniformChanged'},
@@ -59,7 +57,6 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
 
       varying vec4 vColor;
       varying float isOutline;
-      varying vec2 vUv;
 
       uniform vec3 uResolution;
       uniform float uDepthBias;
@@ -74,8 +71,7 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
         vec3 nor = normalMatrix * normal;
         vec4 pos = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 
-        // nor = (projectionMatrix * vec4(nor, 1.0)).xyz;
-        nor = normalize((nor.xyz) * vec3(1., 1., 0.));
+        nor = normalize(nor.xyz * vec3(1., 1., 0.));
 
         pos.z -= uDepthBias * 0.1;
         pos.z -= uHighlight;
@@ -83,24 +79,22 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
         float extrude = 0.0;
         if (outline > 0.0) {
           extrude = outline;
-          pos.z += 0.00001;
+          pos.z += 0.0001;
           pos.z = max(-0.99, pos.z);
         } else {
           extrude -= outline;
           pos.z = max(-1.0, pos.z);
         }
 
-        pos.xy /= pos.w;
+        // pos.xy /= pos.w;
 
-        float dx = nor.x * extrude * (1.0 + uResolution.z);
-        float dy = nor.y * extrude * (1.0 + uResolution.z);
+        float dx = nor.x * extrude;
+        float dy = nor.y * extrude;
 
-        pos.x += (dx) * (1.0 / uResolution.x);
-        pos.y += (dy) * (1.0 / uResolution.y);
+        pos.x += dx * (uResolution.z / uResolution.x);
+        pos.y += dy * (uResolution.z / uResolution.y);
 
-        vUv = uv;
-
-        pos.xy *= pos.w;
+        // pos.xy *= pos.w;
 
         gl_Position = pos;
       }
@@ -113,7 +107,6 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
 
       varying vec4 vColor;
       varying float isOutline;
-      varying vec2 vUv;
 
       void main() {
 
@@ -143,12 +136,12 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
   }
   uniformChanged() {
     if (this.uniforms) {
-      // this.uniforms.uColor.value = this.color;
-      // this.uniforms.uOpacity.value = this.opacity;
-      // this.uniforms.uDepthBias.value = this.depthBias;
-      // this.uniforms.uHighlight.value = this.highlight;
-      // this.uniforms.uResolution.value = this.resolution;
-      // this.uniformsNeedUpdate = true;
+      this.uniforms.uColor.value = this.color;
+      this.uniforms.uOpacity.value = this.opacity;
+      this.uniforms.uDepthBias.value = this.depthBias;
+      this.uniforms.uHighlight.value = this.highlight;
+      this.uniforms.uResolution.value = this.resolution;
+      this.uniformsNeedUpdate = true;
     }
   }
 }

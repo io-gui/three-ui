@@ -1,7 +1,3 @@
-/**
- * @author arodic / http://github.com/arodic
- */
-
 import {IoNode} from "../../../io/build/io-core.js";
 
 const selectedOld = [];
@@ -71,7 +67,7 @@ export class Selection extends IoNode {
     this.dispatchEvent('object-mutated', {object: this}, false, window);
   }
   dispose() {
-    // TODO:
-    console.log('dispose');
+    super.dispose();
+    this.selected.length = 0;
   }
 }
