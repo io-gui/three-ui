@@ -1,7 +1,7 @@
 import {WebGLRenderer, Scene, PerspectiveCamera, OrthographicCamera} from "../../../three.js/build/three.module.js";
 import {html, IoElement} from "../../../io/build/io.js";
 
-const renderer = new WebGLRenderer({antialias: true, preserveDrawingBuffer: true, alpha: true});
+const renderer = new WebGLRenderer({antialias: false, preserveDrawingBuffer: true, alpha: true});
 const gl = renderer.getContext();
 
 renderer.domElement.className = 'canvas3d';
@@ -63,8 +63,8 @@ export class ThreeRenderer extends IoElement {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        width: 100% !important;
+        height: 100% !important;
         pointer-events: none;
         image-rendering: optimizeSpeed;             /* Older versions of FF          */
         image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */

@@ -10,9 +10,9 @@ const HPI = PI / 2;
 const EPS = 0.000001;
 
 const corner3Geometry = new HelperGeometry([
-  [new CylinderBufferGeometry(EPS, EPS, 1, 8, 1, true), {color: [1, 0, 0], position: [0.5, 0, 0], rotation: [0, 0, HPI], thickness: 1}],
-  [new CylinderBufferGeometry(EPS, EPS, 1, 8, 1, true), {color: [0, 1, 0], position: [0, 0.5, 0], rotation: [0, HPI, 0], thickness: 1}],
-  [new CylinderBufferGeometry(EPS, EPS, 1, 8, 1, true), {color: [0, 0, 1], position: [0, 0, 0.5], rotation: [HPI, 0, 0], thickness: 1}],
+  [new CylinderBufferGeometry(EPS, EPS, 1, 4, 1, true), {color: [1, 0, 0], position: [0.5, 0, 0], rotation: [0, 0, HPI], thickness: 1}],
+  [new CylinderBufferGeometry(EPS, EPS, 1, 4, 1, true), {color: [0, 1, 0], position: [0, 0.5, 0], rotation: [0, HPI, 0], thickness: 1}],
+  [new CylinderBufferGeometry(EPS, EPS, 1, 4, 1, true), {color: [0, 0, 1], position: [0, 0, 0.5], rotation: [HPI, 0, 0], thickness: 1}],
 ]);
 
 const handleGeometry = {

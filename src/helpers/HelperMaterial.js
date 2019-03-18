@@ -76,25 +76,25 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
         pos.z -= uDepthBias * 0.1;
         pos.z -= uHighlight;
 
+        pos.xyz /= pos.w;
+
         float extrude = 0.0;
         if (outline > 0.0) {
           extrude = outline;
-          pos.z += 0.0001;
+          pos.z += 0.000001;
           pos.z = max(-0.99, pos.z);
         } else {
           extrude -= outline;
           pos.z = max(-1.0, pos.z);
         }
 
-        // pos.xy /= pos.w;
-
-        float dx = nor.x * extrude;
-        float dy = nor.y * extrude;
+        float dx = nor.x * extrude * 2.0;
+        float dy = nor.y * extrude * 2.0;
 
         pos.x += dx * (uResolution.z / uResolution.x);
         pos.y += dy * (uResolution.z / uResolution.y);
 
-        // pos.xy *= pos.w;
+        pos.xyz *= pos.w;
 
         gl_Position = pos;
       }
