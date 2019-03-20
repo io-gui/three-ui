@@ -145,5 +145,3 @@ export class HelperMaterial extends IoCoreMixin(ShaderMaterial) {
     }
   }
 }
-
-HelperMaterial.Register = IoCoreMixin.Register;

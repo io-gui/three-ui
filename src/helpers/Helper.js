@@ -121,5 +121,3 @@ export class Helper extends IoCoreMixin(Object3D) {
     return texts;
   }
 }
-Helper.Register = IoCoreMixin.Register;
-// Helper.Register();
