@@ -1,5 +1,5 @@
 import {Object3D, Mesh, Vector3} from "../../../three.js/build/three.module.js";
-import {IoCoreMixin} from "../../../io/build/io-core.js";
+import {IoNodeMixin} from "../../../io/build/io-core.js";
 import {HelperMaterial} from "./HelperMaterial.js";
 import {TextHelper} from "./Text.js";
 
@@ -12,7 +12,7 @@ const _cameraPosition = new Vector3();
  * Helpers will auto-scale in view space if `size` property is non-zero.
  */
 
-export class Helper extends IoCoreMixin(Object3D) {
+export class Helper extends IoNodeMixin(Object3D) {
   static get properties() {
     return {
       object: null,
