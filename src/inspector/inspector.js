@@ -102,7 +102,7 @@ const propConfig = {
 export class IoThreeInspector extends IoInspector {
 	static get Properties() {
 		return {
-			autoExpand: ['properties', 'transform', 'rendering'],
+			autoExpand: ['properties', 'transform', 'values'],
 		};
 	}
 	static get Listeners() {
