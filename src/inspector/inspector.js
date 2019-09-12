@@ -52,6 +52,10 @@ const propConfig = {
 	// 'Material|aoMapIntensity': ['io-slider', {'min': 0,'max': 1}],
 	// 'Material|lightMapIntensity': ['io-slider', {'min': 0,'max': 1}],
 	'Material|opacity': floatSlider,
+	'Material|reflectivity': floatSlider,
+	'Material|refractionRatio': floatSlider,
+	'Material|aoMapIntensity': floatSlider,
+	'Material|emissiveIntensity': floatSlider,
 	'Material|side': ['io-option-menu', {'options': makeOptions(['FrontSide', 'BackSide', 'DoubleSide'])}],
 	'Material|shading': ['io-option-menu', {'options': makeOptions(['FlatShading', 'SmoothShading'])}],
 	'Material|vertexColors': ['io-option-menu', {'options': makeOptions(['NoColors', 'FaceColors', 'VertexColors'])}],
@@ -118,25 +122,32 @@ export class IoThreeInspector extends IoInspector {
 	}
 	static get Groups() {
 		return {
-			'Object|properties': ['name', 'visible', 'userData'],
+			'Object|properties': ['name', 'visible', 'userData', 'map'],
 
 			'Object3D|properties': ['name', 'parent', 'children', 'material', 'geometry'],
 			'Object3D|transform': ['position', 'rotation', 'scale', 'quaternion', 'up', /update/i],
 			'Object3D|rendering': ['layers', /shadow/i, 'renderOrder', 'frustumCulled', 'background', 'fog', 'overrideMaterial', 'drawMode'],
 			'Object3D|matrices': [/matrix/i],
 
+			'Light|properties': ['color', 'intensity'],
+			'Light|transform': ['target'],
+
+			'Camera|properties': ['fov', 'near', 'far', 'zoom', 'focus', 'aspect', 'view', 'filmGauge', 'filmOffset'],
+
 			'BufferGeometry|properties': ['boundingBox', 'boundingSphere', 'groups'],
 			'BufferGeometry|attributes': ['index', 'attributes', 'morphAttributes', 'drawRange'],
 
-			'Material|properties': ['transparent', 'opacity', 'color'],
+			'Material|properties': ['transparent', 'opacity', 'color', /Map/, /emissive/i, 'reflectivity', 'refractionRatio'],
 			'Material|rendering': [
-				'side', 'fog', 'lights', 'flatShading', 'vertexTangents', /blend/i, /stencil/i, /depth/i,
-				'dithering', 'vertexColors', 'toneMapped', 'premultipliedAlpha', 'alphaTest', 'colorWrite',
-				'clipIntersection', 'clippingPlanes',
+				'side', 'fog', 'lights', 'flatShading', 'vertexTangents',
+				'vertexColors', 'toneMapped',
+				,
 			],
+			'Material|blending': [/blend/i, 'colorWrite', 'depthTest', 'depthWrite', 'dithering', 'premultipliedAlpha', 'alphaTest', 'depthFunc', 'combine'],
+			'Material|stencil': [/stencil/i],
 			'Material|shadows': [/shadow/i],
-			'Material|wireframe': [/line/i],
-			'Material|advanced': [/polygon/i, 'precision', 'program'],
+			'Material|wireframe': [/line/i, 'wireframe'],
+			'Material|advanced': [/polygon/i, 'precision', 'program', 'skinning', 'morphTargets', 'morphNormals', 'clipIntersection', 'clippingPlanes'],
 
 			'Object|advanced': ['needsUpdate'],
 			'Object|hidden': [/^is/, 'type', 'id', 'uuid'],
@@ -146,8 +157,14 @@ export class IoThreeInspector extends IoInspector {
 	stopPropagation(event) {
 		event.stopImmediatePropagation();
 	}
+	// TODO: only on set!
 	selectedMutated() {
 		this.dispatchEvent('change');
+		const all = this.querySelectorAll('*');
+		// TODO: unhack this horrific hack
+		for (let i = 0; i < all.length; i++) {
+			if (all[i].changed) all[i].changed();
+		}
 	}
 }
 
@@ -157,6 +174,6 @@ IoThreeInspector.Register();
 
 IoThreeInspector.RegisterGroups({
 	'Array|values': [/^[0-9]+$/],
-	'Object|other': [/^/],
+	// 'Object|other': [/^/],
 });
 
