@@ -38,7 +38,11 @@ function svg() {
   };
 }
 
-const externals = ['../three.js/build/three.module.js'];
+const externals = [
+	path.resolve('../three.js/build/three.module.js'),
+	path.resolve('../io/build/io.js'),
+	path.resolve('../io/build/io-core.js')
+];
 
 function makeTarget(src, target) {
   externals.push(path.resolve(src));
