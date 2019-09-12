@@ -1,0 +1,59 @@
+{
+  "name": "three-ui",
+  "version": "1.0.0-rc.1",
+  "description": "UI system for three.js built with Io-GUI.",
+  "jsnext:main": "build/three-ui.js",
+  "module": "build/three-ui.js",
+  "files": [
+    "src",
+    "build/*.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "jspm": {
+    "files": [
+      "src",
+      "build/*.js",
+      "package.json",
+      "LICENSE",
+      "README.md"
+    ],
+    "directories": {}
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "rollup": "rollup -c",
+    "uglify": "uglifyjs build/three-ui.js -cmo build/three-ui.js --comments",
+    "build": "npm run lint && npm run rollup && npm run uglify",
+    "travis": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/io-gui/three-ui.git"
+  },
+  "keywords": [
+    "io",
+    "gui",
+    "ui",
+    "ux",
+    "navigation",
+    "menu",
+    "inspector",
+    "computer graphics",
+    "three",
+    "threejs"
+  ],
+  "author": "Aleksandar (Aki) Rodić",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/io-gui/three-ui/issues"
+  },
+  "homepage": "https://io-gui.dev",
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.3.0",
+    "rollup": "^1.21.2",
+    "uglify-es": "^3.3.10"
+  }
+}

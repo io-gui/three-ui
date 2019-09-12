@@ -1,7 +1,7 @@
 import {Object3D, Mesh, Vector3} from "../../../three.js/build/three.module.js";
 import {IoNodeMixin} from "../../../io/dist/io-core.js";
-import {HelperMaterial} from "./HelperMaterial.js";
-import {TextHelper} from "./Text.js";
+import {HelperMaterial} from "./HelperMaterial.js.js";
+import {TextHelper} from "./Text.js.js";
 
 // Reusable utility variables
 const _cameraPosition = new Vector3();
