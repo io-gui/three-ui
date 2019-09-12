@@ -102,7 +102,7 @@ const propConfig = {
 export class IoThreeInspector extends IoInspector {
 	static get Properties() {
 		return {
-			autoExpand: ['properties', 'transform', 'rendering'],
+			autoExpand: ['properties', 'transform', 'values'],
 		};
 	}
 	static get Listeners() {
@@ -141,7 +141,6 @@ export class IoThreeInspector extends IoInspector {
 			'Material|rendering': [
 				'side', 'fog', 'lights', 'flatShading', 'vertexTangents',
 				'vertexColors', 'toneMapped',
-				,
 			],
 			'Material|blending': [/blend/i, 'colorWrite', 'depthTest', 'depthWrite', 'dithering', 'premultipliedAlpha', 'alphaTest', 'depthFunc', 'combine'],
 			'Material|stencil': [/stencil/i],
