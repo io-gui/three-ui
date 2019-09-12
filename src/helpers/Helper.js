@@ -1,5 +1,5 @@
 import {Object3D, Mesh, Vector3} from "../../../three.js/build/three.module.js";
-import {IoNodeMixin} from "../../../io/build/io-core.js";
+import {IoNodeMixin} from "../../../io/dist/io-core.js";
 import {HelperMaterial} from "./HelperMaterial.js";
 import {TextHelper} from "./Text.js";
 

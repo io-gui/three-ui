@@ -1,5 +1,5 @@
 import {WebGLRenderer, Scene, PerspectiveCamera, OrthographicCamera} from "../../../three.js/build/three.module.js";
-import {html, IoElement} from "../../../io/build/io.js";
+import {html, IoElement} from "../../../io/dist/io.js";
 
 const renderer = new WebGLRenderer({antialias: false, preserveDrawingBuffer: true, alpha: true});
 const gl = renderer.getContext();

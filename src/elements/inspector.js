@@ -1,4 +1,4 @@
-import {IoInspector, IoProperties} from "../../../io/build/io.js";
+import {IoInspector, IoProperties} from "../../../io/dist/io.js";
 
 export class ThreeInspector extends IoInspector {
   static get listeners() {

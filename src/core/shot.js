@@ -1,4 +1,4 @@
-import {IoNode} from "../../../io/build/io-core.js";
+import {IoNode} from "../../../io/dist/io-core.js";
 import * as THREE from "../../../three.js/build/three.module.js";
 
 export class Shot extends IoNode {

@@ -1,4 +1,4 @@
-import {IoNodeMixin} from "../../../io/build/io-core.js";
+import {IoNodeMixin} from "../../../io/dist/io-core.js";
 import {Raycaster, Vector3, Quaternion, Plane} from "../../../three.js/build/three.module.js";
 
 // Reusable utility variables

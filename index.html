@@ -89,77 +89,82 @@
     <link href="../io/lib/mocha.css" rel="stylesheet" />
     <script type="module">
 
-    import {html, IoElement, IoStorage as $} from "../io/build/io.js";
-    import "./build/three-ui.js";
+    import {IoSelectorTabs, IoStorageFactory as $} from "../io/dist/io-core.js";
+    import "../io/dist/io-extras.js";
+    // import "./dist/three-ui.js";
 
-    export class IoMainPage extends IoElement {
+    export class IoMainPage extends IoSelectorTabs {
+      static get Properties() {
+        return {
+          selected: $({value: 'about', storage: 'hash', key: 'page'}),
+          role: 'main',
+          class: 'main',
+          cache: true,
+        };
+      }
       constructor(props) {
         super(props);
-        this.template([
-          // ['io-selector', {selected: $('page', 0, true), elements: [
-          //   ['io-md-view', {label: 'About', path :'./readme.md'}],
-          //   ['io-selector', {label: 'Docs', selected: $('doc', 0), elements: [
-          //     ['io-selector', {label: 'Core', vertical: true, selected: $('doc_core', 0), elements: [
-          //       ['io-md-view', {label: 'animation', path :'./docs/core/animation.md'}],
-          //       ['io-md-view', {label: 'pointers', path :'./docs/core/pointers.md'}],
-          //       ['io-md-view', {label: 'shot', path :'./docs/core/shot.md'}],
-          //       ['io-md-view', {label: 'tool', path :'./docs/core/tool.md'}],
-          //     ]}],
-          //     ['io-selector', {label: 'Elements', vertical: true, selected: $('doc_elements', 0), elements: [
-          //       ['io-md-view', {label: 'three-attributes', path :'./docs/elements/attributes.md'}],
-          //       ['io-md-view', {label: 'three-color', path :'./docs/elements/color.md'}],
-          //       ['io-md-view', {label: 'three-editor', path :'./docs/elements/editor.md'}],
-          //       ['io-md-view', {label: 'three-euler', path :'./docs/elements/euler.md'}],
-          //       ['io-md-view', {label: 'three-inspector', path :'./docs/elements/inspector.md'}],
-          //       ['io-md-view', {label: 'three-matrix', path :'./docs/elements/matrix.md'}],
-          //       ['io-md-view', {label: 'three-player', path :'./docs/elements/player.md'}],
-          //       ['io-md-view', {label: 'three-vector', path :'./docs/elements/vector.md'}],
-          //       ['io-md-view', {label: 'three-renderer', path :'./docs/elements/renderer.md'}],
-          //       ['io-md-view', {label: 'three-viewport', path :'./docs/elements/viewport.md'}],
-          //     ]}],
-          //     ['io-selector', {label: 'Helpers', vertical: true, selected: $('doc_helpers', 0), elements: [
-          //       ['io-md-view', {label: 'Helper', path :'./docs/helpers/helper.md'}],
-          //       ['io-md-view', {label: 'SelectionHelper', path :'./docs/helpers/selection.md'}],
-          //       ['io-md-view', {label: 'textHelper', path :'./docs/helpers/text.md'}],
-          //       ['io-md-view', {label: 'TransformHelper', path :'./docs/helpers/transform.md'}],
-          //       ['io-md-view', {label: 'CombinedTransformHelper', path :'./docs/helpers/transform/combined.md'}],
-          //       ['io-md-view', {label: 'RotateTransformHelper', path :'./docs/helpers/transform/rotate.md'}],
-          //       ['io-md-view', {label: 'ScaleTransformHelper', path :'./docs/helpers/transform/scale.md'}],
-          //       ['io-md-view', {label: 'StretchTransformHelper', path :'./docs/helpers/transform/stretch.md'}],
-          //       ['io-md-view', {label: 'TranslateTransformHelper', path :'./docs/helpers/transform/translate.md'}],
-          //     ]}],
-          //     ['io-selector', {label: 'Controls', vertical: true, selected: $('doc_controls', 0), elements: [
-          //       ['io-md-view', {label: 'CameraControls', path :'./docs/controls/camera.md'}],
-          //       ['io-md-view', {label: 'selectionControls', path :'./docs/controls/selection.md'}],
-          //       ['io-md-view', {label: 'TransformControls', path :'./docs/controls/transform.md'}],
-          //       ['io-md-view', {label: 'EditorCameraControls', path :'./docs/controls/camera/editor.md'}],
-          //       ['io-md-view', {label: 'OrbitCameraControls', path :'./docs/controls/camera/orbit.md'}],
-          //       ['io-md-view', {label: 'TrackballCameraControls', path :'./docs/controls/camera/trackball.md'}],
-          //       ['io-md-view', {label: 'CombinedTransformControls', path :'./docs/controls/transform/combined.md'}],
-          //       ['io-md-view', {label: 'DragTransformControls', path :'./docs/controls/transform/drag.md'}],
-          //       ['io-md-view', {label: 'RotateTransformControls', path :'./docs/controls/transform/rotate.md'}],
-          //       ['io-md-view', {label: 'ScaleTransformControls', path :'./docs/controls/transform/scale.md'}],
-          //       ['io-md-view', {label: 'StretchTransformControls', path :'./docs/controls/transform/stretch.md'}],
-          //       ['io-md-view', {label: 'TranslateTransformControls', path :'./docs/controls/transform/translate.md'}],
-          //     ]}],
-          //   ]}],
-          //   ['io-selector', {label: 'Demos', vertical: true, selected: $('demo', 0), elements: [
-              ['three-editor', {label: 'Editor'}],
-          //     ['three-viewport', {label: 'Viewport'}],
-          //     ['three-renderer', {label: 'Renderer'}],
-          //   ]}],
-          //   ['div', {label: 'Examples', className: 'examples'}, [
-          //     ['three-example-animation-keyframes'],
-          //     ['three-example-cloth'],
-          //     ['three-example-geometries'],
-          //     ['three-example-geometry-colors'],
-          //     ['three-example-geometry-hierarchy2'],
-          //     ['three-example-geometry-teapot'],
-          //     ['three-editor'],
-          //     ['three-example-helpers'],
-          //   ]],
-          // ]}],
-        ]);
+        this.options = [
+          {label: 'About', value: 'about'},
+        ],
+        this.elements = [
+          ['io-md-view', {name: 'about', path :'./readme.md'}],
+      //   ['io-selector', {label: 'Docs', selected: $('doc', 0), elements: [
+      //     ['io-selector', {label: 'Core', vertical: true, selected: $('doc_core', 0), elements: [
+      //       ['io-md-view', {label: 'animation', path :'./docs/core/animation.md'}],
+      //       ['io-md-view', {label: 'pointers', path :'./docs/core/pointers.md'}],
+      //       ['io-md-view', {label: 'shot', path :'./docs/core/shot.md'}],
+      //       ['io-md-view', {label: 'tool', path :'./docs/core/tool.md'}],
+      //     ]}],
+      //     ['io-selector', {label: 'Elements', vertical: true, selected: $('doc_elements', 0), elements: [
+      //       ['io-md-view', {label: 'three-attributes', path :'./docs/elements/attributes.md'}],
+      //       ['io-md-view', {label: 'three-color', path :'./docs/elements/color.md'}],
+      //       ['io-md-view', {label: 'three-editor', path :'./docs/elements/editor.md'}],
+      //       ['io-md-view', {label: 'three-euler', path :'./docs/elements/euler.md'}],
+      //       ['io-md-view', {label: 'three-inspector', path :'./docs/elements/inspector.md'}],
+      //       ['io-md-view', {label: 'three-matrix', path :'./docs/elements/matrix.md'}],
+      //       ['io-md-view', {label: 'three-player', path :'./docs/elements/player.md'}],
+      //       ['io-md-view', {label: 'three-vector', path :'./docs/elements/vector.md'}],
+      //       ['io-md-view', {label: 'three-renderer', path :'./docs/elements/renderer.md'}],
+      //       ['io-md-view', {label: 'three-viewport', path :'./docs/elements/viewport.md'}],
+      //     ]}],
+      //     ['io-selector', {label: 'Helpers', vertical: true, selected: $('doc_helpers', 0), elements: [
+      //       ['io-md-view', {label: 'Helper', path :'./docs/helpers/helper.md'}],
+      //       ['io-md-view', {label: 'SelectionHelper', path :'./docs/helpers/selection.md'}],
+      //       ['io-md-view', {label: 'textHelper', path :'./docs/helpers/text.md'}],
+      //       ['io-md-view', {label: 'TransformHelper', path :'./docs/helpers/transform.md'}],
+      //       ['io-md-view', {label: 'CombinedTransformHelper', path :'./docs/helpers/transform/combined.md'}],
+      //       ['io-md-view', {label: 'RotateTransformHelper', path :'./docs/helpers/transform/rotate.md'}],
+      //       ['io-md-view', {label: 'ScaleTransformHelper', path :'./docs/helpers/transform/scale.md'}],
+      //       ['io-md-view', {label: 'StretchTransformHelper', path :'./docs/helpers/transform/stretch.md'}],
+      //       ['io-md-view', {label: 'TranslateTransformHelper', path :'./docs/helpers/transform/translate.md'}],
+      //     ]}],
+      //     ['io-selector', {label: 'Controls', vertical: true, selected: $('doc_controls', 0), elements: [
+      //       ['io-md-view', {label: 'CameraControls', path :'./docs/controls/camera.md'}],
+      //       ['io-md-view', {label: 'selectionControls', path :'./docs/controls/selection.md'}],
+      //       ['io-md-view', {label: 'TransformControls', path :'./docs/controls/transform.md'}],
+      //       ['io-md-view', {label: 'EditorCameraControls', path :'./docs/controls/camera/editor.md'}],
+      //       ['io-md-view', {label: 'OrbitCameraControls', path :'./docs/controls/camera/orbit.md'}],
+      //       ['io-md-view', {label: 'TrackballCameraControls', path :'./docs/controls/camera/trackball.md'}],
+      //       ['io-md-view', {label: 'CombinedTransformControls', path :'./docs/controls/transform/combined.md'}],
+      //       ['io-md-view', {label: 'DragTransformControls', path :'./docs/controls/transform/drag.md'}],
+      //       ['io-md-view', {label: 'RotateTransformControls', path :'./docs/controls/transform/rotate.md'}],
+      //       ['io-md-view', {label: 'ScaleTransformControls', path :'./docs/controls/transform/scale.md'}],
+      //       ['io-md-view', {label: 'StretchTransformControls', path :'./docs/controls/transform/stretch.md'}],
+      //       ['io-md-view', {label: 'TranslateTransformControls', path :'./docs/controls/transform/translate.md'}],
+      //     ]}],
+      //   ]}],
+      //   ['div', {label: 'Examples', className: 'examples'}, [
+      //     ['three-example-animation-keyframes'],
+      //     ['three-example-cloth'],
+      //     ['three-example-geometries'],
+      //     ['three-example-geometry-colors'],
+      //     ['three-example-geometry-hierarchy2'],
+      //     ['three-example-geometry-teapot'],
+      //     ['three-editor'],
+      //     ['three-example-helpers'],
+      //   ]],
+        ];
       }
     }
 

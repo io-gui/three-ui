@@ -1,4 +1,4 @@
-import {IoNode} from "../../../io/build/io-core.js";
+import {IoNode} from "../../../io/dist/io-core.js";
 
 /*
  * Creates a single requestAnimationFrame loop.

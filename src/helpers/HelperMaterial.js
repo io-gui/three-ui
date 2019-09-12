@@ -1,4 +1,4 @@
-import {IoNodeMixin} from "../../../io/build/io-core.js";
+import {IoNodeMixin} from "../../../io/dist/io-core.js";
 import {UniformsUtils, Vector3, Color, FrontSide, ShaderMaterial,
   DataTexture, RGBAFormat, FloatType, NearestFilter} from "../../../three.js/build/three.module.js";
 

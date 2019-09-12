@@ -1,4 +1,4 @@
-import {IoNode} from "../../../io/build/io-core.js";
+import {IoNode} from "../../../io/dist/io-core.js";
 
 export class Pointers extends IoNode {
   static get properties() {
