@@ -41,6 +41,8 @@ const propConfig = {
 	'constructor:Sphere': propProp, // Temp
 	// Object3D
 	'Object3D|drawMode': ['io-option-menu', {'options': makeOptions(['TrianglesDrawMode', 'TriangleStripDrawMode', 'TriangleFanDrawMode'])}],
+	'Object3D|castShadow': ['io-switch'],
+	'Object3D|receiveShadow': ['io-switch'],
 	// BufferGeometry
 	'BufferGeometry|constructor:Object': propProp,
 	// 'BufferGeometry|index': ['three-attributes'],
@@ -103,6 +105,7 @@ export class IoThreeInspector extends IoInspector {
 	static get Properties() {
 		return {
 			autoExpand: ['properties', 'transform', 'values'],
+			lazy: true,
 		};
 	}
 	static get Listeners() {
@@ -115,6 +118,7 @@ export class IoThreeInspector extends IoInspector {
 			'touchend': 'stopPropagation',
 			'keydown': 'stopPropagation',
 			'keyup': 'stopPropagation',
+			'io-value-set': '_onIoValueSet',
 		};
 	}
 	static get Config() {
@@ -129,7 +133,7 @@ export class IoThreeInspector extends IoInspector {
 			'Object3D|rendering': ['layers', /shadow/i, 'renderOrder', 'frustumCulled', 'background', 'fog', 'overrideMaterial', 'drawMode'],
 			'Object3D|matrices': [/matrix/i],
 
-			'Light|properties': ['color', 'intensity'],
+			'Light|properties': ['color', 'groundColor', 'intensity'],
 			'Light|transform': ['target'],
 
 			'Camera|properties': ['fov', 'near', 'far', 'zoom', 'focus', 'aspect', 'view', 'filmGauge', 'filmOffset'],
@@ -156,14 +160,8 @@ export class IoThreeInspector extends IoInspector {
 	stopPropagation(event) {
 		event.stopImmediatePropagation();
 	}
-	// TODO: only on set!
-	selectedMutated() {
+	_onIoValueSet() {
 		this.dispatchEvent('change');
-		const all = this.querySelectorAll('*');
-		// TODO: unhack this horrific hack
-		for (let i = 0; i < all.length; i++) {
-			if (all[i].changed) all[i].changed();
-		}
 	}
 }
 
