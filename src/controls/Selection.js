@@ -2,7 +2,7 @@
 
 import {Raycaster} from "../../../three.js/build/three.module.js";
 import {Selection} from "../core/Selection.js";
-import {SelectionHelper} from "../helpers/Selection.js";
+// import {SelectionHelper} from "../helpers/Selection.js";
 import {Tool} from "../core/Tool.js";
 
 // Temp variables
@@ -16,7 +16,7 @@ export class SelectionControls extends Tool {
 	static get Properties() {
 		return {
 			selection: Selection,
-			helper: SelectionHelper,
+			// helper: SelectionHelper,
 		};
 	}
 	static get Listeners() {
@@ -25,17 +25,17 @@ export class SelectionControls extends Tool {
 			pointerup: 'onPointerup',
 		};
 	}
-	get compose() {
-		return {
-			helper: {selection: this.bind('selection')},
-		};
-	}
-	helperChanged(event) {
-		const oldHelper = event.detail.oldValue;
-		const helper = event.detail.value;
-		if (oldHelper) this.helperScene.remove(oldHelper);
-		if (helper) this.helperScene.add(helper);
-	}
+	// get compose() {
+	// 	return {
+	// 		helper: {selection: this.bind('selection')},
+	// 	};
+	// }
+	// helperChanged(event) {
+	// 	const oldHelper = event.detail.oldValue;
+	// 	const helper = event.detail.value;
+	// 	if (oldHelper) this.helperScene.remove(oldHelper);
+	// 	if (helper) this.helperScene.add(helper);
+	// }
 	select(viewport, pointer, camera) {
 		raycaster.setFromCamera(pointer.position, camera);
 		const intersects = raycaster.intersectObjects(this.scene.children, true);
