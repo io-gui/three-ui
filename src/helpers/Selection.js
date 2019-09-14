@@ -1,7 +1,7 @@
 import {CylinderBufferGeometry} from "../../../three.js/build/three.module.js";
-import {Helper} from "./Helper.js.js";
+import {Helper} from "./Helper.js";
 // import {TransformHelper} from "./Transform.js";
-import {HelperGeometry} from "./HelperGeometry.js.js";
+import {HelperGeometry} from "./HelperGeometry.js";
 import {Selection} from "../core/Selection.js";
 
 // Reusable utility variables

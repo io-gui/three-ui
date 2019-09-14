@@ -69,8 +69,6 @@ export class ThreeRenderer extends IoElement {
 			position: absolute;
 			top: 0;
 			left: 0;
-			width: 100% !important;
-			height: 100% !important;
 			pointer-events: none;
 			image-rendering: optimizeSpeed; /* Older versions of FF */
 			image-rendering: -moz-crisp-edges; /* FF 6.0+ */
@@ -193,8 +191,8 @@ export class ThreeRenderer extends IoElement {
 	}
 	onResized() {
 		const rect = this.getBoundingClientRect();
-		this.size[0] = Math.ceil(rect.width);
-		this.size[1] = Math.ceil(rect.height);
+		this.size[0] = Math.floor(rect.width);
+		this.size[1] = Math.floor(rect.height);
 		const r = window.devicePixelRatio || 1;
 		this.$.canvas.width = this.size[0] * r;
 		this.$.canvas.height = this.size[1] * r;

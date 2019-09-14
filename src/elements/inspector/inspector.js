@@ -1,8 +1,18 @@
-import {IoProperties, IoInspector} from "../../../io/build/io-core.js";
-import {configs} from "./__configs.js";
-import {groups} from "./__groups.js";
+import {IoProperties, IoInspector} from "../../../../io/build/io-core.js";
+import {configs} from "./configs.js";
+import {groups} from "./groups.js";
 
 export class ThreeInspector extends IoInspector {
+	static get Style() {
+		return /* css */`
+		:host {
+			--io-spacing: 3px;
+			--io-font-size: 12px;
+			--io-line-height: 12px;
+			--io-item-height: 20px;
+		}
+		`;
+	}
 	static get Properties() {
 		return {
 			autoExpand: ['properties', 'transform', 'values'],

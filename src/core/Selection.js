@@ -29,13 +29,13 @@ export class Selection extends IoNode {
 			if (index !== -1) this.selected.splice(index, 1);
 			else this.selected.push(list[i]);
 		}
-		this.dispatchEvent('object-mutated', {object: this}, false, window);
+		this.dispatchEvent('object-mutated', {objects: [this, this.selected]}, false, window);
 	}
 	add(list, hierarchy, filter) {
 		list = filterItems(list, hierarchy, filter);
 		selectedOld.push(...this.selected);
 		this.selected.concat(...list);
-		this.dispatchEvent('object-mutated', {object: this}, false, window);
+		this.dispatchEvent('object-mutated', {objects: [this, this.selected]}, false, window);
 	}
 	addFirst(list, hierarchy, filter) {
 		list = filterItems(list, hierarchy, filter);
@@ -43,7 +43,7 @@ export class Selection extends IoNode {
 		this.selected.length = 0;
 		this.selected.push(...list);
 		this.selected.push(...selectedOld);
-		this.dispatchEvent('object-mutated', {object: this}, false, window);
+		this.dispatchEvent('object-mutated', {objects: [this, this.selected]}, false, window);
 	}
 	remove(list, hierarchy, filter) {
 		list = filterItems(list, hierarchy, filter);
@@ -52,19 +52,19 @@ export class Selection extends IoNode {
 			let index = this.selected.indexOf(list[i]);
 			if (index !== -1) this.selected.splice(i, 1);
 		}
-		this.dispatchEvent('object-mutated', {object: this}, false, window);
+		this.dispatchEvent('object-mutated', {objects: [this, this.selected]}, false, window);
 	}
 	replace(list, hierarchy, filter) {
 		list = filterItems(list, hierarchy, filter);
 		selectedOld.push(...this.selected);
 		this.selected.length = 0;
 		this.selected.push(...list);
-		this.dispatchEvent('object-mutated', {object: this}, false, window);
+		this.dispatchEvent('object-mutated', {objects: [this, this.selected]}, false, window);
 	}
 	clear() {
 		selectedOld.push(...this.selected);
 		this.selected.length = 0;
-		this.dispatchEvent('object-mutated', {object: this}, false, window);
+		this.dispatchEvent('object-mutated', {objects: [this, this.selected]}, false, window);
 	}
 	dispose() {
 		super.dispose();

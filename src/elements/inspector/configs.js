@@ -1,4 +1,4 @@
-import * as THREE from "../../../three.js/src/constants.js";
+import * as THREE from "../../../../../three.js/src/constants.js";
 
 function makeOptions(list) {
 	const options = [];
@@ -29,7 +29,7 @@ export const configs = {
 	'constructor:Matrix3': matrixProp,
 	'constructor:Matrix4': matrixProp,
 	'constructor:Euler': ['io-vector', {step: Math.PI/12, conversion: 180/Math.PI}], // TODO
-	'constructor:Quaternion': ['io-vector'],
+	'constructor:Quaternion': ['io-vector', {step: 0.01}],
 	'constructor:Color': ['io-color-vector'],
 	'scale': ['io-vector', {linkable: true}],
 	// Other types
