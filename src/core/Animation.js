@@ -48,3 +48,5 @@ export class Animation extends IoNode {
 		cancelAnimationFrame(this._rafID);
 	}
 }
+
+Animation.Register();

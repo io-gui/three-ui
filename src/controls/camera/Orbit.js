@@ -65,7 +65,7 @@ export class OrbitCameraControls extends CameraControls {
 		} else if (camera.isOrthographicCamera) {
 			camera.zoom = Math.max(this.minZoom, Math.min(this.maxZoom, camera.zoom * dollyScale));
 		}
-		camera.updateProjectionMatrix();
+		// camera.updateProjectionMatrix();
 
 		this._spherical.makeSafe();
 		// restrict radius to be between desired limits
@@ -119,3 +119,5 @@ export class OrbitCameraControls extends CameraControls {
 		return this._spherical.theta;
 	}
 }
+
+OrbitCameraControls.Register();

@@ -86,8 +86,14 @@ export class ThreeRenderer extends IoElement {
 	}
 	static get Properties() {
 		return {
-			scene: Scene,
-			camera: PerspectiveCamera,
+			scene: {
+				type: Scene,
+				observe: true,
+			},
+			camera: {
+				type: PerspectiveCamera,
+				observe: true,
+			},
 			ishost: {
 				type: Boolean,
 				reflect: 1

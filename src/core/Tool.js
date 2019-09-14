@@ -20,7 +20,7 @@ export class Tool extends IoNode {
 			pointers: {enabled: this.bind('enabled')}
 		};
 	}
-	constructor(props = {}) {
+	constructor(props) {
 		super(props);
 
 		this.pointers.addEventListener('pointerdown', this.onViewportPointerdown.bind(this));
@@ -29,13 +29,14 @@ export class Tool extends IoNode {
 		this.pointers.addEventListener('pointerup', this.onViewportPointerup.bind(this));
 		this.pointers.addEventListener('pointerleave', this.onViewportPointerleave.bind(this));
 		this.pointers.addEventListener('contextmenu', this.onViewportContextmenu.bind(this));
+		this.pointers.addEventListener('scroll', this.onViewportWheel.bind(this));
 		this.pointers.addEventListener('wheel', this.onViewportWheel.bind(this));
 		this.pointers.addEventListener('keydown', this.onViewportKeydown.bind(this));
 		this.pointers.addEventListener('keyup', this.onViewportKeyup.bind(this));
 		this.pointers.addEventListener('focus', this.onViewportFocus.bind(this));
 		this.pointers.addEventListener('blur', this.onViewportBlur.bind(this));
 
-		if (props.domElement && props.camera) {
+		if (props && props.domElement && props.camera) {
 			this.attachViewport(props.domElement, props.camera);
 		}
 	}
@@ -101,42 +102,42 @@ export class Tool extends IoNode {
 		if (!this.enabled) return false;
 		// event.detail.event.preventDefault();
 		const target = event.detail.event.target;
-		const camera = this.cameras.get(event.target);
+		const camera = this.cameras.get(target);
 		const rect = target.getBoundingClientRect();
 		this.dispatchEvent('contextmenu', {event: event.detail.event, target: target, rect: rect, camera: camera});
 	}
 	onViewportKeydown(event) {
 		if (!this.enabled) return false;
 		const target = event.detail.event.target;
-		const camera = this.cameras.get(event.target);
+		const camera = this.cameras.get(target);
 		const rect = target.getBoundingClientRect();
-		this.dispatchEvent('keykown', {event: event.detail.event, target: target, rect: rect, camera: camera});
+		this.dispatchEvent('keydown', {event: event.detail.event, target: target, rect: rect, camera: camera});
 	}
 	onViewportKeyup(event) {
 		if (!this.enabled) return false;
 		const target = event.detail.event.target;
-		const camera = this.cameras.get(event.target);
+		const camera = this.cameras.get(target);
 		const rect = target.getBoundingClientRect();
 		this.dispatchEvent('keyup', {event: event.detail.event, target: target, rect: rect, camera: camera});
 	}
 	onViewportWheel(event) {
 		if (!this.enabled) return false;
 		const target = event.detail.event.target;
-		const camera = this.cameras.get(event.target);
+		const camera = this.cameras.get(target);
 		const rect = target.getBoundingClientRect();
 		this.dispatchEvent('wheel', {event: event.detail.event, target: target, rect: rect, camera: camera});
 	}
 	onViewportFocus(event) {
 		if (!this.enabled) return false;
 		const target = event.detail.event.target;
-		const camera = this.cameras.get(event.target);
+		const camera = this.cameras.get(target);
 		const rect = target.getBoundingClientRect();
 		this.dispatchEvent('focus', {event: event.detail.event, target: target, rect: rect, camera: camera});
 	}
 	onViewportBlur(event) {
 		if (!this.enabled) return false;
 		const target = event.detail.event.target;
-		const camera = this.cameras.get(event.target);
+		const camera = this.cameras.get(target);
 		const rect = target.getBoundingClientRect();
 		this.dispatchEvent('blur', {event: event.detail.event, target: target, rect: rect, camera: camera});
 	}

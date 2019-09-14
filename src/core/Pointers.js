@@ -140,6 +140,8 @@ export class Pointers extends IoNode {
 	}
 }
 
+Pointers.Register();
+
 class Pointer {
 	constructor(event, start) {
 		const rect = event.target.getBoundingClientRect();

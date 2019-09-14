@@ -69,6 +69,7 @@ export class CameraControls extends Tool {
 		});
 		this.addEventListener('pointermove', this.onPointermove.bind(this));
 		this.addEventListener('pointerup', this.onPointerup.bind(this));
+		this.addEventListener('wheel', this.onWheel.bind(this));
 	}
 	dispose() {
 		super.dispose();
@@ -161,6 +162,9 @@ export class CameraControls extends Tool {
 
 			if (viewportMaxV > EPS) {
 				this.dispatchEvent('object-mutated', {object: camera}, false, window);
+				this.dispatchEvent('object-mutated', {object: camera.position}, false, window);
+				this.dispatchEvent('object-mutated', {object: camera.rotation}, false, window);
+				this.dispatchEvent('object-mutated', {object: camera.quaternion}, false, window);
 				this.animation.startAnimation(0);
 			}
 		}
@@ -252,11 +256,8 @@ export class CameraControls extends Tool {
 		// this.active = false;
 	}
 	onWheel(event) {
-		this.state = STATE.DOLLY;
 		const camera = event.detail.camera;
-		this._setDolly(camera, event.detail.delta * this.wheelDollySpeed);
-		this.state = STATE.NONE;
-		this.animation.startAnimation(0);
+		this._setDolly(camera, event.detail.event.wheelDelta * this.wheelDollySpeed);
 	}
 	_setPan(camera, dir) {
 		this.state = STATE.PAN;
