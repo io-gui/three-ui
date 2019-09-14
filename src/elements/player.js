@@ -1,5 +1,4 @@
 import {Clock} from "../../../three.js/build/three.module.js";
-import {html} from "../../../io/dist/io.js";
 import {ThreeViewport} from "./viewport.js";
 // import {OrbitCameraControls} from "../controls/camera/Orbit.js";
 

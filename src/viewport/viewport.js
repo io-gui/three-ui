@@ -13,59 +13,59 @@ export class ThreeViewport extends ThreeRenderer {
 		};
 	}
 	get compose() {
-		 return {
-			 // TODO: make work without binding
-			 cameraTool: {scene: this.bind('scene')},
-			 //  selectionTool: {scene: this.bind('scene'), selection: this.bind('selection')},
-		 };
+		return {
+			// TODO: make work without binding
+			cameraTool: {scene: this.bind('scene')},
+			//  selectionTool: {scene: this.bind('scene'), selection: this.bind('selection')},
+		};
 	}
 	connectedCallback() {
-		 super.connectedCallback();
-		 this.cameraTool.attachViewport(this, this.camera);
+		super.connectedCallback();
+		this.cameraTool.attachViewport(this, this.camera);
 		//  this.selectionTool.attachViewport(this, this.camera);
 	}
 	disconnectedCallback() {
-		 super.disconnectedCallback();
-		 this.cameraTool.detachViewport(this, this.camera);
+		super.disconnectedCallback();
+		this.cameraTool.detachViewport(this, this.camera);
 		//  this.selectionTool.detachViewport(this, this.camera);
 	}
 	// sceneChanged() {
-	//	 this.selectionTool.scene = this.scene;
+	//	this.selectionTool.scene = this.scene;
 	// }
 	cameraChanged() {
-		 this.cameraTool.attachViewport(this, this.camera);
+		this.cameraTool.attachViewport(this, this.camera);
 		//  this.selectionTool.attachViewport(this, this.camera);
 	}
 	// selectionToolChanged(event) {
-	//	 if (event.detail.oldValue) event.detail.oldValue.detachViewport(this);
-	//	 event.detail.value.attachViewport(this, this.camera);
+	//	if (event.detail.oldValue) event.detail.oldValue.detachViewport(this);
+	//	event.detail.value.attachViewport(this, this.camera);
 	// }
 	cameraToolChanged(event) {
-		 if (event.detail.oldValue) event.detail.oldValue.detachViewport(this);
-		 event.detail.value.attachViewport(this, this.camera);
+		if (event.detail.oldValue) event.detail.oldValue.detachViewport(this);
+		event.detail.value.attachViewport(this, this.camera);
 	}
 	// selectionMutated(event) {
-	//	 this.render();
+	//	this.render();
 	// }
 	dispose() {
-		 // TODO
-		 this.cameraTool.detachViewport(this, this.camera);
+		// TODO
+		this.cameraTool.detachViewport(this, this.camera);
 		//  this.selectionTool.detachViewport(this, this.camera);
 	}
 	// preRender() {
 	// }
 	// postRender() {
-	//	 this.renderer.clearDepth();
+	//	this.renderer.clearDepth();
 
-	//	 this.selectionTool.helperScene.traverse(child => {
-	//		 if (child.material) {
-	//			 child.material.resolution.set(this.size[0], this.size[1], window.devicePixelRatio);
-	//			 child.material.uniformChanged()
-	//		 }
-	//	 });
+	//	this.selectionTool.helperScene.traverse(child => {
+	//		if (child.material) {
+	//			child.material.resolution.set(this.size[0], this.size[1], window.devicePixelRatio);
+	//			child.material.uniformChanged()
+	//		}
+	//	});
 
-	//	 if (this.cameraTool.helperScene) this.renderer.render(this.cameraTool.helperScene, this.camera);
-	//	 if (this.selectionTool.helperScene) this.renderer.render(this.selectionTool.helperScene, this.camera);
+	//	if (this.cameraTool.helperScene) this.renderer.render(this.cameraTool.helperScene, this.camera);
+	//	if (this.selectionTool.helperScene) this.renderer.render(this.selectionTool.helperScene, this.camera);
 	// }
 }
 
