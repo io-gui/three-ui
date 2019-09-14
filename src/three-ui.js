@@ -2,8 +2,8 @@
  * @author arodic / https://github.com/arodic
  */
 
-export {IoThreeInspector} from "./inspector/inspector.js";
+export {ThreeInspector} from "./inspector/inspector.js";
 // export {ThreeEditor} from "./elements/editor.js";
 // export {ThreePlayer} from "./elements/player.js";
-// export {ThreeRenderer} from "./elements/renderer.js";
-// export {ThreeViewport} from "./elements/viewport.js";
+export {ThreeRenderer} from "./viewport/renderer.js";
+export {ThreeViewport} from "./viewport/viewport.js";
