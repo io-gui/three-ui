@@ -164,7 +164,6 @@ export class CameraControls extends Tool {
 				this.dispatchEvent('object-mutated', {object: camera}, false, window);
 				this.dispatchEvent('object-mutated', {object: camera.position}, false, window);
 				this.dispatchEvent('object-mutated', {object: camera.rotation}, false, window);
-				this.dispatchEvent('object-mutated', {object: camera.quaternion}, false, window);
 				this.animation.startAnimation(0);
 			}
 		}

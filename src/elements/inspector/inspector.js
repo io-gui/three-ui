@@ -11,6 +11,9 @@ export class ThreeInspector extends IoInspector {
 			--io-line-height: 12px;
 			--io-item-height: 20px;
 		}
+		:host io-number-slider > io-number {
+			flex-basis: 4.5em;
+		}
 		`;
 	}
 	static get Properties() {

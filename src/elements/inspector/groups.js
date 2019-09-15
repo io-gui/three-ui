@@ -2,9 +2,9 @@ export const groups = {
 	'Object|properties': ['name', 'visible', 'userData', 'map'],
 
 	'Object3D|properties': ['name', 'parent', 'children', 'material', 'geometry'],
-	'Object3D|transform': ['position', 'rotation', 'scale', 'quaternion', 'up', /update/i],
+	'Object3D|transform': ['position', 'rotation', 'scale', 'up', /update/i],
 	'Object3D|rendering': ['layers', /shadow/i, 'renderOrder', 'frustumCulled', 'background', 'fog', 'overrideMaterial', 'drawMode'],
-	'Object3D|matrices': [/matrix/i],
+	'Object3D|matrices': [/matrix/i, 'quaternion'],
 
 	'Light|properties': ['color', 'groundColor', 'intensity'],
 	'Light|transform': ['target'],

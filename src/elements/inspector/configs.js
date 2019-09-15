@@ -90,8 +90,8 @@ export const configs = {
 	'KeyframeTrack|loop': ['io-option-menu', {'options': makeOptions(['InterpolateDiscrete', 'InterpolateLinear', 'InterpolateSmooth'])}],
 
 	// Camera
-	"Camera|fov": ["io-number-slider", {min: 0.001, max: 180, step: 1}],
-	"Camera|zoom": ["io-number-slider", {min: 0.001, max: 100}],
-	"Camera|near": ["io-number-slider", {min: 0.001, max: 100000}], // TODO: log
-	"Camera|far": ["io-number-slider", {min: 0.001, max: 100000}], // TODO: log
+	"Camera|fov": ["io-number-slider", {min: 0.001, max: 180, step: 0.1}],
+	"Camera|zoom": ["io-number-slider", {min: 0, max: 10}], // TODO: log
+	"Camera|near": ["io-number-slider", {min: 0.001, max: 10}], // TODO: log
+	"Camera|far": ["io-number-slider", {min: 10, max: 100000, step: 1}], // TODO: log
 };
