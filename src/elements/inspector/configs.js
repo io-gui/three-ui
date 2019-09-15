@@ -1,4 +1,4 @@
-import * as THREE from "../../../../../three.js/src/constants.js";
+import * as THREE from "../../../../three.js/src/constants.js";
 
 function makeOptions(list) {
 	const options = [];
