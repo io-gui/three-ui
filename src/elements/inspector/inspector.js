@@ -1,15 +1,22 @@
 import {IoProperties, IoInspector} from "../../../../io/build/io-core.js";
-import {configs} from "./configs.js";
+import {config} from "./config.js";
 import {groups} from "./groups.js";
 
 export class ThreeInspector extends IoInspector {
 	static get Style() {
 		return /* css */`
 		:host {
-			--io-spacing: 3px;
-			--io-font-size: 12px;
+			--io-spacing: 2px;
+			--io-font-size: 11px;
 			--io-line-height: 12px;
-			--io-item-height: 20px;
+			--io-item-height: 18px;
+		}
+		:host io-number {
+			padding-left: 0;
+			padding-right: 0;
+		}
+		:host io-number-slider > io-number {
+			flex-basis: 4.5em;
 		}
 		`;
 	}
@@ -32,7 +39,7 @@ export class ThreeInspector extends IoInspector {
 		};
 	}
 	static get Config() {
-		return configs;
+		return config;
 	}
 	static get Groups() {
 		return groups;
@@ -47,7 +54,7 @@ export class ThreeInspector extends IoInspector {
 
 // TODO: this should not be neccesary.
 //Redundant with ThreeInspector `static get Config()a
-IoProperties.RegisterConfig(configs);
+IoProperties.RegisterConfig(config);
 
 ThreeInspector.Register();
 

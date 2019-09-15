@@ -62,8 +62,9 @@ export class ThreeRenderer extends IoElement {
 			user-select: none;
 			box-sizing: border-box;
 		}
-		:host:focus {
-			z-index: 2;
+		:host:focus > canvas {
+			outline: var(--io-border-width) solid var(--io-color-focus);
+			outline-offset: calc(var(--io-border-width) * -1);
 		}
 		:host > canvas {
 			position: absolute;
