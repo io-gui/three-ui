@@ -4,24 +4,12 @@ export class Pointers extends IoNode {
 	static get Properties() {
 		return {
 			enabled: true,
+			domElements: [],
 		};
 	}
 	constructor(props = {}) {
 		super(props);
-
-		this.domElements = [];
 		this.pointers = new WeakMap();
-
-		this.onPointerdown = this.onPointerdown.bind(this);
-		this.onPointerhover = this.onPointerhover.bind(this);
-		this.onPointermove = this.onPointermove.bind(this);
-		this.onPointerup = this.onPointerup.bind(this);
-		this.onContextmenu = this.onContextmenu.bind(this);
-		this.onWheel = this.onWheel.bind(this);
-		this.onKeydown = this.onKeydown.bind(this);
-		this.onKeyup = this.onKeyup.bind(this);
-		this.onFocus = this.onFocus.bind(this);
-		this.onBlur = this.onBlur.bind(this);
 	}
 	attachElement(domElement) {
 		if (this.domElements.indexOf(domElement) === -1) {
@@ -84,7 +72,7 @@ export class Pointers extends IoNode {
 	onPointerhover(event) {
 		if (!this.enabled) return false;
 		const pointers = this.pointers.get(event.target);
-		pointers[event.pointerId] = new Pointer(event);
+		pointers[event.pointerId] = new Pointer(event, pointers[event.pointerId]);
 		if (event.buttons !== 0) {
 			this.onPointermove(event);
 			return;
@@ -94,7 +82,7 @@ export class Pointers extends IoNode {
 	onPointermove(event) {
 		if (!this.enabled) return false;
 		const pointers = this.pointers.get(event.target);
-		pointers[event.pointerId] = new Pointer(event, pointers[event.pointerId].start);
+		pointers[event.pointerId] = new Pointer(event, pointers[event.pointerId]);
 		const pointerArray = [];
 		for (let i in pointers) pointerArray.push(pointers[i]);
 		this.dispatchEvent('pointermove', {event: event, pointers: pointerArray});
@@ -103,7 +91,7 @@ export class Pointers extends IoNode {
 		if (!this.enabled) return false;
 		event.target.releasePointerCapture(event.pointerId);
 		const pointers = this.pointers.get(event.target);
-		const pointer = new Pointer(event, pointers[event.pointerId].start);
+		const pointer = new Pointer(event, pointers[event.pointerId]);
 		delete pointers[event.pointerId];
 		this.dispatchEvent('pointerup', {event: event, pointers: [pointer]});
 	}
@@ -143,7 +131,7 @@ export class Pointers extends IoNode {
 Pointers.Register();
 
 class Pointer {
-	constructor(event, start) {
+	constructor(event, previousPointer) {
 		const rect = event.target.getBoundingClientRect();
 		const button0 = (event.buttons === 1 || event.buttons === 3 || event.buttons === 5 || event.buttons === 7) ? true : false;
 		const button1 = (event.buttons === 2 || event.buttons === 6) ? true : false;
@@ -152,7 +140,7 @@ class Pointer {
 		const y = (event.offsetY / rect.height) * - 2.0 + 1.0;
 		const dx = (event.movementX / rect.width) * 2.0;
 		const dy = (event.movementY / rect.height) * - 2.0;
-		start = start || {x: x, y: y};
+		const start = previousPointer ? previousPointer.start : {x: x, y: y};
 		return {
 			pointerId: event.pointerId,
 			target: event.target,
