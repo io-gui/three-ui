@@ -1,20 +1,23 @@
 export const groups = {
-	'Object|properties': ['name', 'visible', 'userData', 'map'],
+	'Object|main': ['name', 'visible'],
 
-	'Object3D|properties': ['name', 'parent', 'children', 'material', 'geometry'],
-	'Object3D|transform': ['position', 'rotation', 'scale', 'up', /update/i],
-	'Object3D|rendering': ['layers', /shadow/i, 'renderOrder', 'frustumCulled', 'background', 'fog', 'overrideMaterial', 'drawMode'],
-	'Object3D|matrices': [/matrix/i, 'quaternion'],
+	'Object3D|main': ['name', 'material', 'geometry'],
+	'Object3D|transform': ['position', 'rotation', 'scale'],
+	'Object3D|transform:advanced': ['up', 'quaternion', /update/i],
+	'Object3D|matrices:advanced': [/matrix/i],
+	'Object3D|rendering': ['castShadow', 'receiveShadow', 'background', 'fog', 'overrideMaterial', 'drawMode'],
+	'Object3D|rendering:advanced': ['layers', 'renderOrder', 'frustumCulled'],
 
-	'Light|properties': ['color', 'groundColor', 'intensity'],
+	'Light|main': ['color', 'groundColor', 'intensity'],
 	'Light|transform': ['target'],
 
-	'Camera|properties': ['fov', 'near', 'far', 'zoom', 'focus', 'aspect', 'view', 'filmGauge', 'filmOffset'],
+	'Camera|main': ['fov', 'near', 'far'],
+	'Camera|main:advanced': ['zoom', 'focus', 'aspect'],
 
-	'BufferGeometry|properties': ['boundingBox', 'boundingSphere', 'groups'],
+	'BufferGeometry|main': ['boundingBox', 'boundingSphere', 'groups'],
 	'BufferGeometry|attributes': ['index', 'attributes', 'morphAttributes', 'drawRange'],
 
-	'Material|properties': ['transparent', 'opacity', 'color', /Map/, /emissive/i, 'reflectivity', 'refractionRatio'],
+	'Material|main': ['transparent', 'opacity', 'color', 'map', /Map/, /emissive/i, 'reflectivity', 'refractionRatio'],
 	'Material|rendering': [
 		'side', 'fog', 'lights', 'flatShading', 'vertexTangents',
 		'vertexColors', 'toneMapped',
@@ -23,11 +26,9 @@ export const groups = {
 	'Material|stencil': [/stencil/i],
 	'Material|shadows': [/shadow/i],
 	'Material|wireframe': [/line/i, 'wireframe'],
-	'Material|advanced': [/polygon/i, 'precision', 'program', 'skinning', 'morphTargets', 'morphNormals', 'clipIntersection', 'clippingPlanes'],
 
-	'Object|advanced': ['needsUpdate'],
 	'Object|hidden': [/^is/, 'type', 'id', 'uuid'],
 
-	'Array|values': [/^[0-9]+$/],
-	// TODO
+	'Array|elements': [/^[0-9]+$/],
+	'Array|hidden': ['length'],
 };

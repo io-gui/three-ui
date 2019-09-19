@@ -20,11 +20,6 @@ export class ThreeInspector extends IoInspector {
 		}
 		`;
 	}
-	static get Properties() {
-		return {
-			autoExpand: ['properties', 'transform', 'values'],
-		};
-	}
 	static get Listeners() {
 		return {
 			'mousedown': 'stopPropagation',

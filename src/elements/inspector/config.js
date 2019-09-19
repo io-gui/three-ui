@@ -91,7 +91,7 @@ export const config = {
 
 	// Camera
 	"Camera|fov": ["io-number-slider", {min: 0.001, max: 180, step: 0.1}],
-	"Camera|zoom": ["io-number-slider", {min: 0, max: 10, exponent: 3}],
-	"Camera|near": ["io-number-slider", {min: 0.0001, max: 10, step: 0.0001, exponent: 3}],
-	"Camera|far": ["io-number-slider", {min: 10, max: 100000, step: 1, exponent: 3}],
+	"Camera|zoom": ["io-number-slider", {min: 0.0001, max: 10, exponent: 3}],
+	"Camera|near": ["io-number-slider", {min: 0.0001, max: 100000, step: 0.0001, exponent: 5}],
+	"Camera|far": ["io-number-slider", {min: 0.0001, max: 100000, step: 0.0001, exponent: 5}],
 };
