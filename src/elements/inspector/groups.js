@@ -1,12 +1,13 @@
 export const groups = {
-	'Object|main': ['name', 'visible'],
+	'Object|main': [],
 
-	'Object3D|main': ['name', 'material', 'geometry'],
+	'Object3D|main': ['material', 'geometry'],
 	'Object3D|transform': ['position', 'rotation', 'scale'],
 	'Object3D|transform:advanced': ['up', 'quaternion', /update/i],
 	'Object3D|matrices:advanced': [/matrix/i],
 	'Object3D|rendering': ['castShadow', 'receiveShadow', 'background', 'fog', 'overrideMaterial', 'drawMode'],
 	'Object3D|rendering:advanced': ['layers', 'renderOrder', 'frustumCulled'],
+	'Object3D|hidden': ['name', 'parent', 'children', 'visible'],
 
 	'Light|main': ['color', 'groundColor', 'intensity'],
 	'Light|transform': ['target'],
@@ -27,7 +28,7 @@ export const groups = {
 	'Material|shadows': [/shadow/i],
 	'Material|wireframe': [/line/i, 'wireframe'],
 
-	'Object|hidden': [/^is/, 'type', 'id', 'uuid'],
+	'Object|hidden': [/^is/],
 
 	'Array|elements': [/^[0-9]+$/],
 	'Array|hidden': ['length'],

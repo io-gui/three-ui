@@ -1,3 +1,3 @@
 export const widgets = {
-	'Object3D': ['three-widget-object'],
+	'Object3D': ['three-widget-object3d'],
 };
