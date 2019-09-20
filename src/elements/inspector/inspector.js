@@ -1,6 +1,7 @@
 import {IoProperties, IoInspector} from "../../../../io/build/io-core.js";
 import {config} from "./config.js";
 import {groups} from "./groups.js";
+import {widgets} from "./widgets.js";
 
 export class ThreeInspector extends IoInspector {
 	static get Style() {
@@ -38,6 +39,9 @@ export class ThreeInspector extends IoInspector {
 	}
 	static get Groups() {
 		return groups;
+	}
+	static get Widgets() {
+		return widgets;
 	}
 	stopPropagation(event) {
 		event.stopPropagation();
