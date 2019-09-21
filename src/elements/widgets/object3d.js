@@ -14,7 +14,7 @@ export class ThreeWidgetObject3D extends IoElement {
 		:host * {
 			overflow: hidden;
 		}
-		:host io-icon {
+		:host io-icon.widget-icon {
 			padding: 0;
 			/* margin: 0 var(--io-spacing); */
 			width: calc(calc(2 * var(--io-item-height)) + var(--io-spacing));
@@ -57,26 +57,46 @@ export class ThreeWidgetObject3D extends IoElement {
 			parent = parent.parent;
 		}
 	}
+	_select(child) {
+		this.className = 'select';
+		this.dispatchEvent('item-clicked', {value: child}, true);
+	}
+	_setVisible(event) {
+		this.value.visible = event.detail.value;
+		this.dispatchEvent('object-mutated', {object: this.value}, false, window);
+	}
+	_setName(event) {
+		this.value.name = event.detail.value;
+		this.dispatchEvent('object-mutated', {object: this.value}, false, window);
+	}
 	changed() {
+		const parent = this.value.parent || null;
+		const scene = this.scene !== this.value ? this.scene : null;
+		let children = null;
+		if (this.value.children && this.value.children.length) {
+			children = this.value.children.map(child => {
+				const label = child.name || child.constructor.name;
+				return {label: label, value: child, action: this._select};
+			});
+		}
+
 		const geometry = this.value.geometry || null;
 		const material = this.value.material || null;
-		const parent = this.value.parent || null;
-		const children = (this.value.children && this.value.children.length) ? this.value.children : null;
-		const scene = this.scene;
+
 		this.template([
 			['div', {class: 'io-row'}, [
-				['io-icon', {icon: 'icons:check'}],
+				['io-icon', {class: 'widget-icon', icon: 'three:grid'}],
 				['div', {class: 'io-column'}, [
 					['div', {class: 'io-row'}, [
-						['io-switch', {value: this.value.visible}],
-						['io-string', {value: this.value.name}],
+						['io-string', {value: this.value.name, 'on-value-set': this._setName}],
+						['io-switch', {value: this.value.visible, 'on-value-set': this._setVisible}],
 					]],
 					['div', {class: 'io-row'}, [
-						material ? ['io-item', {label: 'material', value: material}]: null,
-						geometry ? ['io-item', {label: 'geometry', value: geometry}]: null,
-						parent ? ['io-item', {label: 'parent', value: parent}] : null,
-						children ? ['io-item', {label: 'children', value: children}] : null,
-						scene ? ['io-item', {label: 'scene', value: scene}] : null,
+						scene ? ['io-button', {label: 'Scene', value: scene, class: 'select'}] : null,
+						parent ? ['io-button', {label: 'Parent', value: parent, class: 'select'}] : null,
+						children ? ['io-option-menu', {label: 'Children ⏷', selectable: false, options: children}] : null,
+						material ? ['io-button', {label: 'Material', value: material, class: 'select'}] : null,
+						geometry ? ['io-button', {label: 'Geometry', value: geometry, class: 'select'}] : null,
 					]],
 				]],
 			]]
