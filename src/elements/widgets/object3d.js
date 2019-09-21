@@ -56,6 +56,7 @@ export class ThreeWidgetObject3D extends IoElement {
 			}
 			parent = parent.parent;
 		}
+		return null;
 	}
 	_select(child) {
 		this.className = 'select';
