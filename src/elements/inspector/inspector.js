@@ -6,12 +6,6 @@ import {widgets} from "./widgets.js";
 export class ThreeInspector extends IoInspector {
 	static get Style() {
 		return /* css */`
-		:host {
-			--io-spacing: 2px;
-			--io-font-size: 11px;
-			--io-line-height: 12px;
-			--io-item-height: 18px;
-		}
 		:host io-number {
 			padding-left: 0;
 			padding-right: 0;

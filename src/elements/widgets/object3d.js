@@ -1,6 +1,4 @@
-import {
-	Object3D, Scene
-} from "../../../../three.js/build/three.module.js";
+import {Object3D, Scene} from "../../../../three.js/build/three.module.js";
 import {IoElement} from "../../../../io/build/io.js";
 
 
@@ -10,40 +8,51 @@ export class ThreeWidgetObject3D extends IoElement {
 		:host {
 			display: flex;
 			overflow: hidden;
+			align-self: stretch;
 		}
 		:host * {
 			overflow: hidden;
 		}
+		:host io-boolicon {
+			border: var(--io-border);
+			border-color: var(--io-color-border-outset);
+			background-color: var(--io-background-color-dark);
+			background-image: var(--io-gradient-button);
+			padding-left: var(--io-spacing);
+			padding-right: var(--io-spacing);
+		}
+		:host io-boolicon:not([value]) {
+			opacity: 0.25;
+		}
 		:host io-icon.widget-icon {
 			padding: 0;
-			/* margin: 0 var(--io-spacing); */
+			margin: 0 var(--io-spacing);
 			width: calc(calc(2 * var(--io-item-height)) + var(--io-spacing));
 			height: calc(calc(2 * var(--io-item-height)) + var(--io-spacing));
 		}
-		:host io-string:empty:before {
+		:host io-string.name {
+			flex-grow: 1;
+		}
+		:host io-string.name:empty:before {
 			content: ' Name';
 			white-space: pre;
 			visibility: visible;
 			opacity: 0.33;
 		}
-		:host io-string {
-			flex-grow: 1;
+		:host io-option-menu {
+			margin-left: auto;
 		}
-		:host io-item {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			color: var(--io-color-link);
+		:host io-button {
+			padding-left: var(--io-spacing);
+			padding-right: var(--io-spacing);
+			margin-right: calc(0.5 * var(--io-spacing));
 		}
-		:host io-item:hover {
-			text-decoration: underline;
-		}
-
 		`;
 	}
 	static get Properties() {
 		return {
 			value: {
-				type: Object3D,
+				type: Object,
 				observe: true,
 			},
 		};
@@ -71,33 +80,30 @@ export class ThreeWidgetObject3D extends IoElement {
 		this.dispatchEvent('object-mutated', {object: this.value}, false, window);
 	}
 	changed() {
-		const parent = this.value.parent || null;
-		const scene = this.scene !== this.value ? this.scene : null;
-		let children = null;
-		if (this.value.children && this.value.children.length) {
-			children = this.value.children.map(child => {
+		const object = this.value;
+		const hierarchyOptions = [];
+
+		if (this.scene !== object) hierarchyOptions.push({icon: "🡄", label: 'Scene', value: this.scene, action: this._select});
+		if (object.parent) hierarchyOptions.push({icon: "🡄", label: 'Parent', value: object.parent, action: this._select});
+		if (object.children) {
+			hierarchyOptions.push(...object.children.map(child => {
 				const label = child.name || child.constructor.name;
 				return {label: label, value: child, action: this._select};
-			});
+			}));
 		}
-
-		const geometry = this.value.geometry || null;
-		const material = this.value.material || null;
 
 		this.template([
 			['div', {class: 'io-row'}, [
 				['io-icon', {class: 'widget-icon', icon: 'three:grid'}],
 				['div', {class: 'io-column'}, [
 					['div', {class: 'io-row'}, [
-						['io-string', {value: this.value.name, 'on-value-set': this._setName}],
-						['io-switch', {value: this.value.visible, 'on-value-set': this._setVisible}],
+						['io-boolicon', {value: object.visible, 'on-value-set': this._setVisible, true: 'icons:visibility', false: 'icons:visibility_off'}],
+						['io-string', {value: object.name, 'on-value-set': this._setName, class: 'name'}],
 					]],
 					['div', {class: 'io-row'}, [
-						scene ? ['io-button', {label: 'Scene', value: scene, class: 'select'}] : null,
-						parent ? ['io-button', {label: 'Parent', value: parent, class: 'select'}] : null,
-						children ? ['io-option-menu', {label: 'Children ⏷', selectable: false, options: children}] : null,
-						material ? ['io-button', {label: 'Material', value: material, class: 'select'}] : null,
-						geometry ? ['io-button', {label: 'Geometry', value: geometry, class: 'select'}] : null,
+						object.material ? ['io-button', {icon: 'three:sphere_shade', label: 'mat', value: object.material, class: 'select'}] : null,
+						object.geometry ? ['io-button', {icon: 'three:mesh_triangles', label: 'geo', value: object.geometry, class: 'select'}] : null,
+						hierarchyOptions.length ? ['io-option-menu', {icon: 'icons:hub', label: '⏷', selectable: false, options: hierarchyOptions}] : null,
 					]],
 				]],
 			]]
