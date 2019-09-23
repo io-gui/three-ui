@@ -10,6 +10,7 @@ export class ThreeInspector extends IoInspector {
 			padding-left: 0;
 			padding-right: 0;
 		}
+		:host io-number-slider-range > io-number,
 		:host io-number-slider > io-number {
 			flex-basis: 4.5em;
 		}

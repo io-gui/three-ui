@@ -4,15 +4,17 @@ export class ThreeWidgetCamera extends IoElement {
 	static get Style() {
 		return /* css */`
 		:host {
-			display: flex;
-			flex-direction: row;
+			display: grid;
+			grid-gap: var(--io-spacing);
+			justify-self: stretch;
+			justify-items: start;
+			white-space: nowrap;
+			grid-template-columns: minmax(6em, min-content) minmax(12em, 1fr);
 		}
-		:host > io-number-slider-range {
-			flex: 1 1 calc(2 * var(--io-item-height));
-			margin: 0 var(--io-spacing);
-		}
-		:host > io-number-slider-range > io-number {
-			flex: 0 0 calc(3 * var(--io-item-height));
+		:host > span.io-item {
+			width: 100%;
+			max-width: 8em !important;
+			text-align: right;
 		}
 		`;
 	}
@@ -33,12 +35,11 @@ export class ThreeWidgetCamera extends IoElement {
 	changed() {
 		const camera = this.value;
 		this.template([
-			['span', {class: 'io-item'}, 'near:'],
-			['io-number-slider-range', {step: 0.0001, min: 0, max: 10000, exponent: 5, value: [camera.near, camera.far], 'on-value-set': this._setValues}],
-			['span', {class: 'io-item'}, ':far'],
+			['span', {class: 'io-item'}, 'near-far:'],
+			['io-number-slider-range', {step: 0.0001, min: 0.0001, max: 10000, exponent: 5, value: [camera.near, camera.far], 'on-value-set': this._setValues}],
 		]);
 		const farnumber = this.children[1].children[2];
-		farnumber.step = 1;
+		farnumber.step = 0.1;
 	}
 
 }
