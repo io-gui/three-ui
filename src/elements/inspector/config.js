@@ -28,7 +28,7 @@ export const config = {
 	'constructor:Matrix2': matrixProp,
 	'constructor:Matrix3': matrixProp,
 	'constructor:Matrix4': matrixProp,
-	'constructor:Euler': ['io-vector', {step: Math.PI/12, conversion: 180/Math.PI}], // TODO
+	'constructor:Euler': ['three-euler'],
 	'constructor:Quaternion': ['io-vector', {step: 0.01}],
 	'constructor:Color': ['io-color-vector'],
 	'scale': ['io-vector', {linkable: true, step: 0.0001}],

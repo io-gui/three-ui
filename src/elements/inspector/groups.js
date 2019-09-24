@@ -1,35 +1,43 @@
 export const groups = {
-'Object|main': [],
-'Object|hidden': [/^is/],
-'Array|elements': [/^[0-9]+$/],
-'Array|hidden': ['length'],
 
 	'Object3D|main': [],
 	'Object3D|transform': ['position', 'rotation', 'scale'],
-	'Object3D|transform:advanced': ['up', 'quaternion'],
-	'Object3D|rendering': ['castShadow', 'receiveShadow', 'background', 'fog', 'overrideMaterial', 'drawMode'],
-	'Object3D|rendering:advanced': ['layers', 'renderOrder', 'frustumCulled'],
-	'Object3D|matrices:advanced': [/matrix/i],
+	'Object3D|rendering': ['frustumCulled', 'castShadow', 'receiveShadow'],
+
+	'Scene|rendering': ['background', 'fog', 'overrideMaterial'],
 
 	'Light|main': ['color', 'groundColor', 'intensity'],
 	'Light|transform': ['target'],
 
-'Camera|main': ['fov'],
-'Camera|main:advanced': ['zoom', 'focus', 'aspect', 'filmGauge', 'filmOffset', 'view'],
-'Camera|hidden': ['castShadow', 'receiveShadow'],
+	'Scene|main': ['autoUpdate'],
 
-'BufferGeometry|main': ['boundingBox', 'boundingSphere'],
-'BufferGeometry|main:advanced': ['groups'],
-'BufferGeometry|attributes': ['index', 'attributes'],
-'BufferGeometry|attributes:advanced': ['morphAttributes', 'drawRange'],
+	'Camera|main': ['fov'],
 
-'BufferAttribute|main': ['array', 'itemSize', 'count', 'dynamic', 'normalized', 'updateRange'],
+	'BufferGeometry|main': ['boundingBox', 'boundingSphere'],
+	'BufferGeometry|main:advanced': ['groups'],
+	'BufferGeometry|attributes': ['index', 'attributes'],
+	'BufferGeometry|attributes:advanced': ['morphAttributes', 'drawRange'],
 
-'Material|main': ['transparent', 'opacity', 'color', 'map', /Map/, /emissive/i, 'reflectivity', 'refractionRatio'],
-'Material|rendering': ['side', 'fog', 'lights', 'flatShading', 'toneMapped', 'wireframe'],
-'Material|rendering:advanced': [/wireframeLine/, 'vertexTangents', 'vertexColors'],
-'Material|blending': [/blend/i, 'colorWrite', 'depthTest', 'depthWrite', 'dithering', 'premultipliedAlpha', 'alphaTest', 'depthFunc', 'combine'],
-'Material|shadows': [/shadow/i],
-'Material|stencil:advanced': [/stencil/i],
+	'BufferAttribute|main': ['array', 'itemSize', 'count', 'dynamic', 'normalized', 'updateRange'],
 
+	'Material|main': ['transparent', 'opacity', 'color', 'map', /Map/, /emissive/i, 'reflectivity', 'refractionRatio'],
+	'Material|rendering': ['side', 'fog', 'lights', 'flatShading', 'toneMapped', 'wireframe'],
+	'Material|rendering:advanced': [/wireframeLine/, 'vertexTangents', 'vertexColors'],
+	'Material|blending': [/blend/i, 'colorWrite', 'depthTest', 'depthWrite', 'dithering', 'premultipliedAlpha', 'alphaTest', 'depthFunc', 'combine'],
+	'Material|shadows': [/shadow/i],
+	'Material|stencil:advanced': [/stencil/i],
+
+	'Camera|main:advanced': ['zoom', 'focus', 'aspect', 'filmGauge', 'filmOffset', 'view', 'near', 'far'],
+	'Object3D|main:advanced': ['geometry', 'material', 'visible', 'parent', 'children'],
+	'Object3D|transform:advanced': ['up', 'quaternion'],
+	'Object3D|matrices:advanced': [/matrix/i],
+	'Object3D|rendering:advanced': ['layers', 'renderOrder'],
+
+	'Object|main': [],
+	'Object|main:advanced': ['name', 'id', 'uuid', 'userData', 'type'],
+	'Object|hidden': [/^is/],
+	'Object3D|rendering:advanced': ['drawMode'],
+
+	'Array|elements': [/^[0-9]+$/],
+	'Array|hidden': ['length'],
 };

@@ -9,6 +9,7 @@ export class ThreeWidgetObject3D extends IoElement {
 			display: flex;
 			overflow: hidden;
 			align-self: stretch;
+			margin: var(--io-spacing) 0;
 		}
 		:host * {
 			overflow: hidden;
@@ -18,10 +19,9 @@ export class ThreeWidgetObject3D extends IoElement {
 			border-color: var(--io-color-border-outset);
 			background-color: var(--io-background-color-dark);
 			background-image: var(--io-gradient-button);
-			padding-left: var(--io-spacing);
-			padding-right: var(--io-spacing);
+			margin-right: var(--io-spacing);
 		}
-		:host io-boolicon:not([value]) {
+		:host io-boolicon:not([value]) > svg {
 			opacity: 0.25;
 		}
 		:host io-icon.widget-icon {
@@ -83,14 +83,14 @@ export class ThreeWidgetObject3D extends IoElement {
 		const object = this.value;
 		const hierarchyOptions = [];
 
-		if (this.scene !== object) hierarchyOptions.push({icon: "🡄", label: 'Scene', value: this.scene, action: this._select});
-		if (object.parent) hierarchyOptions.push({icon: "🡄", label: 'Parent', value: object.parent, action: this._select});
 		if (object.children) {
 			hierarchyOptions.push(...object.children.map(child => {
 				const label = child.name || child.constructor.name;
 				return {label: label, value: child, action: this._select};
 			}));
 		}
+		if (this.scene !== object) hierarchyOptions.push({icon: "🡄", label: 'Scene', value: this.scene, action: this._select});
+		if (object.parent) hierarchyOptions.push({icon: "🡄", label: 'Parent', value: object.parent, action: this._select});
 
 		this.template([
 			['div', {class: 'io-row'}, [
@@ -101,9 +101,10 @@ export class ThreeWidgetObject3D extends IoElement {
 						['io-string', {value: object.name, 'on-value-set': this._setName, class: 'name'}],
 					]],
 					['div', {class: 'io-row'}, [
+						// ['io-button', {icon: 'icons:layers', label: ''}],
 						object.material ? ['io-button', {icon: 'three:sphere_shade', label: 'mat', value: object.material, class: 'select'}] : null,
 						object.geometry ? ['io-button', {icon: 'three:mesh_triangles', label: 'geo', value: object.geometry, class: 'select'}] : null,
-						hierarchyOptions.length ? ['io-option-menu', {icon: 'icons:hub', label: '⏷', selectable: false, options: hierarchyOptions}] : null,
+						hierarchyOptions.length ? ['io-option-menu', {selectable: false, options: hierarchyOptions}] : null,
 					]],
 				]],
 			]]

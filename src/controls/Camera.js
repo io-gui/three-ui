@@ -169,6 +169,7 @@ export class CameraControls extends Tool {
 		}
 	}
 	onPointermove(event) {
+
 		const pointers = event.detail.pointers;
 		const camera = event.detail.camera;
 		const rect = event.detail.rect;

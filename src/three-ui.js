@@ -5,6 +5,9 @@
 export {Selection} from "./core/Selection.js";
 
 export {ThreeInspector} from "./elements/inspector/inspector.js";
+
+export {ThreeEuler} from "./elements/math/euler.js";
+
 // export {ThreeEditor} from "./elements/editor.js";
 // export {ThreePlayer} from "./elements/player.js";
 export {ThreeRenderer} from "./elements/renderer.js";
