@@ -12,7 +12,7 @@ const floatSlider = ['io-number-slider', {min: 0, max: 1, step: 0.001}];
 
 const matrixProp = ['io-properties', {properties: ['elements'], labeled: false, config: {'elements': ['io-matrix']}}];
 
-const propProp = ['io-properties'];
+const propProp = ['io-properties', {config: {'type:object': ['io-item', {class: 'select'}]}}];
 
 const textureFormatOptions = makeOptions(['AlphaFormat', 'RGBFormat', 'RGBAFormat', 'LuminanceFormat', 'LuminanceAlphaFormat', 'RGBEFormat', 'DepthFormat', 'DepthStencilFormat', 'RedFormat', 'RGB_ETC1_Format']);
 	textureFormatOptions.push({label: 'DXT Formats', options: makeOptions(['RGB_S3TC_DXT1_Format', 'RGBA_S3TC_DXT1_Format', 'RGBA_S3TC_DXT3_Format', 'RGBA_S3TC_DXT5_Format'])});
@@ -28,7 +28,7 @@ export const config = {
 	'constructor:Matrix2': matrixProp,
 	'constructor:Matrix3': matrixProp,
 	'constructor:Matrix4': matrixProp,
-	'constructor:Euler': ['io-vector', {step: Math.PI/12, conversion: 180/Math.PI}], // TODO
+	'constructor:Euler': ['three-euler'],
 	'constructor:Quaternion': ['io-vector', {step: 0.01}],
 	'constructor:Color': ['io-color-vector'],
 	'scale': ['io-vector', {linkable: true, step: 0.0001}],
@@ -40,6 +40,7 @@ export const config = {
 	'Object3D|receiveShadow': ['io-switch'],
 	// BufferGeometry
 	'BufferGeometry|constructor:Object': propProp,
+	'BufferAttribute|constructor:Object': propProp,
 	// 'BufferGeometry|index': ['three-attributes'],
 	// 'BufferGeometry|attributes': ['three-attributes'],
 	// Material
