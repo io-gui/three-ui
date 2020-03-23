@@ -31,12 +31,11 @@ export const groups = {
 	'Object3D|main:advanced': ['geometry', 'material', 'visible', 'parent', 'children'],
 	'Object3D|transform:advanced': ['up', 'quaternion'],
 	'Object3D|matrices:advanced': [/matrix/i],
-	'Object3D|rendering:advanced': ['layers', 'renderOrder'],
+	'Object3D|rendering:advanced': ['layers', 'renderOrder', 'drawMode'],
 
 	'Object|main': [],
 	'Object|main:advanced': ['name', 'id', 'uuid', 'userData', 'type'],
 	'Object|hidden': [/^is/],
-	'Object3D|rendering:advanced': ['drawMode'],
 
 	'Array|elements': [/^[0-9]+$/],
 	'Array|hidden': ['length'],
