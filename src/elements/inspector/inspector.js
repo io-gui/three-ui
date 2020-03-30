@@ -1,4 +1,4 @@
-import {IoProperties, IoInspector} from "../../../../io/build/io-core.js";
+import {IoProperties, IoInspector} from "../../../../io/build/io-elements.js";
 import {config} from "./config.js";
 import {groups} from "./groups.js";
 import {widgets} from "./widgets.js";

@@ -7,10 +7,10 @@ function html() {
       let regex = /<style>([\s\S]*?)<\/style>/gm;
       if ( regex.test( code ) === true ) {
         let match = code.match(regex);
-        for (var i = 0; i < match.length; i++) {
-          transformedCode = transformedCode.replace(match[i], match[i].replace((/  |\r\n|\n|\r/gm), ""));
+        for (let i = 0; i < match.length; i++) {
+          transformedCode = transformedCode.replace(match[i], match[i].replace((/ {2}|\r\n|\n|\r/gm), ""));
         }
-      };
+      }
       return {
         code: transformedCode,
         map: { mappings: '' }
@@ -26,10 +26,10 @@ function svg() {
       let regex = /<svg>([\s\S]*?)<\/svg>/gm;
       if ( regex.test( code ) === true ) {
         let match = code.match(regex);
-        for (var i = 0; i < match.length; i++) {
-          transformedCode = transformedCode.replace(match[i], match[i].replace((/  |\r\n|\n|\r/gm), ""));
+        for (let i = 0; i < match.length; i++) {
+          transformedCode = transformedCode.replace(match[i], match[i].replace((/ {2}|\r\n|\n|\r/gm), ""));
         }
-      };
+      }
       return {
         code: transformedCode,
         map: { mappings: '' }
@@ -41,7 +41,7 @@ function svg() {
 const externals = [
 	path.resolve('../three.js/build/three.module.js'),
 	path.resolve('../io/build/io.js'),
-	path.resolve('../io/build/io-core.js')
+	path.resolve('../io/build/io-elements.js')
 ];
 
 function makeTarget(src, target) {
@@ -62,7 +62,7 @@ function makeTarget(src, target) {
       if (warning.code === 'THIS_IS_UNDEFINED') return;
       warn(warning);
     }
-  }
+  };
 }
 
 export default [
