@@ -1,11 +1,11 @@
 import * as THREE from "../../../../three.js/src/constants.js";
-
+import {Options} from "../../../../iogui/build/io.js";
 function makeOptions(list) {
 	const options = [];
 	for (let i = 0; i < list.length; i++) {
 		options.push({value: THREE[list[i]], label: list[i]});
 	}
-	return options;
+	return new Options(options);
 }
 
 const floatSlider = ['io-number-slider', {min: 0, max: 1, step: 0.001}];
@@ -14,10 +14,12 @@ const matrixProp = ['io-properties', {properties: ['elements'], labeled: false, 
 
 const propProp = ['io-properties', {config: {'type:object': ['io-item', {class: 'select'}]}}];
 
-const textureFormatOptions = makeOptions(['AlphaFormat', 'RGBFormat', 'RGBAFormat', 'LuminanceFormat', 'LuminanceAlphaFormat', 'RGBEFormat', 'DepthFormat', 'DepthStencilFormat', 'RedFormat', 'RGB_ETC1_Format']);
-	textureFormatOptions.push({label: 'DXT Formats', options: makeOptions(['RGB_S3TC_DXT1_Format', 'RGBA_S3TC_DXT1_Format', 'RGBA_S3TC_DXT3_Format', 'RGBA_S3TC_DXT5_Format'])});
-	textureFormatOptions.push({label: 'PVRTC Formats', options: makeOptions(['RGB_PVRTC_4BPPV1_Format', 'RGB_PVRTC_2BPPV1_Format', 'RGBA_PVRTC_4BPPV1_Format', 'RGBA_PVRTC_2BPPV1_Format'])});
-	textureFormatOptions.push({label: 'ASTC Formats', options: makeOptions(['RGBA_ASTC_4x4_Format', 'RGBA_ASTC_5x4_Format', 'RGBA_ASTC_5x5_Format', 'RGBA_ASTC_6x5_Format', 'RGBA_ASTC_6x6_Format', 'RGBA_ASTC_8x5_Format', 'RGBA_ASTC_8x6_Format', 'RGBA_ASTC_8x8_Format', 'RGBA_ASTC_10x5_Format', 'RGBA_ASTC_10x6_Format', 'RGBA_ASTC_10x8_Format', 'RGBA_ASTC_10x10_Format', 'RGBA_ASTC_12x10_Format', 'RGBA_ASTC_12x12_Format'])});
+const textureFormatOptions = makeOptions([
+	'AlphaFormat', 'RGBFormat', 'RGBAFormat', 'LuminanceFormat', 'LuminanceAlphaFormat', 'RGBEFormat', 'DepthFormat', 'DepthStencilFormat', 'RedFormat', 'RGB_ETC1_Format',
+	{label: 'DXT Formats', options: makeOptions(['RGB_S3TC_DXT1_Format', 'RGBA_S3TC_DXT1_Format', 'RGBA_S3TC_DXT3_Format', 'RGBA_S3TC_DXT5_Format'])},
+	{label: 'PVRTC Formats', options: makeOptions(['RGB_PVRTC_4BPPV1_Format', 'RGB_PVRTC_2BPPV1_Format', 'RGBA_PVRTC_4BPPV1_Format', 'RGBA_PVRTC_2BPPV1_Format'])},
+	{label: 'ASTC Formats', options: makeOptions(['RGBA_ASTC_4x4_Format', 'RGBA_ASTC_5x4_Format', 'RGBA_ASTC_5x5_Format', 'RGBA_ASTC_6x5_Format', 'RGBA_ASTC_6x6_Format', 'RGBA_ASTC_8x5_Format', 'RGBA_ASTC_8x6_Format', 'RGBA_ASTC_8x8_Format', 'RGBA_ASTC_10x5_Format', 'RGBA_ASTC_10x6_Format', 'RGBA_ASTC_10x8_Format', 'RGBA_ASTC_10x10_Format', 'RGBA_ASTC_12x10_Format', 'RGBA_ASTC_12x12_Format'])},
+]);
 
 export const config = {
 	// Basic types

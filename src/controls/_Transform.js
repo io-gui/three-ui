@@ -1,4 +1,4 @@
-import {IoNodeMixin} from "../../../io/build/io.js";
+import {NodeMixin} from "../../../iogui/build/io.js";
 import {Raycaster, Vector3, Quaternion, Plane} from "../../../three.js/build/three.module.js";
 
 // Reusable utility variables
@@ -6,7 +6,7 @@ const _ray = new Raycaster();
 const _rayTarget = new Vector3();
 const _tempVector = new Vector3();
 
-export const TransformControlsMixin = (superclass) => class extends IoNodeMixin(superclass) {
+export const TransformControlsMixin = (superclass) => class extends NodeMixin(superclass) {
 	constructor(props) {
 		super(props);
 

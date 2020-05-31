@@ -30,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/io-gui/three-ui.git"
+    "url": "git+https://github.com/iogui/three-ui.git"
   },
   "keywords": [
     "io",
@@ -47,9 +47,9 @@
   "author": "Aleksandar (Aki) Rodić",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/io-gui/three-ui/issues"
+    "url": "https://github.com/iogui/three-ui/issues"
   },
-  "homepage": "https://io-gui.dev",
+  "homepage": "https://iogui.dev",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",

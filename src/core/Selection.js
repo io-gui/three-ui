@@ -1,4 +1,4 @@
-import {IoNode} from "../../../io/build/io.js";
+import {Node} from "../../../iogui/build/io.js";
 
 const selectedOld = [];
 
@@ -15,7 +15,7 @@ function filterItems(list, hierarchy, filter) {
 	return filtered;
 }
 
-export class Selection extends IoNode {
+export class Selection extends Node {
 	static get Properties() {
 		return {
 			selected: [],
@@ -71,3 +71,5 @@ export class Selection extends IoNode {
 		this.selected.length = 0;
 	}
 }
+
+Selection.Register();

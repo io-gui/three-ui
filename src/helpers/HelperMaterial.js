@@ -1,8 +1,8 @@
-import {IoNodeMixin} from "../../../io/build/io.js";
+import {NodeMixin} from "../../../iogui/build/io.js";
 import {UniformsUtils, Vector3, Color, FrontSide, ShaderMaterial,
 	DataTexture, RGBAFormat, FloatType, NearestFilter} from "../../../three.js/build/three.module.js";
 
-export class HelperMaterial extends IoNodeMixin(ShaderMaterial) {
+export class HelperMaterial extends NodeMixin(ShaderMaterial) {
 	static get Properties() {
 		return {
 			depthTest: true,

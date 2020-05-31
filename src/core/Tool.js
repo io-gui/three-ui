@@ -1,8 +1,8 @@
-import {IoNode} from "../../../io/build/io.js";
+import {Node} from "../../../iogui/build/io.js";
 import {Scene} from "../../../three.js/build/three.module.js";
 import {Pointers} from "./Pointers.js";
 
-export class Tool extends IoNode {
+export class Tool extends Node {
 	static get Properties() {
 		return {
 			enabled: true,
@@ -162,3 +162,5 @@ export class Tool extends IoNode {
 		delete this.onViewportBlur;
 	}
 }
+
+Tool.Register();

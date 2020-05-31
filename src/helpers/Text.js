@@ -1,7 +1,7 @@
-import {IoNodeMixin} from "../../../io/build/io.js";
+import {NodeMixin} from "../../../iogui/build/io.js";
 import {Sprite, Vector3, Texture} from "../../../three.js/build/three.module.js";
 
-export class TextHelper extends IoNodeMixin(Sprite) {
+export class TextHelper extends NodeMixin(Sprite) {
 	static get Properties() {
 		return {
 			text: '',

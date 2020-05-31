@@ -1,6 +1,5 @@
 import {Object3D, Scene} from "../../../../three.js/build/three.module.js";
-import {IoElement} from "../../../../io/build/io.js";
-
+import {IoElement, Options} from "../../../../iogui/build/io.js";
 
 export class ThreeWidgetObject3D extends IoElement {
 	static get Style() {
@@ -53,7 +52,7 @@ export class ThreeWidgetObject3D extends IoElement {
 		return {
 			value: {
 				type: Object,
-				observe: true,
+				observe: 1,
 			},
 		};
 	}
@@ -104,7 +103,7 @@ export class ThreeWidgetObject3D extends IoElement {
 						// ['io-button', {icon: 'icons:layers', label: ''}],
 						object.material ? ['io-button', {icon: 'three:sphere_shade', label: 'mat', value: object.material, class: 'select'}] : null,
 						object.geometry ? ['io-button', {icon: 'three:mesh_triangles', label: 'geo', value: object.geometry, class: 'select'}] : null,
-						hierarchyOptions.length ? ['io-option-menu', {selectable: false, options: hierarchyOptions}] : null,
+						hierarchyOptions.length ? ['io-option-menu', {selectable: false, options: new Options(hierarchyOptions)}] : null,
 					]],
 				]],
 			]]

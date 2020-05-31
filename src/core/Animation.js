@@ -1,4 +1,4 @@
-import {IoNode} from "../../../io/build/io.js";
+import {Node} from "../../../iogui/build/io.js";
 
 /*
  * Creates a single requestAnimationFrame loop.
@@ -18,7 +18,7 @@ const animate = function() {
 };
 requestAnimationFrame(animate);
 
-export class Animation extends IoNode {
+export class Animation extends Node {
 	constructor() {
 		super();
 		this._time = 0;

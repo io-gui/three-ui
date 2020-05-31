@@ -1,4 +1,4 @@
-import {IoElement} from "../../../../io/build/io.js";
+import {IoElement} from "../../../../iogui/build/io.js";
 
 export class ThreeWidgetCamera extends IoElement {
 	static get Style() {
@@ -22,7 +22,7 @@ export class ThreeWidgetCamera extends IoElement {
 		return {
 			value: {
 				type: Object,
-				observe: true,
+				observe: 1,
 			},
 		};
 	}

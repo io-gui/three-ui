@@ -70,3 +70,5 @@ export class SelectionControls extends Tool {
 		}
 	}
 }
+
+SelectionControls.Register();

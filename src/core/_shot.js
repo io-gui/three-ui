@@ -1,7 +1,7 @@
-import {IoNode} from "../../../io/build/io.js";
+import {Node} from "../../../iogui/build/io.js";
 import * as THREE from "../../../three.js/build/three.module.js";
 
-export class Shot extends IoNode {
+export class Shot extends Node {
 	static get Properties() {
 		return {
 			camera: THREE.PerspectiveCamera,
