@@ -1,4 +1,4 @@
-import {IoIconsetSingleton} from "../../io/build/io-elements.js";
+import {IoIconsetSingleton} from "../../iogui/build/io-elements.js";
 
 const icons = /* html */`
 <svg>

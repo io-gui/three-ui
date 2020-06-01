@@ -4,7 +4,7 @@ import {
 	PerspectiveCamera,
 	OrthographicCamera
 } from "../../../three.js/build/three.module.js";
-import {IoElement} from "../../../io/build/io.js";
+import {IoElement} from "../../../iogui/build/iogui.js";
 
 
 const renderer = new WebGLRenderer({antialias: false, preserveDrawingBuffer: true, alpha: true});
@@ -87,11 +87,11 @@ export class ThreeRenderer extends IoElement {
 		return {
 			scene: {
 				type: Scene,
-				observe: true,
+				observe: 1,
 			},
 			camera: {
 				type: PerspectiveCamera,
-				observe: true,
+				observe: 1,
 			},
 			ishost: {
 				type: Boolean,

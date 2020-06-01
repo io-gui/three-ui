@@ -2,13 +2,13 @@ import path from 'path';
 
 function html() {
   return {
-    transform( code, id ) {
+    transform( code ) {
       let transformedCode = code;
       let regex = /<style>([\s\S]*?)<\/style>/gm;
       if ( regex.test( code ) === true ) {
         let match = code.match(regex);
         for (let i = 0; i < match.length; i++) {
-          transformedCode = transformedCode.replace(match[i], match[i].replace((/ {2}|\r\n|\n|\r/gm), ""));
+          transformedCode = transformedCode.replace(match[i], match[i].replace((/ {2}|\r\n|\n|\r/gm), ''));
         }
       }
       return {
@@ -21,13 +21,13 @@ function html() {
 
 function svg() {
   return {
-    transform( code, id ) {
+    transform( code ) {
       let transformedCode = code;
       let regex = /<svg>([\s\S]*?)<\/svg>/gm;
       if ( regex.test( code ) === true ) {
         let match = code.match(regex);
         for (let i = 0; i < match.length; i++) {
-          transformedCode = transformedCode.replace(match[i], match[i].replace((/ {2}|\r\n|\n|\r/gm), ""));
+          transformedCode = transformedCode.replace(match[i], match[i].replace((/ {2}|\r\n|\n|\r/gm), ''));
         }
       }
       return {
@@ -40,8 +40,8 @@ function svg() {
 
 const externals = [
 	path.resolve('../three.js/build/three.module.js'),
-	path.resolve('../io/build/io.js'),
-	path.resolve('../io/build/io-elements.js')
+	path.resolve('build/iogui.js'),
+	path.resolve('build/io-elements.js')
 ];
 
 function makeTarget(src, target) {

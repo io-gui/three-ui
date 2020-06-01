@@ -1,5 +1,5 @@
-import {IoElement} from "../../io/build/io.js";
-import {IoContextMenu} from "../../io/build/io-elements.js";
+import {IoElement, Options} from "../../iogui/build/iogui.js";
+import {IoContextMenu} from "../../iogui/build/io-elements.js";
 import {
 	PerspectiveCamera,
 	Scene,
@@ -37,7 +37,7 @@ export class IoDemoThree extends IoElement {
 			scene: Scene,
 			selection: {
 				type: Selection,
-				observe: true,
+				observe: 1,
 			},
 			camera: PerspectiveCamera,
 		};
@@ -54,11 +54,11 @@ export class IoDemoThree extends IoElement {
 
 		const contextMenu = new IoContextMenu({
 			button: 2,
-			options: [
+			options: new Options([
 				{label: 'Camera', action: () => { this.$.inspector.value = this.$.viewport.camera; }},
 				{label: 'Scene', action: () => { this.$.inspector.value = this.$.viewport.scene; }},
 				{label: 'Renderer', action: () => { this.$.inspector.value = this.$.viewport.renderer; }},
-			]
+			])
 		});
 		this.$.viewport.appendChild(contextMenu);
 

@@ -1,4 +1,4 @@
-import {IoElement} from "../../../../io/build/io.js";
+import {IoElement, Options} from "../../../../iogui/build/iogui.js";
 
 export class ThreeEuler extends IoElement {
 	static get Style() {
@@ -25,7 +25,7 @@ export class ThreeEuler extends IoElement {
 		return {
 			value: {
 				value: Object,
-				observe: true,
+				observe: 1,
 			},
 			conversion: 180/Math.PI,
 			step: Math.PI/180,
@@ -69,7 +69,7 @@ export class ThreeEuler extends IoElement {
 		}
 		elements.push(['io-option-menu', {
 			value: this.value.order,
-			options: ['YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX'],
+			options: new Options(['YZX', 'ZXY', 'XZY', 'YXZ', 'ZYX']),
 			'on-value-set': this._onOrderSet,
 		}]);
 		this.template(elements);

@@ -1,6 +1,6 @@
-import {IoNode} from "../../../io/build/io.js";
+import {Node} from "../../../iogui/build/iogui.js";
 
-export class Pointers extends IoNode {
+export class Pointers extends Node {
 	static get Properties() {
 		return {
 			enabled: true,
