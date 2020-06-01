@@ -1,4 +1,4 @@
-import {NodeMixin} from "../../../iogui/build/io.js";
+import {NodeMixin} from "../../../iogui/build/iogui.js";
 import {Raycaster, Vector3, Quaternion, Plane} from "../../../three.js/build/three.module.js";
 
 // Reusable utility variables

@@ -1,5 +1,5 @@
 import {Object3D, Scene} from "../../../../three.js/build/three.module.js";
-import {IoElement, Options} from "../../../../iogui/build/io.js";
+import {IoElement, Options} from "../../../../iogui/build/iogui.js";
 
 export class ThreeWidgetObject3D extends IoElement {
 	static get Style() {

@@ -1,4 +1,4 @@
-import {Node} from "../../../iogui/build/io.js";
+import {Node} from "../../../iogui/build/iogui.js";
 import {Scene} from "../../../three.js/build/three.module.js";
 import {Pointers} from "./Pointers.js";
 

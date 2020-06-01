@@ -1,4 +1,4 @@
-import {NodeMixin} from "../../../iogui/build/io.js";
+import {NodeMixin} from "../../../iogui/build/iogui.js";
 import {UniformsUtils, Vector3, Color, FrontSide, ShaderMaterial,
 	DataTexture, RGBAFormat, FloatType, NearestFilter} from "../../../three.js/build/three.module.js";
 

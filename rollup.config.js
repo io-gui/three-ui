@@ -40,7 +40,7 @@ function svg() {
 
 const externals = [
 	path.resolve('../three.js/build/three.module.js'),
-	path.resolve('build/io.js'),
+	path.resolve('build/iogui.js'),
 	path.resolve('build/io-elements.js')
 ];
 

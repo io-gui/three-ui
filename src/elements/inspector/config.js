@@ -1,5 +1,5 @@
 import * as THREE from "../../../../three.js/src/constants.js";
-import {Options} from "../../../../iogui/build/io.js";
+import {Options} from "../../../../iogui/build/iogui.js";
 function makeOptions(list) {
 	const options = [];
 	for (let i = 0; i < list.length; i++) {

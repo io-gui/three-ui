@@ -1,4 +1,4 @@
-import {IoElement, Options} from "../../../../iogui/build/io.js";
+import {IoElement, Options} from "../../../../iogui/build/iogui.js";
 
 export class ThreeEuler extends IoElement {
 	static get Style() {

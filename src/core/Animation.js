@@ -1,4 +1,4 @@
-import {Node} from "../../../iogui/build/io.js";
+import {Node} from "../../../iogui/build/iogui.js";
 
 /*
  * Creates a single requestAnimationFrame loop.

@@ -4,7 +4,7 @@ import {
 	PerspectiveCamera,
 	OrthographicCamera
 } from "../../../three.js/build/three.module.js";
-import {IoElement} from "../../../iogui/build/io.js";
+import {IoElement} from "../../../iogui/build/iogui.js";
 
 
 const renderer = new WebGLRenderer({antialias: false, preserveDrawingBuffer: true, alpha: true});

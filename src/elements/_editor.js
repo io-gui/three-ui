@@ -1,5 +1,5 @@
 import {Scene, PerspectiveCamera, Vector3, OrthographicCamera, HemisphereLight} from "../../../three.js/build/three.module.js";
-import {IoElement} from "../../dist/io.js";
+import {IoElement} from "../../dist/iogui.js";
 import {GLTFLoader} from "../../lib/GLTFLoader.js";
 import {EditorCameraControls} from "../controls/camera/Editor.js.js";
 // import {OrbitCameraControls} from "../controls/camera/Orbit.js";

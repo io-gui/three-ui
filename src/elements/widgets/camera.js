@@ -1,4 +1,4 @@
-import {IoElement} from "../../../../iogui/build/io.js";
+import {IoElement} from "../../../../iogui/build/iogui.js";
 
 export class ThreeWidgetCamera extends IoElement {
 	static get Style() {

@@ -1,4 +1,4 @@
-import {IoElement, Options} from "../../iogui/build/io.js";
+import {IoElement, Options} from "../../iogui/build/iogui.js";
 import {IoContextMenu} from "../../iogui/build/io-elements.js";
 import {
 	PerspectiveCamera,

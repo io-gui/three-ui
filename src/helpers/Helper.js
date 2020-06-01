@@ -1,5 +1,5 @@
 import {Object3D, Mesh, Vector3} from "../../../three.js/build/three.module.js";
-import {NodeMixin} from "../../../iogui/build/io.js";
+import {NodeMixin} from "../../../iogui/build/iogui.js";
 import {HelperMaterial} from "./HelperMaterial.js";
 import {TextHelper} from "./Text.js";
 
