@@ -1,8 +1,12 @@
 .DS_Store
 npm-debug.log
-/node_modules/
+yarn-error.log
+node_modules/
 .git/
 .idea/
 .vscode/
 .vs/
 .project
+*.swp
+*.iml
+

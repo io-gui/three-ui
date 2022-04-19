@@ -1,59 +1,50 @@
 {
-  "name": "three-ui",
-  "version": "1.0.0-rc.1",
-  "description": "UI system for three.js built with Io-GUI.",
-  "jsnext:main": "build/three-ui.js",
-  "module": "build/three-ui.js",
+  "name": "io-gui-three-ui",
+  "version": "1.1.1",
+  "main": "index.js",
+  "module": "index.js",
   "files": [
     "src",
-    "build/*.js",
-    "package.json",
+    "build",
+    "index.js",
     "LICENSE",
     "README.md"
   ],
-  "jspm": {
-    "files": [
-      "src",
-      "build/*.js",
-      "package.json",
-      "LICENSE",
-      "README.md"
-    ],
-    "directories": {}
-  },
   "scripts": {
-    "lint": "eslint src",
-    "rollup": "rollup -c",
-    "uglify": "uglifyjs build/three-ui.js -cmo build/three-ui.js --comments",
-    "build": "npm run lint && npm run rollup && npm run uglify",
-    "travis": "npm run build"
+    "clean": "rm -rf build",
+    "lint": "eslint -c ./eslint.typescript.json src --fix",
+    "lint:build": "eslint build -c ./eslint.mdcs.json build --fix",
+    "build": "yarn clean && yarn lint && tsc && yarn lint:build",
+    "watch": "yarn clean && yarn lint && tsc -w --declarationMap --sourceMap"
   },
+  "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iogui/three-ui.git"
+    "url": "git+https://github.com/io-gui/three-ui.git"
   },
   "keywords": [
-    "io",
+    "threejs",
     "gui",
-    "ui",
-    "ux",
-    "navigation",
-    "menu",
-    "inspector",
-    "computer graphics",
-    "three",
-    "threejs"
+    "ui"
   ],
-  "author": "Aleksandar (Aki) Rodić",
+  "author": "Aleksandar (Aki) Rodic",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iogui/three-ui/issues"
+    "url": "https://github.com/io-gui/three-ui/issues"
   },
-  "homepage": "https://iogui.dev",
+  "homepage": "https://github.com/io-gui/three-ui",
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
-    "rollup": "^2.1.0",
-    "uglify-es": "^3.3.9"
+    "@types/three": "^0.139",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.13.0",
+    "eslint-config-mdcs": "^5.0.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "io-gui": "^1.2.0",
+    "io-gui-three-controls": "^1.1.2",
+    "three": "^0.139.2"
   }
 }
