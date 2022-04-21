@@ -31,7 +31,8 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "jsm/**/*",
   ],
   "exclude": [
     "./src/_HelperGeometry.ts",

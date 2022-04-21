@@ -124,7 +124,9 @@ export class ThreeViewport extends IoElement {
             }
         }
         this.rendered = false;
-        this.render();
+        setTimeout(() => {
+            this.render();
+        });
     }
     // initPostprocessing() {}
     loadIbl(url, onLoad, onProgress, onError) {

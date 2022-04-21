@@ -542,17 +542,18 @@ inherits@2:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-io-gui-three-controls@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/io-gui-three-controls/-/io-gui-three-controls-1.1.2.tgz#56486dd1120e076bdd36a476f3bc57186ff7f89b"
-  integrity sha512-mTQgDeoDGpt6XKUktNjXYu2FSppvsjSbw+00PXuaVV3yPD4H4PjHZ4TrAYb7oEtzQAxq4XehMmKKE/FjRkRlJg==
+io-gui-three-controls@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/io-gui-three-controls/-/io-gui-three-controls-1.1.3.tgz#54ddf591792e948bcc6bfe97bd04d628ecb6ec16"
+  integrity sha512-5wWiu2sl+tzZj2KwhOzRSzMBUSCKIbx/0cPyJGk1DqE0ktyQRKllq0ZgG0yLoakmh87txZi1jRmBmQqM1egKUQ==
   dependencies:
+    "@types/three" "^0.139"
     three "^0.139.2"
 
-io-gui@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/io-gui/-/io-gui-1.2.0.tgz#9818bda5db36aea0ad1184ac917aa7724744270b"
-  integrity sha512-O1Soin5x8N+OEvI3V16lCRvcs/tpW8iRZI8z/BBCRGPDnKEXFsSDjiUsFee5eAMkgZd0v2M11KVSvOP6sGdOdQ==
+io-gui@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/io-gui/-/io-gui-1.2.1.tgz#338212dfcff4916daf29b5c52d7a7ee4eef8394e"
+  integrity sha512-gFvgAqQFIAc1CCwM2pUwhXn8I+fjjdtni/q1bDof3JJ3bTru+QakXqjIAMJkK1jo/bcveGVB9MCbCYpHlyMomw==
 
 is-extglob@^2.1.1:
   version "2.1.1"

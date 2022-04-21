@@ -1,4 +1,4 @@
-import {IoIconsetSingleton} from 'io-gui/build/elements';
+import {IoIconsetSingleton} from 'io-gui';
 
 IoIconsetSingleton.registerIcons('three', /* html */`
 <svg>
