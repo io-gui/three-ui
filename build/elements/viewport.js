@@ -105,6 +105,7 @@ export class ThreeViewport extends IoElement {
     onResized() {
         const rect = this.getBoundingClientRect();
         const aspect = rect.width / rect.height;
+        this.composer.setSize(rect.width, rect.height);
         const camera = this.camera;
         if (camera instanceof PerspectiveCamera) {
             if (camera.aspect !== aspect) {
@@ -153,7 +154,7 @@ export class ThreeViewport extends IoElement {
     render() {
         this.$.renderer.setHost();
         this.bokehPass.uniforms.focus.value = this.camera.position.distanceTo(new Vector3(0, 500, 0));
-        this.bokehPass.uniforms.maxblur.value = 20 / this.camera.position.distanceTo(new Vector3(0, 500, 0));
+        this.bokehPass.uniforms.maxblur.value = 10 / this.camera.position.distanceTo(new Vector3(0, 500, 0));
         this.bokehPass.uniforms.aperture.value = 0.005 / this.camera.position.distanceTo(new Vector3(0, 500, 0));
         this.renderer.clear();
         this.scene.background = this.envMap;
