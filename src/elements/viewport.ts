@@ -51,7 +51,7 @@ export class ThreeViewport extends IoElement {
 
     this.renderer = this.$.renderer.renderer;
 
-    this.camera = new PerspectiveCamera(75, 1, 10, 3000);
+    this.camera = new PerspectiveCamera(75, 1, 1, 1000);
     this.controls = new OrbitControls(this.camera, this as unknown as HTMLElement);
     this.transformControls = new TransformControls(this.camera, this as unknown as HTMLElement);
   
@@ -63,7 +63,7 @@ export class ThreeViewport extends IoElement {
     this.bokehPass = new BokehPass(this.scene, this.camera, {
       focus: 500.0,
       aperture: 3 * 0.00001,
-      maxblur: 0.015,
+      maxblur: 0.15,
       width: window.innerWidth, // ?
       height: window.innerHeight // ?
     });
@@ -81,8 +81,8 @@ export class ThreeViewport extends IoElement {
     this.composer.addPass(new ShaderPass(GammaCorrectionShader));
     this.composer.addPass(this.bokehPass);
 
-    this.camera.position.set(300, 500, 300);
-    this.camera.lookAt(new Vector3(0, 500, 0));
+    this.camera.position.set(50, 30, 30);
+    this.camera.lookAt(new Vector3(0, 0, 0));
 
     this.render = this.render.bind(this);
     this.controls.addEventListener('change', this.render);
@@ -90,10 +90,10 @@ export class ThreeViewport extends IoElement {
     this.controls.maxDistance = 500;
     this.controls.zoomSpeed = 0.3;
     this.controls.enableDamping = true;
-    this.controls.position.set(0, 500, 0);
+    this.controls.position.set(0, 0, 0);
     
     const target = new Object3D();
-    target.position.set(0, 500, 0);
+    target.position.set(0, 0, 0);
     this.scene.add(target);
     this.transformControls.attach(target);
     this.transformControls.traverse((obj: Object3D) => {
@@ -107,6 +107,7 @@ export class ThreeViewport extends IoElement {
 
     this.lightProbeRig.position.y = 500;
     this.lightProbeRig.layers.set(1);
+    this.lightProbeRig.lightProbeHelper.visible = false;
     this.scene.add(this.lightProbeRig);
   }
   connectedCallback() {
@@ -145,7 +146,7 @@ export class ThreeViewport extends IoElement {
     });
   }
   // initPostprocessing() {}
-  loadIbl(url: string, onLoad: any, onProgress: any, onError: any) {
+  loadIbl(url: string, onLoad?: any, onProgress?: any, onError?: any) {
     rgbeLoader.load(url, (texture) => {
       if (onLoad) onLoad(texture);
       texture.mapping = EquirectangularReflectionMapping;
@@ -156,7 +157,7 @@ export class ThreeViewport extends IoElement {
       this.render();
     }, onProgress, onError);
   }
-  loadModel(url: string, onLoad: any, onProgress: any, onError: any) {
+  loadModel(url: string, onLoad?: any, onProgress?: any, onError?: any) {
     gltfLoader.load(url, (gltf: GLTF) => {
       if (onLoad) onLoad(gltf.scene);
       this.scene.add(gltf.scene);
@@ -166,9 +167,9 @@ export class ThreeViewport extends IoElement {
   }
   render() {
     this.$.renderer.setHost();
-    (this.bokehPass as any).uniforms.focus.value = this.camera.position.distanceTo(new Vector3(0, 500, 0));
-    (this.bokehPass as any).uniforms.maxblur.value = 10 / this.camera.position.distanceTo(new Vector3(0, 500, 0));
-    (this.bokehPass as any).uniforms.aperture.value = 0.005 / this.camera.position.distanceTo(new Vector3(0, 500, 0));
+    (this.bokehPass as any).uniforms.focus.value = this.camera.position.distanceTo(this.controls.position);
+    (this.bokehPass as any).uniforms.maxblur.value = 1000 / this.camera.position.distanceTo(this.controls.position);
+    (this.bokehPass as any).uniforms.aperture.value = 0.0035 / this.camera.position.distanceTo(this.controls.position);
     this.renderer.clear();
     this.scene.background = this.envMap;
     this.camera.layers.set(0);
