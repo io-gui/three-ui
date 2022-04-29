@@ -1,5 +1,6 @@
 import { IoIconsetSingleton } from 'io-gui';
-IoIconsetSingleton.registerIcons('three', /* html */ `
+
+IoIconsetSingleton.registerIcons( 'three', /* html */ `
 <svg>
 <g id="mesh_triangles">
 	<path d="M18.3,12.5l-4.8-8.2c0.1-0.2,0.1-0.4,0.1-0.6c0-0.9-0.7-1.6-1.6-1.6c-0.9,0-1.6,0.7-1.6,1.6c0,0.2,0,0.4,0.1,0.6l-4.1,4
@@ -141,5 +142,6 @@ IoIconsetSingleton.registerIcons('three', /* html */ `
 	L12,8.3z"/>
 </g>
 </svg>
-`);
+` );
+
 //# sourceMappingURL=iconset.js.map

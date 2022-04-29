@@ -25,8 +25,8 @@ export declare class ThreeViewport extends IoElement {
     connectedCallback(): void;
     disconnectedCallback(): void;
     onResized(): void;
-    loadIbl(url: string, onLoad: any, onProgress: any, onError: any): void;
-    loadModel(url: string, onLoad: any, onProgress: any, onError: any): void;
+    loadIbl(url: string, onLoad?: any, onProgress?: any, onError?: any): void;
+    loadModel(url: string, onLoad?: any, onProgress?: any, onError?: any): void;
     render(): void;
 }
 //# sourceMappingURL=viewport.d.ts.map
