@@ -5,7 +5,7 @@ import { LightProbeGenerator } from 'three/examples/jsm/lights/LightProbeGenerat
 export class LightProbeRig extends Object3D {
 
 	lightProbe = new LightProbe();
-	lightProbeHelper = new LightProbeHelper( this.lightProbe, 50 );
+	lightProbeHelper = new LightProbeHelper( this.lightProbe, 5 );
 	cubeRenderTarget;
 	cubeCamera;
 	constructor( resolution = 256 ) {

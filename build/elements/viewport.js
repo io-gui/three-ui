@@ -7,9 +7,8 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
-import { LightProbeRig } from '../rigs/lightProbeRig.js';
 import { OrbitControls, TransformControls } from 'io-gui-three-controls';
-import './renderer.js';
+import { ThreeRenderer } from './renderer.js';
 
 const gltfLoader = new GLTFLoader();
 const rgbeLoader = new RGBELoader();
@@ -37,28 +36,28 @@ export class ThreeViewport extends IoElement {
 	controls;
 	transformControls;
 	scene;
-	lightProbeRig;
 	renderPass;
 	bokehPass;
 	composer;
-	envMap = null;
+	backgroundTexture = null;
 	static get Properties() {
 
 		return {
-			tabindex: 1
+			tabindex: 1,
+			exposure: 1,
 		};
 
 	}
 	constructor( properties = {} ) {
 
 		super( properties );
-		this.template( [[ 'three-renderer', { id: 'renderer' } ]] );
-		this.renderer = this.$.renderer.renderer;
+		this.rendererElement = new ThreeRenderer();
+		this.appendChild( this.rendererElement );
+		this.renderer = this.rendererElement.renderer;
 		this.camera = new PerspectiveCamera( 75, 1, 1, 1000 );
 		this.controls = new OrbitControls( this.camera, this );
 		this.transformControls = new TransformControls( this.camera, this );
 		this.scene = new Scene();
-		this.lightProbeRig = new LightProbeRig();
 		this.renderPass = new RenderPass( this.scene, this.camera );
 
 		this.bokehPass = new BokehPass( this.scene, this.camera, {
@@ -70,12 +69,11 @@ export class ThreeViewport extends IoElement {
 		} );
 
 		this.composer = new EffectComposer( this.renderer );
-
-		// envMap: null | Texture = null;
 		this.renderer.setClearColor( 0x999999 );
 		this.renderer.setPixelRatio( window.devicePixelRatio );
 		this.renderer.outputEncoding = sRGBEncoding;
 		this.renderer.toneMapping = ACESFilmicToneMapping;
+		this.renderer.toneMappingExposure = this.exposure;
 		this.renderer.autoClear = false;
 		this.composer.addPass( this.renderPass );
 		this.composer.addPass( new ShaderPass( GammaCorrectionShader ) );
@@ -108,11 +106,6 @@ export class ThreeViewport extends IoElement {
 			this.controls.enabled = ! event.value;
 
 		} );
-
-		this.lightProbeRig.position.y = 500;
-		this.lightProbeRig.layers.set( 1 );
-		this.lightProbeRig.lightProbeHelper.visible = false;
-		this.scene.add( this.lightProbeRig );
 
 	}
 	connectedCallback() {
@@ -162,8 +155,6 @@ export class ThreeViewport extends IoElement {
 
 		}
 
-		this.rendered = false;
-
 		setTimeout( () => {
 
 			this.render();
@@ -171,8 +162,6 @@ export class ThreeViewport extends IoElement {
 		} );
 
 	}
-
-	// initPostprocessing() {}
 	loadIbl( url, onLoad, onProgress, onError ) {
 
 		rgbeLoader.load( url, ( texture ) => {
@@ -183,8 +172,7 @@ export class ThreeViewport extends IoElement {
 			texture.mapping = EquirectangularReflectionMapping;
 			this.scene.background = texture;
 			this.scene.environment = texture;
-			this.envMap = texture;
-			this.lightProbeRig.update( this.renderer, this.scene );
+			this.backgroundTexture = texture;
 			this.render();
 
 		}, onProgress, onError );
@@ -198,7 +186,6 @@ export class ThreeViewport extends IoElement {
 				onLoad( gltf.scene );
 
 			this.scene.add( gltf.scene );
-			this.lightProbeRig.update( this.renderer, this.scene );
 			this.render();
 
 		}, onProgress, onError );
@@ -206,12 +193,13 @@ export class ThreeViewport extends IoElement {
 	}
 	render() {
 
-		this.$.renderer.setHost();
+		this.rendererElement.setHost();
 		this.bokehPass.uniforms.focus.value = this.camera.position.distanceTo( this.controls.position );
 		this.bokehPass.uniforms.maxblur.value = 1000 / this.camera.position.distanceTo( this.controls.position );
 		this.bokehPass.uniforms.aperture.value = 0.0035 / this.camera.position.distanceTo( this.controls.position );
 		this.renderer.clear();
-		this.scene.background = this.envMap;
+		this.renderer.clearDepth();
+		this.scene.background = this.backgroundTexture;
 		this.camera.layers.set( 0 );
 		this.composer.render();
 		this.renderer.clearDepth();
@@ -222,7 +210,6 @@ export class ThreeViewport extends IoElement {
 		this.camera.layers.set( 100 );
 		this.scene.background = null;
 		this.renderer.render( this.scene, this.camera );
-		this.rendered = true;
 
 	}
 

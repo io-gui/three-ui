@@ -7,9 +7,8 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
-import { LightProbeRig } from '../rigs/lightProbeRig.js';
 import { OrbitControls, TransformControls } from 'io-gui-three-controls';
-import './renderer.js';
+import { ThreeRenderer } from './renderer.js';
 
 const gltfLoader = new GLTFLoader();
 const rgbeLoader = new RGBELoader();
@@ -34,30 +33,29 @@ export class ThreeViewport extends IoElement {
   controls: OrbitControls;
   transformControls: TransformControls;
   scene: Scene;
-  lightProbeRig: LightProbeRig;
   renderPass: RenderPass;
   bokehPass: BokehPass;
   composer: EffectComposer;
-  envMap: null | Texture = null;
+  backgroundTexture: null | Texture = null;
 
   static get Properties() {
     return {
-      tabindex: 1
+      tabindex: 1,
+      exposure: 1,
     };
   }
   constructor(properties: Record<string, any> = {}) {
     super(properties);
-    this.template([['three-renderer', {id: 'renderer'}]]);
+    this.rendererElement = new ThreeRenderer();
+    this.appendChild(this.rendererElement);
 
-    this.renderer = this.$.renderer.renderer;
+    this.renderer = this.rendererElement.renderer;
 
     this.camera = new PerspectiveCamera(75, 1, 1, 1000);
     this.controls = new OrbitControls(this.camera, this as unknown as HTMLElement);
     this.transformControls = new TransformControls(this.camera, this as unknown as HTMLElement);
   
     this.scene = new Scene();
-  
-    this.lightProbeRig = new LightProbeRig();
   
     this.renderPass = new RenderPass(this.scene, this.camera);
     this.bokehPass = new BokehPass(this.scene, this.camera, {
@@ -68,13 +66,12 @@ export class ThreeViewport extends IoElement {
       height: window.innerHeight // ?
     });
     this.composer = new EffectComposer(this.renderer);
-  
-    // envMap: null | Texture = null;
 
     this.renderer.setClearColor(0x999999);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.outputEncoding = sRGBEncoding;
     this.renderer.toneMapping = ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = this.exposure;
     this.renderer.autoClear = false;
 
     this.composer.addPass(this.renderPass);
@@ -104,11 +101,6 @@ export class ThreeViewport extends IoElement {
     this.transformControls.addEventListener('dragging-changed', (event) => {
       this.controls.enabled = !(event as any).value;
     });
-
-    this.lightProbeRig.position.y = 500;
-    this.lightProbeRig.layers.set(1);
-    this.lightProbeRig.lightProbeHelper.visible = false;
-    this.scene.add(this.lightProbeRig);
   }
   connectedCallback() {
     super.connectedCallback();
@@ -140,20 +132,17 @@ export class ThreeViewport extends IoElement {
         camera.updateProjectionMatrix();
       }
     }
-    this.rendered = false;
     setTimeout(()=>{
       this.render();
     });
   }
-  // initPostprocessing() {}
   loadIbl(url: string, onLoad?: any, onProgress?: any, onError?: any) {
     rgbeLoader.load(url, (texture) => {
       if (onLoad) onLoad(texture);
       texture.mapping = EquirectangularReflectionMapping;
       this.scene.background = texture;
       this.scene.environment = texture;
-      this.envMap = texture;
-      this.lightProbeRig.update(this.renderer, this.scene);
+      this.backgroundTexture = texture;
       this.render();
     }, onProgress, onError);
   }
@@ -161,17 +150,17 @@ export class ThreeViewport extends IoElement {
     gltfLoader.load(url, (gltf: GLTF) => {
       if (onLoad) onLoad(gltf.scene);
       this.scene.add(gltf.scene);
-      this.lightProbeRig.update(this.renderer, this.scene);
       this.render();
     }, onProgress, onError);
   }
   render() {
-    this.$.renderer.setHost();
+    this.rendererElement.setHost();
     (this.bokehPass as any).uniforms.focus.value = this.camera.position.distanceTo(this.controls.position);
     (this.bokehPass as any).uniforms.maxblur.value = 1000 / this.camera.position.distanceTo(this.controls.position);
     (this.bokehPass as any).uniforms.aperture.value = 0.0035 / this.camera.position.distanceTo(this.controls.position);
     this.renderer.clear();
-    this.scene.background = this.envMap;
+    this.renderer.clearDepth();
+    this.scene.background = this.backgroundTexture;
     this.camera.layers.set(0);
     this.composer.render();
     this.renderer.clearDepth();
@@ -182,7 +171,6 @@ export class ThreeViewport extends IoElement {
     this.camera.layers.set(100);
     this.scene.background = null;
     this.renderer.render(this.scene, this.camera);
-    this.rendered = true;
   }
 }
 
