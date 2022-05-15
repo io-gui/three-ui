@@ -24,10 +24,10 @@
     <script type="importmap">
       {
         "imports": {
-          "io-gui": "./node_modules/io-gui/index.js",
-          "io-gui-three-controls": "./node_modules/io-gui-three-controls/build/index.js",
-          "three": "./node_modules/three/build/three.module.js",
-          "three/": "./node_modules/three/"
+          "io-gui": "../io/index.js",
+          "io-gui-three-controls": "../three-controls/index.js",
+          "three": "../three.js/build/three.module.js",
+          "three/": "../three.js/"
         }
       }
     </script>
@@ -46,8 +46,8 @@
               flex-direction: column;
               overflow: hidden;
             }
-            :host > three-viewport {
-              flex: 1 1 auto;
+            :host > div {
+              margin: auto;
             }
           `;
         }
@@ -56,14 +56,14 @@
         }
         constructor(properties = {}) {
           super(properties);
-          this.template([['three-viewport', {id: 'viewport'}]]);
-          this.$.viewport.loadIbl('./assets/ibl/royal_esplanade_1k.hdr');
-          this.$.viewport.loadModel('./assets/models/cubes/cubes.gltf', (scene) => {
-            scene.traverse((obj) => {
-              obj.layers.set(1);
-            });
-            scene.scale.set(500, 500, 500);
-          });
+          this.template([['div', 'This page is not ready yet.']]);
+          // this.$.viewport.loadIbl('./assets/ibl/royal_esplanade_1k.hdr');
+          // this.$.viewport.loadModel('./assets/models/cubes/cubes.gltf', (scene) => {
+          //   scene.traverse((obj) => {
+          //     obj.layers.set(1);
+          //   });
+          //   scene.scale.set(500, 500, 500);
+          // });
         }
       }
 
