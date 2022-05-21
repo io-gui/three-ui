@@ -1,13 +1,12 @@
 import { IoElement, RegisterIoElement } from "io-gui";
-import { Scene, PerspectiveCamera, OrthographicCamera, Vector3, sRGBEncoding, EquirectangularReflectionMapping, ACESFilmicToneMapping, Object3D } from 'three';
+import { Scene, PerspectiveCamera, OrthographicCamera, Vector3, sRGBEncoding, EquirectangularReflectionMapping, ACESFilmicToneMapping } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
-import { OrbitControls, TransformControls } from 'io-gui-three-controls';
+import { ControlsInteractive, ControlsCamera } from 'io-gui-three-controls';
 import { ThreeRenderer } from './renderer.js';
 
 const gltfLoader = new GLTFLoader();
@@ -33,11 +32,11 @@ export class ThreeViewport extends IoElement {
 	}
 	renderer;
 	camera;
-	controls;
-	transformControls;
+
+	// cameraControls?: ControlsCamera;
+	// interactiveControls?: ControlsInteractive;
 	scene;
 	renderPass;
-	bokehPass;
 	composer;
 	backgroundTexture = null;
 	static get Properties() {
@@ -45,6 +44,14 @@ export class ThreeViewport extends IoElement {
 		return {
 			tabindex: 1,
 			exposure: 1,
+			cameraControls: {
+				type: ControlsCamera,
+				value: null
+			},
+			interactiveControls: {
+				type: ControlsInteractive,
+				value: null
+			}
 		};
 
 	}
@@ -55,19 +62,8 @@ export class ThreeViewport extends IoElement {
 		this.appendChild( this.rendererElement );
 		this.renderer = this.rendererElement.renderer;
 		this.camera = new PerspectiveCamera( 75, 1, 1, 1000 );
-		this.controls = new OrbitControls( this.camera, this );
-		this.transformControls = new TransformControls( this.camera, this );
 		this.scene = new Scene();
 		this.renderPass = new RenderPass( this.scene, this.camera );
-
-		this.bokehPass = new BokehPass( this.scene, this.camera, {
-			focus: 500.0,
-			aperture: 3 * 0.00001,
-			maxblur: 0.15,
-			width: window.innerWidth,
-			height: window.innerHeight // ?
-		} );
-
 		this.composer = new EffectComposer( this.renderer );
 		this.renderer.setClearColor( 0x999999 );
 		this.renderer.setPixelRatio( window.devicePixelRatio );
@@ -77,35 +73,65 @@ export class ThreeViewport extends IoElement {
 		this.renderer.autoClear = false;
 		this.composer.addPass( this.renderPass );
 		this.composer.addPass( new ShaderPass( GammaCorrectionShader ) );
-		this.composer.addPass( this.bokehPass );
 		this.camera.position.set( 50, 30, 30 );
 		this.camera.lookAt( new Vector3( 0, 0, 0 ) );
 		this.render = this.render.bind( this );
-		this.controls.addEventListener( 'change', this.render );
-		this.controls.minDistance = 200;
-		this.controls.maxDistance = 500;
-		this.controls.zoomSpeed = 0.3;
-		this.controls.enableDamping = true;
-		this.controls.position.set( 0, 0, 0 );
-		const target = new Object3D();
-		target.position.set( 0, 0, 0 );
-		this.scene.add( target );
-		this.transformControls.attach( target );
 
-		this.transformControls.traverse( ( obj ) => {
+	}
+	cameraControlsChanged( change ) {
 
-			obj.layers.set( 1 );
+		if ( change.oldValue ) {
 
-		} );
+			change.oldValue.removeEventListener( 'change', this.render );
+			this.scene.remove( change.oldValue );
 
-		this.scene.add( this.transformControls );
-		this.transformControls.addEventListener( 'change', this.render );
+		}
 
-		this.transformControls.addEventListener( 'dragging-changed', ( event ) => {
+		if ( change.value ) {
 
-			this.controls.enabled = ! event.value;
+			change.value.addEventListener( 'change', this.render );
 
-		} );
+			change.value.traverse( ( obj ) => {
+
+				obj.layers.set( 1 );
+
+			} );
+
+			this.scene.add( change.value );
+
+		}
+
+	}
+	interactiveControlsChanged( change ) {
+
+		if ( change.oldValue ) {
+
+			change.oldValue.removeEventListener( 'change', this.render );
+			change.oldValue.removeEventListener( 'active-changed', this.onInteractiveControlsActiveChanged );
+			this.scene.remove( change.oldValue );
+
+		}
+
+		if ( change.value ) {
+
+			change.value.addEventListener( 'change', this.render );
+			change.value.addEventListener( 'active-changed', this.onInteractiveControlsActiveChanged );
+
+			change.value.traverse( ( obj ) => {
+
+				obj.layers.set( 1 );
+
+			} );
+
+			this.scene.add( change.value );
+
+		}
+
+	}
+	onInteractiveControlsActiveChanged( event ) {
+
+		if ( this.cameraControls )
+			this.cameraControls.enabled = ! event.value;
 
 	}
 	connectedCallback() {
@@ -173,6 +199,7 @@ export class ThreeViewport extends IoElement {
 			this.scene.background = texture;
 			this.scene.environment = texture;
 			this.backgroundTexture = texture;
+			this.dispatchEvent( 'ibl-loaded', texture );
 			this.render();
 
 		}, onProgress, onError );
@@ -186,6 +213,7 @@ export class ThreeViewport extends IoElement {
 				onLoad( gltf.scene );
 
 			this.scene.add( gltf.scene );
+			this.dispatchEvent( 'model-loaded', gltf.scene );
 			this.render();
 
 		}, onProgress, onError );
@@ -193,10 +221,8 @@ export class ThreeViewport extends IoElement {
 	}
 	render() {
 
+		this.dispatchEvent( 'before-render' );
 		this.rendererElement.setHost();
-		this.bokehPass.uniforms.focus.value = this.camera.position.distanceTo( this.controls.position );
-		this.bokehPass.uniforms.maxblur.value = 1000 / this.camera.position.distanceTo( this.controls.position );
-		this.bokehPass.uniforms.aperture.value = 0.0035 / this.camera.position.distanceTo( this.controls.position );
 		this.renderer.clear();
 		this.renderer.clearDepth();
 		this.scene.background = this.backgroundTexture;
@@ -210,6 +236,7 @@ export class ThreeViewport extends IoElement {
 		this.camera.layers.set( 100 );
 		this.scene.background = null;
 		this.renderer.render( this.scene, this.camera );
+		this.dispatchEvent( 'after-render' );
 
 	}
 
