@@ -542,10 +542,10 @@ inherits@2:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-io-gui-three-controls@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/io-gui-three-controls/-/io-gui-three-controls-1.1.4.tgz#34d4c977e216fbf3b8affc7ebbf102f1741cecb9"
-  integrity sha512-Eu5E7RStwekkl9ePhsbhjH5M4FZT/lBWK/sZzmM+zLXoAjBcCrvy5NfoWCfdPiYLQX+VjaHgZGhzzzbMHi4vvA==
+io-gui-three-controls@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/io-gui-three-controls/-/io-gui-three-controls-1.1.5.tgz#35b3ceb57922528110a0746b84049ae06e065edb"
+  integrity sha512-SS4gqafmjjFYYLYGv8dDcSd/w2DTuWdHq191QDzhBWyXcDH6r62PzO6D2eNlhLDj0c3MDzMhhSwRSO+sA0QHSA==
   dependencies:
     "@types/three" "^0.140.0"
     three "^0.140.2"

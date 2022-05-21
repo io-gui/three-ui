@@ -1,6 +1,6 @@
 {
   "name": "io-gui-three-ui",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "main": "index.js",
   "module": "index.js",
   "files": [
@@ -45,13 +45,13 @@
   "dependencies": {
     "@types/three": "^0.140.0",
     "io-gui": "^1.2.3",
-    "io-gui-three-controls": "^1.1.4",
+    "io-gui-three-controls": "^1.1.5",
     "three": "^0.140.2"
   },
   "peerDependencies": {
     "@types/three": "^0.140.0",
     "io-gui": "^1.2.3",
-    "io-gui-three-controls": "^1.1.4",
+    "io-gui-three-controls": "^1.1.5",
     "three": "^0.140.2"
   }
 }
