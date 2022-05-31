@@ -57,7 +57,7 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.11.tgz#d421b6c527a3037f7c84433fd2c4229e016863d3"
   integrity sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==
 
-"@types/three@^0.140.0", "@types/three@^0.140.2":
+"@types/three@^0.140.0", "@types/three@^0.141.0":
   version "0.140.0"
   resolved "https://registry.yarnpkg.com/@types/three/-/three-0.140.0.tgz#3b74a021a69a6e2cd0e2550def15aa4c1c20e924"
   integrity sha512-YPJLSIY6uKUOp1k6BZYDq5GtEIdhfeK04UCbc9IPAVbdn/RNjkfrbnyd7smrsNkJhc0IFASLpd3AAYgwqgXKVQ==
@@ -550,10 +550,10 @@ io-gui-three-controls@^1.1.5:
     "@types/three" "^0.140.0"
     three "^0.140.2"
 
-io-gui@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/io-gui/-/io-gui-1.2.5.tgz#8f76ab88530646a431a94cacc4e6808a6d347e50"
-  integrity sha512-jf/37/ZaHx7rqHMtCViejF2cetfJiu+rj95zkaQ9C6NjzuHi3+IDK4FaBDvda3juLW/yhf7iaP+s3U1Ky1NWUw==
+io-gui@^1.2.7:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/io-gui/-/io-gui-1.2.7.tgz#5074b248263d649545991718fabc28f4de59699e"
+  integrity sha512-bP2eCbj5ci0tGFpHEV36cC9mgd2DuViKp92jnW+y3tEjpeQbfPmEfUuJi7ui6SLCm5/BKZ3y+IRI6hzzqlHvUw==
 
 is-extglob@^2.1.1:
   version "2.1.1"
@@ -786,6 +786,11 @@ three@^0.140.2:
   version "0.140.2"
   resolved "https://registry.yarnpkg.com/three/-/three-0.140.2.tgz#ca0b7390d1ce4f7f2850e80afd00ef48fc244491"
   integrity sha512-DdT/AHm/TbZXEhQKQpGt5/iSgBrmXpjU26FNtj1KhllVPTKj1eG4X/ShyD5W2fngE+I1s1wa4ttC4C3oCJt7Ag==
+
+three@^0.141.0:
+  version "0.141.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.141.0.tgz#16677a12b9dd0c3e1568ebad0fd09de15d5a8216"
+  integrity sha512-JaSDAPWuk4RTzG5BYRQm8YZbERUxTfTDVouWgHMisS2to4E5fotMS9F2zPFNOIJyEFTTQDDKPpsgZVThKU3pXA==
 
 to-regex-range@^5.0.1:
   version "5.0.1"
