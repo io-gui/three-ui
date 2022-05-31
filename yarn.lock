@@ -57,7 +57,7 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.11.tgz#d421b6c527a3037f7c84433fd2c4229e016863d3"
   integrity sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==
 
-"@types/three@^0.140.0":
+"@types/three@^0.140.0", "@types/three@^0.140.2":
   version "0.140.0"
   resolved "https://registry.yarnpkg.com/@types/three/-/three-0.140.0.tgz#3b74a021a69a6e2cd0e2550def15aa4c1c20e924"
   integrity sha512-YPJLSIY6uKUOp1k6BZYDq5GtEIdhfeK04UCbc9IPAVbdn/RNjkfrbnyd7smrsNkJhc0IFASLpd3AAYgwqgXKVQ==
@@ -550,10 +550,10 @@ io-gui-three-controls@^1.1.5:
     "@types/three" "^0.140.0"
     three "^0.140.2"
 
-io-gui@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/io-gui/-/io-gui-1.2.3.tgz#4a314e7ed0804a3043a048a6246c0f17d87c1eca"
-  integrity sha512-qljKjZwsDzhnUtimAs1dYMfC3x/VgdtVNM8LqiYIWQdVWIDUy5bkEfDpAHYWwYohc+ppa99LELizZGlzJFe3bw==
+io-gui@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/io-gui/-/io-gui-1.2.5.tgz#8f76ab88530646a431a94cacc4e6808a6d347e50"
+  integrity sha512-jf/37/ZaHx7rqHMtCViejF2cetfJiu+rj95zkaQ9C6NjzuHi3+IDK4FaBDvda3juLW/yhf7iaP+s3U1Ky1NWUw==
 
 is-extglob@^2.1.1:
   version "2.1.1"
