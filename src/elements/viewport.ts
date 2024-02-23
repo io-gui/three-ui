@@ -4,10 +4,8 @@ import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
-import { LightProbeRig } from '../rigs/lightProbeRig.js';
 import { OrbitControls, TransformControls } from 'io-gui-three-controls';
 import './renderer.js';
 
@@ -34,9 +32,7 @@ export class ThreeViewport extends IoElement {
   controls: OrbitControls;
   transformControls: TransformControls;
   scene: Scene;
-  lightProbeRig: LightProbeRig;
   renderPass: RenderPass;
-  bokehPass: BokehPass;
   composer: EffectComposer;
   envMap: null | Texture = null;
 
@@ -47,7 +43,7 @@ export class ThreeViewport extends IoElement {
   }
   constructor(properties: Record<string, any> = {}) {
     super(properties);
-    this.template([['three-renderer', {id: 'renderer'}]]);
+    this.template([['three-renderer', {$: 'renderer'}]]);
 
     this.renderer = this.$.renderer.renderer;
 
@@ -57,16 +53,7 @@ export class ThreeViewport extends IoElement {
   
     this.scene = new Scene();
   
-    this.lightProbeRig = new LightProbeRig();
-  
     this.renderPass = new RenderPass(this.scene, this.camera);
-    this.bokehPass = new BokehPass(this.scene, this.camera, {
-      focus: 500.0,
-      aperture: 3 * 0.00001,
-      maxblur: 0.015,
-      width: window.innerWidth, // ?
-      height: window.innerHeight // ?
-    });
     this.composer = new EffectComposer(this.renderer);
   
     // envMap: null | Texture = null;
@@ -79,10 +66,9 @@ export class ThreeViewport extends IoElement {
 
     this.composer.addPass(this.renderPass);
     this.composer.addPass(new ShaderPass(GammaCorrectionShader));
-    this.composer.addPass(this.bokehPass);
 
-    this.camera.position.set(300, 500, 300);
-    this.camera.lookAt(new Vector3(0, 500, 0));
+    this.camera.position.set(300, 200, 300);
+    this.camera.lookAt(new Vector3(0, 0, 0));
 
     this.render = this.render.bind(this);
     this.controls.addEventListener('change', this.render);
@@ -90,10 +76,9 @@ export class ThreeViewport extends IoElement {
     this.controls.maxDistance = 500;
     this.controls.zoomSpeed = 0.3;
     this.controls.enableDamping = true;
-    this.controls.position.set(0, 500, 0);
     
     const target = new Object3D();
-    target.position.set(0, 500, 0);
+    target.position.set(0, 0, 0);
     this.scene.add(target);
     this.transformControls.attach(target);
     this.transformControls.traverse((obj: Object3D) => {
@@ -104,10 +89,6 @@ export class ThreeViewport extends IoElement {
     this.transformControls.addEventListener('dragging-changed', (event) => {
       this.controls.enabled = !(event as any).value;
     });
-
-    this.lightProbeRig.position.y = 500;
-    this.lightProbeRig.layers.set(1);
-    this.scene.add(this.lightProbeRig);
   }
   connectedCallback() {
     super.connectedCallback();
@@ -166,9 +147,7 @@ export class ThreeViewport extends IoElement {
   }
   render() {
     this.$.renderer.setHost();
-    (this.bokehPass as any).uniforms.focus.value = this.camera.position.distanceTo(new Vector3(0, 500, 0));
-    (this.bokehPass as any).uniforms.maxblur.value = 10 / this.camera.position.distanceTo(new Vector3(0, 500, 0));
-    (this.bokehPass as any).uniforms.aperture.value = 0.005 / this.camera.position.distanceTo(new Vector3(0, 500, 0));
+
     this.renderer.clear();
     this.scene.background = this.envMap;
     this.camera.layers.set(0);

@@ -2,8 +2,6 @@ import { IoElement } from "io-gui";
 import { WebGLRenderer, Scene, PerspectiveCamera, Texture } from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
-import { LightProbeRig } from '../rigs/lightProbeRig.js';
 import { OrbitControls, TransformControls } from 'io-gui-three-controls';
 import './renderer.js';
 export declare class ThreeViewport extends IoElement {
@@ -13,9 +11,7 @@ export declare class ThreeViewport extends IoElement {
     controls: OrbitControls;
     transformControls: TransformControls;
     scene: Scene;
-    lightProbeRig: LightProbeRig;
     renderPass: RenderPass;
-    bokehPass: BokehPass;
     composer: EffectComposer;
     envMap: null | Texture;
     static get Properties(): {

@@ -98,7 +98,7 @@ export class ThreeRenderer extends IoElement {
   }
   constructor(properties: Record<string, any> = {}) {
     super(properties);
-    this.template([['canvas', {id: 'canvas'}]]);
+    this.template([['canvas', {$: 'canvas'}]]);
     this._ctx = this.$.canvas.getContext('2d');
     this.$.canvas.imageSmoothingEnabled = false;
   }
