@@ -7,10 +7,50 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
 import { OrbitControls, TransformControls } from 'io-gui-three-controls';
-import './renderer.js';
 
 const gltfLoader = new GLTFLoader();
 const rgbeLoader = new RGBELoader();
+
+const renderer = new WebGLRenderer({antialias: false, preserveDrawingBuffer: true, alpha: true});
+const gl = renderer.getContext();
+
+renderer.domElement.className = 'canvas3d';
+renderer.shadowMap.enabled = true;
+renderer.setClearColor(0x000000, 1.0);
+renderer.autoClear = false;
+
+let host: ThreeViewport;
+
+let perfNow = 0;
+let perfDelta = 1000;
+let perfAverage = 1000;
+let perfWarned: boolean;
+
+const _performanceCheck = function() {
+  if (perfWarned) return;
+  perfDelta = performance.now() - perfNow;
+  perfAverage = Math.min((perfAverage * 10 + perfDelta) / 11, 1000);
+  perfNow = performance.now();
+  if (perfAverage < 16) {
+    console.warn('ThreeViewport performance warning: rendering multiple canvases!');
+    perfWarned = true;
+  }
+};
+
+const renderedQueue: ThreeViewport[] = [];
+const renderNextQueue: ThreeViewport[] = [];
+
+const animate = function() {
+  for (let i = 0; i < renderedQueue.length; i++) renderedQueue[i].rendered = false;
+  renderedQueue.length = 0;
+  for (let i = 0; i < renderNextQueue.length; i++) {
+    renderNextQueue[i].scheduled = false;
+    renderNextQueue[i].render();
+  }
+  renderNextQueue.length = 0;
+  requestAnimationFrame(animate);
+};
+requestAnimationFrame(animate);
 
 export class ThreeViewport extends IoElement {
   static get Style() {
@@ -19,14 +59,29 @@ export class ThreeViewport extends IoElement {
         position: relative;
         overflow: hidden;
         display: flex;
+        touch-action: none;
+        user-select: none;
+        box-sizing: border-box;
+      }
+      :host:focus > canvas {
+        outline: var(--io-border-width) solid var(--io-color-focus);
+        outline-offset: calc(var(--io-border-width) * -1);
       }
       :host > canvas {
         position: absolute;
-        top: 0 !important;
-        left: 0 !important;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        image-rendering: pixelated;
+      }
+      :host[ishost] > canvas:not(.canvas3d) {
+        display: none;
       }
     `;
   }
+
+  _ctx: CanvasRenderingContext2D;
+
   renderer: WebGLRenderer;
   camera: PerspectiveCamera;
   controls: OrbitControls;
@@ -38,14 +93,28 @@ export class ThreeViewport extends IoElement {
 
   static get Properties() {
     return {
-      tabindex: 1
+      ishost: {
+        type: Boolean,
+        // reflect: 1
+      },
+      size: [0, 0],
+      tabindex: 1,
+      clearColor: 0x000000,
+      clearAlpha: 1
+    };
+  }
+  static get Listeners() {
+    return {
+      'dragstart': 'preventDefault'
     };
   }
   constructor(properties: Record<string, any> = {}) {
     super(properties);
-    this.template([['three-renderer', {$: 'renderer'}]]);
+    this.template([['canvas', {$: 'canvas'}]]);
+    this._ctx = this.$.canvas.getContext('2d');
+    this.$.canvas.imageSmoothingEnabled = false;
 
-    this.renderer = this.$.renderer.renderer;
+    this.renderer = renderer;
 
     this.camera = new PerspectiveCamera(75, 1, 10, 3000);
     this.controls = new OrbitControls(this.camera, this as unknown as HTMLElement);
@@ -90,6 +159,27 @@ export class ThreeViewport extends IoElement {
       this.controls.enabled = !(event as any).value;
     });
   }
+  setHost() {
+    if (!this.ishost) {
+      if (host) {
+        const r = window.devicePixelRatio || 1;
+        host._ctx.clearRect(0, 0, host.size[0] * r, host.size[1] * r);
+        host._ctx.drawImage(host.renderer.domElement, 0, 0, host.size[0] * r, host.size[1] * r);
+        gl.flush();
+        host.ishost = false;
+      }
+      /* eslint-disable-next-line */
+      host = this;
+      this.appendChild(this.renderer.domElement);
+      this.ishost = true;
+      _performanceCheck();
+    }
+    if (this.size[0] && this.size[1]) {
+      this.renderer.setSize(this.size[0], this.size[1]);
+      this.renderer.setPixelRatio(window.devicePixelRatio);
+      this.renderer.setClearColor(this.clearColor, this.clearAlpha);
+    }
+  }
   connectedCallback() {
     super.connectedCallback();
     this._connected = true;
@@ -121,6 +211,13 @@ export class ThreeViewport extends IoElement {
       }
     }
     this.rendered = false;
+
+    this.size[0] = Math.floor(rect.width);
+    this.size[1] = Math.floor(rect.height);
+    const r = window.devicePixelRatio || 1;
+    this.$.canvas.width = this.size[0] * r;
+    this.$.canvas.height = this.size[1] * r;
+
     setTimeout(()=>{
       this.render();
     });
@@ -146,7 +243,7 @@ export class ThreeViewport extends IoElement {
     }, onProgress, onError);
   }
   render() {
-    this.$.renderer.setHost();
+    this.setHost();
 
     this.renderer.clear();
     this.scene.background = this.envMap;
